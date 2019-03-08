@@ -11,7 +11,7 @@
         allowGuest = allowGuest || false;
         params.returnAll = true;
         params.headers = {
-          'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8',
+          'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'
         };
         params.cache = false;
         var that = this,
@@ -79,7 +79,6 @@
                       location: 'bottom'
                     });
                 }
-
                 return false;
               }
             }
@@ -88,6 +87,27 @@
         }
         else
         {
+          /*axios.jsonp = (url) => {
+            if(!url){
+              console.error('Axios.JSONP 至少需要一个url参数!')
+              return;
+            }
+            return new Promise((resolve,reject) => {
+              window.jsonCallBack =(result) => {
+                resolve(result)
+              }
+              var JSONP=document.createElement("script");
+              JSONP.type="text/javascript";
+              JSONP.src=`${url}&callback=jsonCallBack`;
+              document.getElementsByTagName("head")[0].appendChild(JSONP);
+              setTimeout(() => {
+                document.getElementsByTagName("head")[0].removeChild(JSONP)
+              },500)
+            })
+          }*/
+          axios.defaults.crossDomain=true;
+          axios.defaults.withCredentials=true;
+          axios.defaults.headers.common['Authorization']=localStorage["token"]
           axios(params).then(function(ret)
           {
             callback(ret);
@@ -108,7 +128,7 @@
         var params = {
             url: url,
             method: 'get',
-            dataType: 'json',
+            dataType: 'jsonp',
             data : {}
         };
 
@@ -127,7 +147,7 @@
         var params = {
             url: url,
             method: 'post',
-            dataType: 'json',
+            dataType: 'jsonp',
             data: {
                 values: datas
             }

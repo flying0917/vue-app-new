@@ -13,14 +13,23 @@ const userModel={
       callback(ret,err)
     })
   },
+  //注册
+  "register":function(param,cb)
+  {
+    var callback=cb
+    quickos.api.post(url.login,param,function(ret,err)
+    {
+      callback(ret,err)
+    })
+  },
   //获取token
   "getToken":function(cb)
   {
     var callback=cb;
      quickos.api.post(url.getToken,{},function(ret,err)
      {
-       if(ret.data&&ret.data.access_token)
-        localStorage.setItem("token",ret.data.access_token);
+        localStorage["token"]=ret.data.data["access_token"];
+        console.log()
         callback(ret,err)
      })
   }

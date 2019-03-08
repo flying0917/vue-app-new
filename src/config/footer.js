@@ -4,17 +4,17 @@
 const footerTabData=[
   {
     name:"首页",
-    url:"",
+    url:"/index",
     icon:""
   },
   {
     name:"消息",
-    url:"",
+    url:"/Im",
     icon:""
   },
   {
     name:"个人中心",
-    url:"",
+    url:"/UserCenter",
     icon:""
   },
 ]

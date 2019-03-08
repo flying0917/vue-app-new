@@ -18,6 +18,12 @@ const router = new VueRouter({
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false
+//跳页
+Vue.prototype.$goRoute=function(index)
+{
+  console.log(index);
+  this.$router.push(index)
+}
 
 /* eslint-disable no-new */
 if(Global.isApp)

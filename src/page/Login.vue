@@ -1,15 +1,17 @@
 <template>
-  <form class="cui-form">
-    <a href="javascript:void(0);" class="cui-input">
-      <label>姓名</label>
-      <input v-model="username" placeholder="请输入姓名">
-    </a>
-    <a  href="javascript:void(0);" class="cui-input">
-      <label>密码</label>
-      <input v-model="password" type="password" placeholder="请输入密码">
-    </a>
-    <div class="cui-btn cui-btn-primary cui-btn-block cui-btn-radius" @click="login()">登录</div>
-  </form>
+  <div class="cui-content">
+    <form class="cui-form">
+      <a href="javascript:void(0);" class="cui-input">
+        <label>姓名</label>
+        <input v-model="username" placeholder="请输入姓名">
+      </a>
+      <a  href="javascript:void(0);" class="cui-input">
+        <label>密码</label>
+        <input v-model="password" type="password" placeholder="请输入密码">
+      </a>
+      <div class="cui-btn cui-btn-primary cui-btn-block cui-btn-radius" @click="login()">登录</div>
+    </form>
+  </div>
 </template>
 <script>
   import userModel from "@/model/user"
@@ -30,6 +32,7 @@
              var that=this;
               userModel.getToken(function(ret,err)
               {
+
               })
            },
           //登陆
@@ -44,7 +47,7 @@
         },
         created()
         {
-          this.getToken();
+          //this.getToken();
         }
     }
 </script>
