@@ -21,7 +21,6 @@ Vue.config.productionTip = false
 //跳页
 Vue.prototype.$goRoute=function(index)
 {
-  console.log(index);
   this.$router.push(index)
 }
 

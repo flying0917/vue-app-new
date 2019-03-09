@@ -1,6 +1,6 @@
 <template>
   <div class="cui-tabbar cui-fixed-bottom">
-    <div class="cui-tabbar-tabitem" v-for="x in footerTabData" @click="$goRoute('main'+x.url)">
+    <div class="cui-tabbar-tabitem" v-for="x in footerTabData" @click="$goRoute(x.url)">
       <span class="cui-iconfont cui-icon-manage"></span>
       <label>{{ x.name }}</label>
     </div>
