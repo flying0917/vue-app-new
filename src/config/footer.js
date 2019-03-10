@@ -5,17 +5,20 @@ const footerTabData=[
   {
     name:"首页",
     url:"/main/index",
-    icon:""
+    icon:"cui-icon-manage",
+    isImg:false
   },
   {
     name:"消息",
     url:"/main/Im",
-    icon:""
+    icon:"cui-icon-message",
+    isImg:false
   },
   {
     name:"个人中心",
     url:"/main/UserCenter",
-    icon:""
+    icon:"cui-icon-people",
+    isImg:false
   },
 ]
 export default footerTabData

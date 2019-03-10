@@ -8,6 +8,7 @@ import UserCenter from '@/page/UserCenter'
 import Index from '@/page/Index'
 import Im from '@/page/Im'
 import Weixin from '@/page/Weixin-login'
+import SelectSole from '@/page/SelectSole'
 
 const routes=[{
     path: '/',
@@ -17,9 +18,14 @@ const routes=[{
     path: '/register',
     component: Register
   },
+
   {
     path: '/weixin',
     component: Weixin
+  },
+  {
+    path: '/SelectSole',
+    component: SelectSole
   },
   {
     path: '/main',
@@ -33,21 +39,24 @@ const routes=[{
         path:"index",
         component:Index,
         meta:{
-          keepAlive:false
+          keepAlive:false,
+          index:1
         }
       },
       {
         path:"Im",
         component:Im,
         meta:{
-          keepAlive:false
+          keepAlive:false,
+          index:2
         }
       },
       {
         path:"UserCenter",
         component:UserCenter,
         meta:{
-          keepAlive:false
+          keepAlive:false,
+          index:3
         }
       },
     ]

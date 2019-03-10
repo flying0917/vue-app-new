@@ -4,17 +4,18 @@
         <img src="@/assets/image/JIANMIAN.png">
         <div class="btn weixin-btn"><img src="@/assets/image/login_icon_wechat.png">微信登录</div>
         <div class="btn mobile-btn"><img src="@/assets/image/login_icon_phone.png">手机登录</div>
-        <div class="tip">
-          <span>登录即代表您同意“招聘app”的</span><a>服务和隐私条款</a>
-        </div>
+        <provision></provision>
       </div>
 
   </div>
 </template>
 <script>
-
+    import Provision from '@/components/Provision'
     export default {
         name: "weixin",
+        components:{
+            Provision
+        },
         data()
         {
           return {
@@ -51,21 +52,7 @@
   {
     width:50%;
   }
-  .tip
-  {
-    font-size:.4rem;
-    color:#999999;
-    position:absolute;
-    margin:0;
-    right:0;
-    left:0;
-    font-family:Adobe Heiti Std R;
-    bottom:.5px;
-  }
-  .tip a
-  {
-    color:#5ed2fa;
-  }
+
   .weixin-content .btn
   {
     width:100%;

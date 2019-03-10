@@ -24,7 +24,11 @@
         },
         watch:{
           '$route' (to, from) {
-            this.transitionName="slide-rights"
+
+            const toIndex = to.meta.index
+            const fromIndex = from.meta.index
+
+            this.transitionName = toIndex < fromIndex ? 'slide-right' : 'slide-left'
           }
         }
 
@@ -32,17 +36,32 @@
 </script>
 
 <style scoped>
-  .slide-left-enter,
-  .slide-right-leave-active {
-    opacity: 0;
-    -webkit-transform: translate(100%, 0);
-    transform: translate(100%, 0);
+  .slide-right-enter-active,
+  .slide-right-leave-active,
+  .slide-left-enter-active,
+  .slide-left-leave-active {
+    will-change: transform;
+    transition: all 500ms;
+    position: absolute;
   }
 
-  .slide-left-leave-active,
   .slide-right-enter {
     opacity: 0;
-    -webkit-transform: translate(-100%, 0);
-    transform: translate(-100% 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  .slide-right-leave-active {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .slide-left-enter {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .slide-left-leave-active {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
   }
 </style>

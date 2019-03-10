@@ -1,12 +1,13 @@
     import axios from "axios"
     import GLOBAL from "@/config/global"
+    import url from "@/config/url"
     var http_api = {};
     var app = {};
     var quickos = {};
     var retdebug =0;
     var errdebug =1;
 
-    http_api.ajax = function (params, cb, allowGuest) {
+    http_api.ajax = function (params, cb, router, allowGuest) {
         allowGuest = allowGuest || false;
         params.returnAll = true;
         params.headers = {
@@ -20,7 +21,7 @@
         {
           api.ajax(params, function (ret, err) {
 
-            if ('' != err && undefined != err) {
+            if ('' !== err && undefined !== err) {
 
               if ( errdebug ) {
                 console.log("-----【AJAX ERR】-----" +
@@ -86,15 +87,41 @@
         }
         else
         {
-          axios.defaults.crossDomain=true;
-          axios.defaults.withCredentials=true;
-          axios.defaults.headers.common['Authorization']=localStorage["token"]
-          axios(params).then(function(ret)
-          {
-            callback(ret);
-          }).catch(function(err){
-            //callback(err);
-          });
+            //判断是否有路由过来，有的话要判断登陆状态
+
+            if(router&&router.constructor.name==="VueRouter")
+            {
+                //判断有没有token
+                if(!localStorage["token"])
+                {
+                    axios({url:url.getToken,headers:params.headers}).then(function(ret)
+                    {
+                        localStorage["token"]=ret.data.data.token;
+                        axios.defaults.crossDomain=true;
+                        axios.defaults.withCredentials=true;
+                        axios.defaults.headers.common['Authorization']=localStorage["token"]
+                        axios(params).then(function(ret)
+                        {
+                            callback(ret);
+                        }).catch(function(err){
+                            //callback(err);
+                        });
+                    })
+                }
+            }
+            else
+            {
+                axios.defaults.crossDomain=true;
+                axios.defaults.withCredentials=true;
+                axios.defaults.headers.common['Authorization']=localStorage["token"]
+                axios(params).then(function(ret)
+                {
+                    callback(ret);
+                }).catch(function(err){
+                    //callback(err);
+                });
+            }
+
         }
     };
 
@@ -133,7 +160,7 @@
                 values: datas
             }
         };
-        this.ajax(params, callback, allowGuest);
+        this.ajax(params, callback, allowGuest,arguments[arguments.length-1]);
     };
 
     /**
@@ -201,7 +228,7 @@
     };
 
     http_api.attachUpload = function (file_path, module) {
-        url = this.url('main/attach/upload');//user/info/uploadavatar
+        var url = this.url('main/attach/upload');//user/info/uploadavatar
         this.ajax({
             data: {
                 files: {

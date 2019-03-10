@@ -7,12 +7,11 @@ const userModel={
   //登录
   "login":function(username,password,cb)
   {
-    var callback=cb,
-        router=arguments&&arguments[arguments.length-1]&&arguments[arguments.length-1].constructor.name==="VueRouter"?arguments[arguments.length-1]:null;
+    var callback=cb
     quickos.api.post(url.login,{username:username,password:password},function(ret,err)
     {
       callback(ret,err)
-    },router)
+    },arguments[arguments.length-1])
   },
   //注册
   "register":function(param,cb)
@@ -21,7 +20,7 @@ const userModel={
     quickos.api.post(url.login,param,function(ret,err)
     {
       callback(ret,err)
-    })
+    },arguments[arguments.length-1])
   },
   //获取token
   "getToken":function(cb)
@@ -31,7 +30,7 @@ const userModel={
      {
         localStorage["token"]=ret.data.data["access_token"];
         callback(ret,err)
-     })
+     },arguments[arguments.length-1])
   }
 }
 export default userModel

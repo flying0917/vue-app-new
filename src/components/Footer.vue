@@ -1,7 +1,8 @@
 <template>
   <div class="cui-tabbar cui-fixed-bottom">
-    <div class="cui-tabbar-tabitem" v-for="x in footerTabData" @click="$goRoute(x.url)">
-      <span class="cui-iconfont cui-icon-manage"></span>
+    <div class="cui-tabbar-tabitem" v-for="x in footerTabData" @click="switchTab(x.url,$event)">
+      <img v-if="x.isImg" :src="x.icon">
+      <span v-else :class="'cui-iconfont '+x.icon"></span>
       <label>{{ x.name }}</label>
     </div>
   </div>
@@ -15,6 +16,13 @@
         {
           return {
             footerTabData:footer
+          }
+        },
+        methods:{
+          switchTab(url,e)
+          {
+            this.$goRoute(url);
+           /* e.currentTarget.className="cui-active"*/
           }
         }
     }
