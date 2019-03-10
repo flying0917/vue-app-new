@@ -8,12 +8,22 @@ import routes from '@/config/router'
 import Global from '@/config/global'
 import './assets/css/cui.css'
 
+
 Vue.use(VueRouter)
 
 Vue.prototype.GLOBAL = Global
 const router = new VueRouter({
   routes
 })
+
+router.beforeEach(function(to,from,next){
+
+  console.log(to)
+  /*to["isback"]=false
+  from["isback"]=true*/
+  next();
+});
+
 
 FastClick.attach(document.body)
 

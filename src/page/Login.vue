@@ -33,7 +33,7 @@
               userModel.getToken(function(ret,err)
               {
 
-              })
+              },that.$router)
            },
           //登陆
            login:function()
@@ -41,8 +41,8 @@
               var that=this
               userModel.login(that.username,that.password,function(ret,err)
               {
-                 console.logt(ret)
-              })
+
+              },that.$router)
            }
         },
         created()
