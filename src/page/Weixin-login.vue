@@ -3,7 +3,7 @@
       <div class="weixin-content">
         <img src="@/assets/image/JIANMIAN.png">
         <div class="btn weixin-btn"><img src="@/assets/image/login_icon_wechat.png">微信登录</div>
-        <div class="btn mobile-btn"><img src="@/assets/image/login_icon_phone.png">手机登录</div>
+        <div class="btn mobile-btn" @click="goMobileLogin()"><img src="@/assets/image/login_icon_phone.png">手机登录</div>
         <provision></provision>
       </div>
 
@@ -24,7 +24,10 @@
         },
         methods:
         {
-
+          goMobileLogin:function()
+          {
+            this.$router.push("/login")
+          }
         },
         created()
         {

@@ -10,8 +10,13 @@ import Im from '@/page/Im'
 import Weixin from '@/page/Weixin-login'
 import SelectSole from '@/page/SelectSole'
 
-const routes=[{
+const routes=[
+  {
     path: '/',
+    component: Weixin
+  },
+  {
+    path: '/login',
     component: Login
   },
   {

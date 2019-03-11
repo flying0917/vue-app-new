@@ -7,7 +7,14 @@ import App from './App'
 import routes from '@/config/router'
 import Global from '@/config/global'
 import './assets/css/cui.css'
+import './assets/css/add-css.css'
+import Validator from 'vue-validator'
+import $api from '@/util/api'
+import { ToastPlugin,LoadingPlugin } from 'vux'
 
+Vue.use(ToastPlugin)
+Vue.use(LoadingPlugin)
+Vue.use(Validator)
 
 Vue.use(VueRouter)
 
@@ -16,13 +23,7 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach(function(to,from,next){
 
-  console.log(to)
-  /*to["isback"]=false
-  from["isback"]=true*/
-  next();
-});
 
 
 FastClick.attach(document.body)

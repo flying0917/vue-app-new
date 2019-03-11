@@ -4,8 +4,10 @@
     var http_api = {};
     var app = {};
     var quickos = {};
-    var retdebug =0;
+    var retdebug =1;
     var errdebug =1;
+
+
 
     http_api.ajax = function (params, cb, router, allowGuest) {
         allowGuest = allowGuest || false;
@@ -13,12 +15,23 @@
         params.headers = {
           'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'
         };
+
         params.cache = false;
         var that = this,
             callback=cb;
         params.data.values = params.data.values&&typeof params.data.values==="object"?params.data.values:{};
-        if(GLOBAL.isApp)
+        if(GLOBAL.isApp&&false)
         {
+          let temp_token=localStorage["temp_token"],
+            access_token=localStorage["access_token"];
+          if(temp_token)
+          {
+            params.headers['Authorization']=temp_token
+          }
+          if(access_token)
+          {
+            params.headers['Authorization']=access_token
+          }
           api.ajax(params, function (ret, err) {
 
             if ('' !== err && undefined !== err) {
@@ -87,42 +100,27 @@
         }
         else
         {
-            //判断是否有路由过来，有的话要判断登陆状态
-
-            if(router&&router.constructor.name==="VueRouter")
-            {
-                //判断有没有token
-                if(!localStorage["token"])
-                {
-                    axios({url:url.getToken,headers:params.headers}).then(function(ret)
-                    {
-                        localStorage["token"]=ret.data.data.token;
-                        axios.defaults.crossDomain=true;
-                        axios.defaults.withCredentials=true;
-                        axios.defaults.headers.common['Authorization']=localStorage["token"]
-                        axios(params).then(function(ret)
-                        {
-                            callback(ret);
-                        }).catch(function(err){
-                            //callback(err);
-                        });
-                    })
-                }
-            }
-            else
-            {
-                axios.defaults.crossDomain=true;
-                axios.defaults.withCredentials=true;
-                axios.defaults.headers.common['Authorization']=localStorage["token"]
-                axios(params).then(function(ret)
-                {
-                    callback(ret);
-                }).catch(function(err){
-                    //callback(err);
-                });
-            }
-
+               params.data=params.data.values;
+               let temp_token=localStorage["temp_token"],
+                   access_token=localStorage["access_token"];
+              if(temp_token)
+              {
+                axios.defaults.headers['Authorization']=temp_token
+              }
+              if(access_token)
+              {
+                axios.defaults.headers.common['Authorization']=access_token
+              }
+              axios(params).then(function(ret)
+              {
+                console.log(JSON.stringify(ret))
+                 callback(ret.data);
+              }).catch(function(err)
+              {
+                console.log(JSON.stringify(err))
+              });
         }
+
     };
 
     /**
@@ -136,7 +134,7 @@
         var params = {
             url: url,
             method: 'get',
-            dataType: 'jsonp',
+            dataType: 'json',
             data : {}
         };
 
@@ -155,7 +153,7 @@
         var params = {
             url: url,
             method: 'post',
-            dataType: 'jsonp',
+            dataType: 'json',
             data: {
                 values: datas
             }
