@@ -31,6 +31,7 @@
 <script>
   import userModel from "@/model/user"
   import Provision from '@/components/Provision'
+  import * as types from '@/store/types'
     export default {
         name: "Login",
         data()
@@ -41,7 +42,8 @@
             code_tip:"获取验证码",
             time:60,
             remaining:60,
-            inTime:true//是否到点
+            inTime:true,//是否到点
+            token:""
           }
         },
         components:{
@@ -192,9 +194,14 @@
                  userModel.login(that.mobile,that.code,function(ret,err)
                  {
                    that.$vux.loading.hide()
-                   setTimeout(function(){
-                     that.$router.push("/SelectSole")
-                   },500)
+                   if (ret.data["access_token"]) {
+                     that.$store.commit(types.LOGIN, ret.data["access_token"],ret.data["im_token"]);
+                     let redirect = decodeURIComponent(that.$route.query.redirect || '/main');
+                     that.$router.push({
+                       path: redirect
+                     })
+                   }
+
                  },that.$router)
                })
              }

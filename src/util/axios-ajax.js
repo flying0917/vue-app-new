@@ -1,5 +1,41 @@
 import axios from 'axios'
 import Qs from 'qs'
+import router from '@/router/index'
+import store from '@/store/store'
+import * as types from '@/store/types'
+// http request 拦截器
+axios.interceptors.request.use(
+    config => {
+      console.log(store.state)
+      if (store.state.token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
+        config.headers.Authorization = store.state.token;
+      }
+      return config;
+    },
+    err => {
+      return Promise.reject(err);
+    });
+
+// http response 拦截器
+axios.interceptors.response.use(
+    response => {
+      return response;
+    },
+    error => {
+      if (error.response) {
+        switch (error.response.status) {
+          case 401:
+            // 返回 401 清除token信息并跳转到登录页面
+            store.commit(types.LOGOUT);
+            router.replace({
+              path: 'login',
+              query: {redirect: router.currentRoute.fullPath}
+            })
+        }
+      }
+      return Promise.reject(error.response.data)   // 返回接口返回的错误信息
+    });
+
 export default {
   ajax:function(param,cb){
 
@@ -24,7 +60,7 @@ export default {
         {
           formdata.append(y,param.data[y]);
         }
-        options.headers={'Content-Type': 'multipart/form-data'};
+        options.headers['Content-Type']='multipart/form-data';
         options.data=formdata;
 
         //进度条回调
@@ -32,7 +68,8 @@ export default {
         {
           //清空头
           //delete options.headers;
-          options.headers={'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json',};
+          options.headers['Access-Control-Allow-Origin']='*';
+          options.headers['Content-Type']='mapplication/json';
           //options.headers={'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'};
 
           var propressCb=param.proCb;
@@ -61,7 +98,7 @@ export default {
     })
       .catch(function(error)
       {
-        callback(false)
+        callback(error)
       });
   },
   get:function(url,cb)

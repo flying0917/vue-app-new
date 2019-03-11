@@ -113,11 +113,10 @@
               }
               axios(params).then(function(ret)
               {
-                console.log(JSON.stringify(ret))
                  callback(ret.data);
               }).catch(function(err)
               {
-                console.log(JSON.stringify(err))
+                //console.log(JSON.stringify(err))
               });
         }
 

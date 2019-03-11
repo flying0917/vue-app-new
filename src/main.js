@@ -2,27 +2,19 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import FastClick from 'fastclick'
-import VueRouter from 'vue-router'
+import router from '@/router/index'
 import App from './App'
-import routes from '@/config/router'
 import Global from '@/config/global'
 import './assets/css/cui.css'
 import './assets/css/add-css.css'
-import Validator from 'vue-validator'
 import $api from '@/util/api'
 import { ToastPlugin,LoadingPlugin } from 'vux'
 
 Vue.use(ToastPlugin)
 Vue.use(LoadingPlugin)
-Vue.use(Validator)
 
-Vue.use(VueRouter)
 
 Vue.prototype.GLOBAL = Global
-const router = new VueRouter({
-  routes
-})
-
 
 
 

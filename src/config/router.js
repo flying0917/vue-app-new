@@ -30,7 +30,10 @@ const routes=[
   },
   {
     path: '/SelectSole',
-    component: SelectSole
+    component: SelectSole,
+    meta:{
+      requireAuth: true//登陆验证
+    }
   },
   {
     path: '/main',
