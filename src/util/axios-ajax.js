@@ -6,8 +6,13 @@ import * as types from '@/store/types'
 // http request 拦截器
 axios.interceptors.request.use(
     config => {
-      console.log(store.state)
-      if (store.state.token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
+      config.headers.Authorization=""
+      if(store.state["temp_token"]&&store.state["temp_token"]!=="null"&&store.state["temp_token"]!=="undefined")
+      {
+        config.headers.Authorization = store.state["temp_token"];
+        console.log(config.headers.Authorization)
+      }
+      if (store.state.token&&store.state.token!=="null"&&store.state.token!=="undefined") {  // 判断是否存在token，如果存在的话，则每个http header都加上token
         config.headers.Authorization = store.state.token;
       }
       return config;
@@ -15,7 +20,6 @@ axios.interceptors.request.use(
     err => {
       return Promise.reject(err);
     });
-
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
@@ -68,9 +72,9 @@ export default {
         {
           //清空头
           //delete options.headers;
-          options.headers['Access-Control-Allow-Origin']='*';
-          options.headers['Content-Type']='mapplication/json';
-          //options.headers={'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'};
+          //options.headers['Access-Control-Allow-Origin']='*';
+          //options.headers['Content-Type']='mapplication/json';
+          options.headers={'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'};
 
           var propressCb=param.proCb;
           //上传进度回调

@@ -23,6 +23,7 @@
         </a>
       </form>
       <div class="login-btn" @click="login()">登录</div>
+      <!--<div class="login-btn" @click="loginout()">退出登录</div>-->
       <provision></provision>
     </div>
 
@@ -31,6 +32,7 @@
 <script>
   import userModel from "@/model/user"
   import Provision from '@/components/Provision'
+  import store from '@/store/store'
   import * as types from '@/store/types'
     export default {
         name: "Login",
@@ -52,6 +54,10 @@
         },
         methods:
         {
+          loginout:function()
+          {
+            store.commit(types.LOGOUT);
+          },
           //返回
           goback:function()
           {
@@ -101,6 +107,7 @@
                   userModel.getToken(function(ret)
                   {
                     //开始倒计时
+                    store.commit(types.TMP_TOKEN, ret.data["access_token"]);
                     that.countDown()
                     userModel.getCode(that.mobile,localStorage["temp_token"],function(ret)
                     {
@@ -119,6 +126,7 @@
                 {
                   //开始倒计时
                   that.countDown()
+                  store.commit(types.TMP_TOKEN,localStorage["temp_token"]);
                   userModel.getCode(that.mobile,localStorage["temp_token"],function(ret)
                   {
 
@@ -146,6 +154,7 @@
           //登陆
            login:function()
            {
+             console.log(store.state)
              if(!this.mobile)
              {
                this.$vux.toast.show({
@@ -189,20 +198,26 @@
                that.$vux.loading.show({
                  text: '登录中，请稍等'
                })
-               userModel.getToken(function()
+               userModel.getToken(function(ret)
                {
+                 store.commit(types.TMP_TOKEN, ret.data["access_token"]);
                  userModel.login(that.mobile,that.code,function(ret,err)
                  {
                    that.$vux.loading.hide()
-                   if (ret.data["access_token"]) {
-                     that.$store.commit(types.LOGIN, ret.data["access_token"],ret.data["im_token"]);
+                   if (ret.data&&ret.data["access_token"]) {
+                     store.commit(types.TOKEN, ret.data["access_token"]);
+                     if(ret.data&&ret.data["im_token"])//获取im_token
+                     {
+                       store.commit(types.IM_TOKEN, ret.data["im_token"]);
+                     }
+
                      let redirect = decodeURIComponent(that.$route.query.redirect || '/main');
                      that.$router.push({
                        path: redirect
                      })
                    }
 
-                 },that.$router)
+                 })
                })
              }
              else
@@ -214,11 +229,19 @@
                userModel.login(that.mobile,that.code,function(ret,err)
                {
                  that.$vux.loading.hide()
-                 setTimeout(function(){
-                    that.$router.push("/SelectSole")
-                 },500)
-               },that.$router)
+                 store.commit(types.TMP_TOKEN,localStorage["temp_token"]);
+                 if (ret.data&&ret.data["access_token"]) {
+                   store.commit(types.TOKEN, ret.data["access_token"]);
+                   store.commit(types.IM_TOKEN, ret.data["im_token"]);
+                   console.log(store.state)
+                   let redirect = decodeURIComponent(that.$route.query.redirect || '/main');
+                   that.$router.push({
+                     path: redirect
+                   })
+                 }
+               })
              }
+
 
 
            }

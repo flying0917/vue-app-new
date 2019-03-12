@@ -3,13 +3,13 @@
  * **/
 import GLOBAl from '@/config/global'
 //const _HOST_="http://api.jm.com/"
-//const _HOST_="http://192.168.2.236/"
-const _HOST_="http://www.paishowtong.com/"
+const _HOST_="http://192.168.2.236/"
+//const _HOST_="http://www.paishowtong.com/"
 const url={
 
   //登录
- // "login":_HOST_+"Account/User/loginByMobile",
-  "login":_HOST_+"?r=item/housinginfo/SearchTwoHouse&page=1&page_length=10&sort_type=&sort_order=",
+   "login":_HOST_+"Account/User/loginByMobile",
+  //"login":_HOST_+"?r=item/housinginfo/SearchTwoHouse&page=1&page_length=10&sort_type=&sort_order=",
   //获取token
   "getToken":_HOST_+"Account/User/loginByTemporary",
   //注册

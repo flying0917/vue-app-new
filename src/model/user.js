@@ -38,7 +38,6 @@ const userModel={
     var callback=cb;
     $http.post(url.getToken,{},function(ret,err)
      {
-        localStorage["temp_token"]=ret.data.data["access_token"];
         callback(ret,err)
      })
   }

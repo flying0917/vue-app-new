@@ -2,3 +2,17 @@
 {
   color:white !important;
 }
+.cui-header .cui-iconfont
+{
+  color:#444444;
+}
+.cui-header .cui-header-title
+{
+  color:#464646;
+}
+
+/*选择时间*/
+.vux-datetime-confirm
+{
+  color:#61d8ff !important;
+}
