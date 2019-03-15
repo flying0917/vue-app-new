@@ -13,6 +13,7 @@ import UserInfo from '@/page/UserInfo-primary'
 import UserInfo2 from '@/page/UserInfo-jobintension'
 import UserInfo3 from '@/page/UserInfo-work'
 import ErrorLoad from '@/page/Error-load'
+import JobChoice from '@/page/Job-choice'
 
 const routes=[
   //默认入口
@@ -63,6 +64,11 @@ const routes=[
   {
     path: '/weixin',
     component: Weixin
+  },
+  //求职意向-选择职业
+  {
+    path: '/Job-choice',
+    component: JobChoice
   },
   //选择角色
   {
