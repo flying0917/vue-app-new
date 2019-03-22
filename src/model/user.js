@@ -4,20 +4,29 @@
 import $http from "@/util/axios-ajax"
 import url from "@/config/url"
 const userModel={
+  //token test
+  "tokentest":function(cb)
+  {
+    var callback=cb
+    $http.post(url.token_test,{},function(ret,err)
+    {
+      callback(ret,err)
+    })
+  },
   //登录
   "login":function(username,yzm,cb)
   {
     var callback=cb
-    $http.post(url.login,{"mobile":username,"mobile_code":yzm},function(ret,err)
+    $http.post(url.login,{"email":username,"code":yzm,"type":1},function(ret,err)
     {
       callback(ret,err)
     })
   },
   //获取验证码
-  'getCode':function(mobile,token,cb)
+  'getCode':function(email,cb)
   {
     var callback=cb,
-        urls=url.getCode+"?mobile="+mobile+"&jwt="+token
+        urls=url.getCode+"?email="+email
     $http.get(urls,function(ret,err)
     {
       callback(ret,err)
@@ -27,7 +36,7 @@ const userModel={
   "register":function(param,cb)
   {
     var callback=cb
-    $http.post(url.login,param,function(ret,err)
+    $http.post(url.register,param,function(ret,err)
     {
       callback(ret,err)
     })

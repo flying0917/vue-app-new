@@ -15,7 +15,7 @@ const footerTabData=[
     isImg:false
   },
   {
-    name:"个人中心",
+    name:"我的",
     url:"/main/UserCenter",
     icon:"cui-icon-people",
     isImg:false

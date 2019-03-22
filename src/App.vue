@@ -1,25 +1,71 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <transition :name="transitionName">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-import FooterTab from '@/components/Footer'
 export default {
   name: 'app',
+  data()
+  {
+    return {
+      transitionName:""
+    }
+  },
   components:{
-    FooterTab
+
+  },
+  watch:{
+    '$route' (to, from) {
+
+      const toIndex = to.fullPath.split("/")
+      const fromIndex = from.fullPath.split("/")
+
+      this.transitionName = toIndex < fromIndex ? 'slide-right' : 'slide-left'
+    }
   }
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import '~vux/src/styles/reset.less';
 body {
   background-color: #fbf9fe;
 }
-  #app{
-      height:100%;
-   }
+#app{
+    height:100%;
+ }
+
+
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  position: absolute;
+}
+
+.slide-right-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+
+.slide-left-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+
+.slide-left-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
 </style>

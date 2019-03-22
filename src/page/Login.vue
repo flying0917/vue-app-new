@@ -3,7 +3,7 @@
     <!--带箭头-->
     <div class="cui-header cui-fixed-top back-btn">
       <span class="cui-iconfont cui-icon-return" @click="goback()"></span>
-
+      <span class="register-btn" @click="$router.push('/register')">注册</span>
     </div>
     <div class="login-content">
       <img class="logo" src="@/assets/image/JIANMIAN.png">
@@ -12,7 +12,7 @@
           <label>
             <img src="@/assets/image/login/login_icon_phone.png">
           </label>
-          <input v-model="mobile" placeholder="请输入手机号码">
+          <input v-model="email" placeholder="请输入邮箱">
         </a>
         <a  href="javascript:void(0);" class="cui-input cui-input-btn">
           <label>
@@ -39,13 +39,13 @@
         data()
         {
           return {
-            mobile:"",
+            email:"",
             code:"",
             code_tip:"获取验证码",
             time:60,
             remaining:60,
             inTime:true,//是否到点
-            token:""
+            token:"",
           }
         },
         components:{
@@ -71,7 +71,7 @@
             var coutDownTimeStamp=setInterval(function()
             {
               that.code_tip="剩余"+that.remaining+"秒"
-              if(that.remaining==0)
+              if(that.remaining===0)
               {
                 clearInterval(coutDownTimeStamp)
                 that.code_tip="获取验证码"
@@ -84,167 +84,111 @@
           //获取验证码
           getCode:function()
           {
-            var that=this
-            //获取临时token
-            if(this.mobile)
+            if(this.inTime)
             {
-              if(!(/^1[34578]\d{9}$/.test(this.mobile)))
+
+              if(!this.email)
               {
                 this.$vux.toast.show({
-                  text: '手机号码格式错误',
+                  text: '请输入邮箱',
                   type:'text',
                   position:"bottom"
                 });
+                return;
               }
-              else
+              if(!(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.email)))
               {
-                if(!that.inTime)
-                {
-                  return false
-                }
-                if(!localStorage["temp_token"]||localStorage["temp_token"]==="undefined")
-                {
-                  userModel.getToken(function(ret)
-                  {
-                    //开始倒计时
-                    store.commit(types.TMP_TOKEN, ret.data["access_token"]);
-                    that.countDown()
-                    userModel.getCode(that.mobile,localStorage["temp_token"],function(ret)
-                    {
-                      if(ret.data&&ret.data.success)
-                      {
-                        that.$vux.toast.show({
-                          text: '获取验证码成功',
-                          type:'text',
-                          position:"bottom"
-                        });
-                      }
-                    })
-                  })
-                }
-                else
-                {
-                  //开始倒计时
-                  that.countDown()
-                  store.commit(types.TMP_TOKEN,localStorage["temp_token"]);
-                  userModel.getCode(that.mobile,localStorage["temp_token"],function(ret)
-                  {
-
-                    if(ret.data&&ret.data.success)
-                    {
-                      that.$vux.toast.show({
-                        text: '获取验证码成功',
-                        type:'text',
-                        position:"bottom"
-                      });
-                    }
-                  })
-                }
+                this.$vux.toast.show({
+                  text: '邮箱格式错误',
+                  type:'text',
+                  position:"bottom"
+                });
+                return;
               }
-            }
-            else
-            {
-              this.$vux.toast.show({
-                text: '手机号码不能为空',
-                type:'text',
-                position:"bottom"
+              var that=this;
+              userModel.getCode(this.email,function(ret)
+              {
+                if(ret&&ret.isSuccess)
+                {
+                  //倒数开始
+                  that.countDown();
+                }
+                if(ret&&ret.message)
+                  that.$vux.toast.show({
+                    text: ret.message,
+                    type:'text',
+                    position:"bottom"
+                  });
+
               });
             }
           },
           //登陆
-           login:function()
-           {
+           login:function() {
              console.log(store.state)
-             if(!this.mobile)
-             {
+             if (!this.email) {
                this.$vux.toast.show({
-                 text: '请输入手机号码',
-                 type:'text',
-                 position:"bottom"
+                 text: '请输入邮箱',
+                 type: 'text',
+                 position: "bottom"
                });
                return false;
              }
-             if(this.mobile&&!(/^1[34578]\d{9}$/.test(this.mobile)))
-             {
+             if (this.email && !(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.email))) {
                this.$vux.toast.show({
-                 text: '请输入正确的手机号码',
-                 type:'text',
-                 position:"bottom"
+                 text: '请输入正确的邮箱',
+                 type: 'text',
+                 position: "bottom"
                });
                return false;
              }
-             if(!this.code)
-             {
+             if (!this.code) {
                this.$vux.toast.show({
                  text: '请输入验证码',
-                 type:'text',
-                 position:"bottom"
+                 type: 'text',
+                 position: "bottom"
                });
                return false;
              }
-             if(!/\d{6}/.test(this.code))
-             {
+             if (!/\d{6}/.test(this.code)) {
                this.$vux.toast.show({
                  text: '请输入6位数的验证码',
-                 type:'text',
-                 position:"bottom"
+                 type: 'text',
+                 position: "bottom"
                });
                return false;
              }
-              var that=this
-             //获取临时token
-             if(!localStorage["temp_token"]||localStorage["temp_token"]==="undefined")
-             {
-               that.$vux.loading.show({
-                 text: '登录中，请稍等'
-               })
-               userModel.getToken(function(ret)
-               {
-                 store.commit(types.TMP_TOKEN, ret.data["access_token"]);
-                 userModel.login(that.mobile,that.code,function(ret,err)
-                 {
-                   that.$vux.loading.hide()
-                   if (ret.data&&ret.data["access_token"]) {
-                     store.commit(types.TOKEN, ret.data["access_token"]);
-                     if(ret.data&&ret.data["im_token"])//获取im_token
-                     {
-                       store.commit(types.IM_TOKEN, ret.data["im_token"]);
-                     }
+             var that = this
 
-                     let redirect = decodeURIComponent(that.$route.query.redirect || '/main');
-                     that.$router.push({
-                       path: redirect
-                     })
-                   }
 
+             that.$vux.loading.show({
+               text: '登录中'
+             })
+             //登录
+             userModel.login(that.email, that.code, function (ret, err) {
+               that.$vux.loading.hide()
+               if (ret.data && ret.data["token"]) {
+                 //保存token
+                 store.commit(types.TOKEN, ret.data["token"]);
+
+                 let redirect = decodeURIComponent(that.$route.query.redirect || '/main');
+
+                 that.$router.push({
+                   path: redirect
                  })
-               })
-             }
-             else
-             {
-               that.$vux.loading.show({
-                 text: '登录中'
-               })
-               //登录
-               userModel.login(that.mobile,that.code,function(ret,err)
+               }
+               if(ret&&ret.message)
                {
-                 that.$vux.loading.hide()
-                 store.commit(types.TMP_TOKEN,localStorage["temp_token"]);
-                 if (ret.data&&ret.data["access_token"]) {
-                   store.commit(types.TOKEN, ret.data["access_token"]);
-                   store.commit(types.IM_TOKEN, ret.data["im_token"]);
-                   console.log(store.state)
-                   let redirect = decodeURIComponent(that.$route.query.redirect || '/main');
-                   that.$router.push({
-                     path: redirect
-                   })
-                 }
-               })
-             }
-
-
-
+                 that.$vux.toast.show({
+                   text: ret.message,
+                   type:'text',
+                   position:"bottom"
+                 });
+               }
+             })
            }
+
+
         },
         created()
         {
@@ -254,6 +198,12 @@
 </script>
 
 <style scoped>
+  .register-btn
+  {
+    color:#61D8FF;
+    float:right;
+    font-size:.7rem;
+  }
   .back-btn
   {
     color:#444444 !important;

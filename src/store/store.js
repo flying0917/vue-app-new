@@ -14,21 +14,23 @@ export default new Vuex.Store({
         token: null,
         title: '',
         im_token:null,
-        temp_token:null
+        temp_token:null,
+
     },
     mutations: {
         //登录更新状态
         [types.TOKEN]: (state, data) => {
-            localStorage["asscess_token"]= data;
+            localStorage["token"]= data;
             state.token = data;
         },
         //退出登录更新状态
         [types.LOGOUT]: (state) => {
-            localStorage.removeItem('asscess_token');
+            localStorage.removeItem('token');
             state.token = null
             localStorage.removeItem('im_token');
             state.im_token = null
         },
+        //更新token
         [types.TITLE]: (state, data) => {
             state.title = data;
         },
@@ -42,7 +44,6 @@ export default new Vuex.Store({
           localStorage["im_token"]= data;
           state.im_token = data
         },
-
 
     }
 })

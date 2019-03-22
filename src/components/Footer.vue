@@ -1,9 +1,11 @@
 <template>
-  <div class="cui-tabbar cui-fixed-bottom">
-    <div class="cui-tabbar-tabitem" v-for="x in footerTabData" @click="switchTab(x.url,$event)">
-      <img v-if="x.isImg" :src="x.icon">
-      <span v-else :class="'cui-iconfont '+x.icon"></span>
-      <label>{{ x.name }}</label>
+  <div class="cui-tabbar">
+    <div :class="activeName===x.name?'cui-tabbar-tabitem cui-tabbar-tabitem-active':'cui-tabbar-tabitem'" v-for="x in footerTabData" @click="switchTab(x.name)">
+      <router-link :to="x.url">
+        <img v-if="x.isImg" :src="x.icon">
+        <span v-else :class="'cui-iconfont '+x.icon"></span>
+        <label>{{ x.name }}</label>
+      </router-link>
     </div>
   </div>
 </template>
@@ -15,13 +17,15 @@
         data()
         {
           return {
-            footerTabData:footer
+            footerTabData:footer,
+            activeName:"首页"
           }
         },
         methods:{
-          switchTab(url,e)
+          switchTab(name)
           {
-            this.$goRoute(url);
+            this.activeName=name
+            //this.$goRoute(url);
            /* e.currentTarget.className="cui-active"*/
           }
         }
@@ -29,6 +33,14 @@
 </script>
 
 <style scoped>
+  .cui-tabbar-tabitem-active a
+  {
+    color:#61d7ff !important;
+  }
+  a
+  {
+    color:black;
+  }
   .cui-fixed-top
   {
     position:fixed;

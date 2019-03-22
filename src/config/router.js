@@ -14,6 +14,7 @@ import UserInfo2 from '@/page/UserInfo-jobintension'
 import UserInfo3 from '@/page/UserInfo-work'
 import ErrorLoad from '@/page/Error-load'
 import JobChoice from '@/page/Job-choice'
+import WorkList from '@/page/Work-list'
 
 const routes=[
   //默认入口
@@ -78,12 +79,22 @@ const routes=[
       requireAuth: true//登陆验证
     }
   },
+  //工作列表
+  {
+      path:"/page/work/list",
+      component:WorkList,
+      meta:{
+          keepAlive:false,
+          index:1
+      }
+  },
   //主导航
   {
     path: '/main',
     component: Main,
     meta:{
       keepAlive:true,
+      requireAuth: true
     },
     children:[
       {

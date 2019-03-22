@@ -14,3 +14,5 @@ export const TMP_TOKEN = 'temp_token'
 export const TOKEN = 'token'
 
 export const IM_TOKEN = 'im_token'
+
+export const JUMP_URL = 'jump_url'

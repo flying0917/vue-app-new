@@ -1,17 +1,22 @@
 <template>
-  <div class="cui-content">
-    <transition :name="transitionName">
-      <keep-alive v-if="$route.meta.keepAlive">
-        <router-view></router-view>
-      </keep-alive>
-      <router-view v-if="!$route.meta.keepAlive"></router-view>
-    </transition>
-    <footer-tab></footer-tab>
+  <div class="cui-content cui-flex-wrap cui-flex-vertical">
+    <div class="cui-flex-con">
+      <transition :name="transitionName">
+        <keep-alive v-if="$route.meta.keepAlive">
+          <router-view></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
+      </transition>
+    </div>
+    <footer>
+      <footer-tab></footer-tab>
+    </footer>
   </div>
 </template>
 
 <script>
   import FooterTab from '@/components/Footer'
+  import userModel from '@/model/user'
     export default {
         name: "main",
         data(){
@@ -30,12 +35,28 @@
 
             this.transitionName = toIndex < fromIndex ? 'slide-right' : 'slide-left'
           }
+        },
+        mounted() {
+
+          userModel.tokentest(function(ret,err)
+          {
+
+          });
         }
 
     }
 </script>
 
 <style scoped>
+  .cui-content
+  {
+    overflow:hidden;
+  }
+  footer
+  {
+    width:100%;
+    height:2.5rem;
+  }
   .slide-right-enter-active,
   .slide-right-leave-active,
   .slide-left-enter-active,

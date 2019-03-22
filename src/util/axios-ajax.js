@@ -3,15 +3,11 @@ import Qs from 'qs'
 import router from '@/router/index'
 import store from '@/store/store'
 import * as types from '@/store/types'
+axios.defaults.withCredentials=true
 // http request 拦截器
 axios.interceptors.request.use(
     config => {
       config.headers.Authorization=""
-      if(store.state["temp_token"]&&store.state["temp_token"]!=="null"&&store.state["temp_token"]!=="undefined")
-      {
-        config.headers.Authorization = store.state["temp_token"];
-        console.log(config.headers.Authorization)
-      }
       if (store.state.token&&store.state.token!=="null"&&store.state.token!=="undefined") {  // 判断是否存在token，如果存在的话，则每个http header都加上token
         config.headers.Authorization = store.state.token;
       }
@@ -32,7 +28,7 @@ axios.interceptors.response.use(
             // 返回 401 清除token信息并跳转到登录页面
             store.commit(types.LOGOUT);
             router.replace({
-              path: 'login',
+              path: '/login',
               query: {redirect: router.currentRoute.fullPath}
             })
         }
@@ -98,6 +94,7 @@ export default {
     }
     axios(options).then(function(res)
     {
+
       callback(res.data);
     })
       .catch(function(error)
