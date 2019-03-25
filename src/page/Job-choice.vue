@@ -10,7 +10,7 @@
             <!-- 小范围职业 -->
             <div class="choice choice-major">
                 <ul>
-                    <li><button class="choice-button"  v-for="item in AciveMajor(partNum)"  :key="item.id">{{item}}</button></li>
+                    <li><button class="choice-button"  v-for="item in AciveMajor"  :key="item.id">{{item}}</button></li>
                 </ul>
             </div>
             <!-- 具体职业 -->
@@ -52,7 +52,7 @@ export default {
         }
     },
     computed:{
-        AciveMajor:function(partNum){
+        AciveMajor(){
             return this.choiceMajor.filter(
                 function(item){
                     return (item.parCode==partNum);
