@@ -10,7 +10,7 @@
             <!-- 小范围职业 -->
             <div class="choice choice-major">
                 <ul>
-                    <li><button class="choice-button" v-for="item in choiceMajor" :key="item.id">{{item}}</button></li>
+                    <li><button class="choice-button"  v-for="item in AciveMajor(partNum)"  :key="item.id">{{item}}</button></li>
                 </ul>
             </div>
             <!-- 具体职业 -->
@@ -28,32 +28,36 @@ export default {
     data(){
         return {
             choicePart:[
-                {code:1,name:'产品系列'},
-                {code:2,name:'金融系列'}
+                {code:101,name:'产品系列'},
+                {code:201,name:'金融系列'}
             ],
             choiceMajor:[
-                {parCode:1,name:'产品经理',childcode:1001},
-                {parCode:2,name:'部门经理',childcode:2001},
+                {parCode:101,name:'产品经理',childcode:1001},
+                {parCode:201,name:'部门经理',childcode:2001},
             ],
             choiceConcrete:[
                 {parCode:1001,name:'部门副经理'},
                 {parCode:2001,name:'部门经理'},
             ],
-            
             partNum:0,
             majorNum:0,
-            concrete:0
+            concrete:0,
+            isTrue:false
         }
     },
     methods:
     {
-        // Part(num){
-        //     partNum=this.num;
-        // }
+        Part(num){
+            partNum=this.num;
+        }
     },
-    created()
-    {
-
+    computed:{
+        AciveMajor:function(partNum){
+            return this.choiceMajor.filter(
+                function(item){
+                    return (item.parCode==partNum);
+                });
+        }
     }
 }
 </script>
