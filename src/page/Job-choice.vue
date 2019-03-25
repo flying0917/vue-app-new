@@ -4,21 +4,25 @@
             <!-- 大范围职业 -->
             <div class="choice choice-part">
                 <ul>
-                    <li><button class="choice-button" @click="Part(item.code)" v-for="item in choicePart" :key="item.id">{{item.name}}</button></li>
+                    <li><button class="choice-button" @click="Part(item.code)" :class="{'button-active':partNum == item.code}" v-for="item in choicePart" :key="item.id">{{item.name}}</button></li>
                 </ul>
             </div>
             <!-- 小范围职业 -->
-            <div class="choice choice-major">
-                <ul>
-                    <li><button class="choice-button"  @click="Major(item.childcode)" v-for="item in AciveMajor"  :key="item.id">{{item.name}}</button></li>
-                </ul>
-            </div>
+            <!-- <transition name="slide-fade"> -->
+                <div class="choice choice-major">
+                    <ul >
+                        <li><button class="choice-button"  @click="Major(item.childCode)" :class="{'button-active':majorNum == item.childCode}" v-for="item in AciveMajor"  :key="item.id">{{item.name}}</button></li>
+                    </ul>
+                </div>
+            <!-- </transition> -->
             <!-- 具体职业 -->
-            <div class="choice choice-concrete">
-                <ul>
-                    <li><button class="choice-button" v-for="item in AciveConcrete" :key="item.id">{{item.name}}</button></li>
-                </ul>
-            </div>    
+            <!-- <transition name="slide-fade"> -->
+                <div class="choice choice-concrete">  
+                    <ul>
+                        <li><button class="choice-button"  @click="Concrete(item.parCode)" :class="{'button-active':concrete == item.parCode}" v-for="item in AciveConcrete" :key="item.id">{{item.name}}</button></li>
+                    </ul>
+                </div>  
+            <!-- </transition> -->
         </div>
     </div>
 </template>
@@ -34,11 +38,11 @@ export default {
                 {code:401,name:'2金融系列'},
             ],
             choiceMajor:[
-                {parCode:101,name:'产品经理',childcode:1001},
-                {parCode:101,name:'产品经理2',childcode:1001},
-                {parCode:201,name:'部门经理',childcode:2001},
-                {parCode:301,name:'部门经s理',childcode:3001},
-                {parCode:401,name:'部门经d理',childcode:4001},
+                {parCode:101,name:'产品经理',childCode:1001},
+                {parCode:101,name:'产品经理2',childCode:1002},
+                {parCode:201,name:'部门经理',childCode:2001},
+                {parCode:301,name:'部门经s理',childCode:3001},
+                {parCode:401,name:'部门经d理',childCode:4001},
             ],
             choiceConcrete:[
                 {parCode:1001,name:'部门副经理'},
@@ -48,7 +52,6 @@ export default {
             partNum:0,
             majorNum:0,
             concrete:0,
-            isTrue:false
         }
     },
     methods:
@@ -58,6 +61,9 @@ export default {
         },
         Major(num){
             this.majorNum=num;
+        },
+        Concrete(num){
+            this.concrete=num;
         }
     },
     computed:{
@@ -93,6 +99,7 @@ export default {
         width:100%;
         height: 100%;
         display:flex;
+        background-color: #ffffff!important;
     }
     .choice-part
     {
@@ -113,9 +120,11 @@ export default {
         width: 100%;
         border: none;
         cursor: pointer;
-        
     }
     .button-active{
         color:#74c7ff;
     }
+
+    /* 动画设置 */
+    
 </style>
