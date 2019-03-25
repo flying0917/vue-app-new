@@ -4,19 +4,19 @@
             <!-- 大范围职业 -->
             <div class="choice choice-part">
                 <ul>
-                    <li><button class="choice-button" @click="Part(item.code)" v-for="item in choicePart" :key="item.id">{{item}}</button></li>
+                    <li><button class="choice-button" @click="Part(item.code)" v-for="item in choicePart" :key="item.id">{{item.name}}</button></li>
                 </ul>
             </div>
             <!-- 小范围职业 -->
             <div class="choice choice-major">
                 <ul>
-                    <li><button class="choice-button"  v-for="item in AciveMajor"  :key="item.id">{{item}}</button></li>
+                    <li><button class="choice-button"  @click="Major(item.childcode)" v-for="item in AciveMajor"  :key="item.id">{{item.name}}</button></li>
                 </ul>
             </div>
             <!-- 具体职业 -->
             <div class="choice choice-concrete">
                 <ul>
-                    <li><button class="choice-button" v-for="item in choiceConcrete" :key="item.id">{{item}}</button></li>
+                    <li><button class="choice-button" v-for="item in AciveConcrete" :key="item.id">{{item.name}}</button></li>
                 </ul>
             </div>    
         </div>
@@ -29,15 +29,21 @@ export default {
         return {
             choicePart:[
                 {code:101,name:'产品系列'},
-                {code:201,name:'金融系列'}
+                {code:201,name:'金融系列'},
+                {code:301,name:'1金融系列'},
+                {code:401,name:'2金融系列'},
             ],
             choiceMajor:[
                 {parCode:101,name:'产品经理',childcode:1001},
+                {parCode:101,name:'产品经理2',childcode:1001},
                 {parCode:201,name:'部门经理',childcode:2001},
+                {parCode:301,name:'部门经s理',childcode:3001},
+                {parCode:401,name:'部门经d理',childcode:4001},
             ],
             choiceConcrete:[
                 {parCode:1001,name:'部门副经理'},
                 {parCode:2001,name:'部门经理'},
+                {parCode:3001,name:'部门经理'},
             ],
             partNum:0,
             majorNum:0,
@@ -48,14 +54,25 @@ export default {
     methods:
     {
         Part(num){
-            partNum=this.num;
+            this.partNum=num;
+        },
+        Major(num){
+            this.majorNum=num;
         }
     },
     computed:{
         AciveMajor(){
+            let that=this;
             return this.choiceMajor.filter(
                 function(item){
-                    return (item.parCode==partNum);
+                    return (item.parCode===that.partNum);
+                });
+        },
+        AciveConcrete(){
+            let that=this;
+            return this.choiceConcrete.filter(
+                function(item){
+                    return (item.parCode===that.majorNum);
                 });
         }
     }
