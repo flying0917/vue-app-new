@@ -1,28 +1,21 @@
 <template>
     <div class="cui-content">
         <div class="choice-content">
-            <!-- 大范围职业 -->
             <div class="choice choice-part">
                 <ul>
                     <li><button class="choice-button" @click="Part(item.code)" :class="{'button-active':partNum == item.code}" v-for="item in choicePart" :key="item.id">{{item.name}}</button></li>
                 </ul>
             </div>
-            <!-- 小范围职业 -->
-            <!-- <transition name="slide-fade"> -->
-                <div class="choice choice-major">
-                    <ul >
-                        <li><button class="choice-button"  @click="Major(item.childCode)" :class="{'button-active':majorNum == item.childCode}" v-for="item in AciveMajor"  :key="item.id">{{item.name}}</button></li>
-                    </ul>
-                </div>
-            <!-- </transition> -->
-            <!-- 具体职业 -->
-            <!-- <transition name="slide-fade"> -->
-                <div class="choice choice-concrete">  
-                    <ul>
-                        <li><button class="choice-button"  @click="Concrete(item.parCode)" :class="{'button-active':concrete == item.parCode}" v-for="item in AciveConcrete" :key="item.id">{{item.name}}</button></li>
-                    </ul>
-                </div>  
-            <!-- </transition> -->
+            <div class="choice choice-major">
+                <ul >
+                    <li><button class="choice-button"  @click="Major(item.childCode)" :class="{'button-active':majorNum == item.childCode}" v-for="item in AciveMajor"  :key="item.id">{{item.name}}</button></li>
+                </ul>
+            </div>
+            <div class="choice choice-concrete">  
+                <ul>
+                    <li><button class="choice-button"  @click="Concrete(item.parCode)" :class="{'button-active':concrete == item.parCode}" v-for="item in AciveConcrete" :key="item.id">{{item.name}}</button></li>
+                </ul>
+            </div>  
         </div>
     </div>
 </template>
@@ -126,5 +119,5 @@ export default {
     }
 
     /* 动画设置 */
-    
+
 </style>
