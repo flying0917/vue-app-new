@@ -15,6 +15,9 @@ import UserInfo3 from '@/page/UserInfo-work'
 import ErrorLoad from '@/page/Error-load'
 import JobChoice from '@/page/Job-choice'
 import WorkList from '@/page/Work-list'
+import TestList from '@/page/Test-list'
+import CompanyList from '@/page/Company-list'
+import PositionList from '@/page/position-list'
 
 const routes=[
   //默认入口
@@ -98,19 +101,27 @@ const routes=[
     },
     children:[
       {
-        path:"index",
-        component:Index,
+        path:"position-list",
+        component:PositionList,
         meta:{
           keepAlive:false,
           index:1
         }
       },
       {
-        path:"Im",
-        component:Im,
+        path:"test-list",
+        component:TestList,
         meta:{
           keepAlive:false,
           index:2
+        }
+      },
+      {
+        path:"company-list",
+        component:CompanyList,
+        meta:{
+          keepAlive:false,
+          index:3
         }
       },
       {
@@ -118,7 +129,7 @@ const routes=[
         component:UserCenter,
         meta:{
           keepAlive:false,
-          index:3
+          index:4
         }
       },
     ]

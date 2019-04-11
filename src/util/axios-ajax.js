@@ -41,6 +41,17 @@ export default {
 
     var options={},
       callback=cb;
+    //添加是ajax标识
+    if(param.data)
+    {
+      param.data["isajax"]="1";
+    }
+    else
+    {
+      var temParam=param.url.indexOf("?")!==-1?"&isajax=1":"?isajax=1"
+      param.url=param.url+temParam;
+    }
+
     options.method=param.type;
     //跨域
     //options.headers={'Content-Type': 'application/x-www-form-urlencoded'};
@@ -70,7 +81,7 @@ export default {
           //delete options.headers;
           //options.headers['Access-Control-Allow-Origin']='*';
           //options.headers['Content-Type']='mapplication/json';
-          options.headers={'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'};
+          options.headers['Content-Type']='application/x-www-form-urlencoded; charset=UTF-8';
 
           var propressCb=param.proCb;
           //上传进度回调
@@ -92,6 +103,7 @@ export default {
         }]
       }
     }
+
     axios(options).then(function(res)
     {
 

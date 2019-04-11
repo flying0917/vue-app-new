@@ -6,7 +6,7 @@
       <span class="register-btn" @click="$router.push('/register')">注册</span>
     </div>
     <div class="login-content">
-      <img class="logo" src="@/assets/image/JIANMIAN.png">
+      <img class="logo" src="@/assets/image/logo-long-theme.png">
       <form class="cui-form">
         <a href="javascript:void(0);" class="cui-input">
           <label>
@@ -228,8 +228,9 @@
   }
   .logo
   {
-    width:4.5rem;
-    margin-left:.75rem;
+    width:5rem;
+    display:block;
+    margin:0 auto 2rem auto;
   }
   .login-btn
   {

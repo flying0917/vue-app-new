@@ -3,15 +3,22 @@
  * **/
 const footerTabData=[
   {
-    name:"首页",
-    url:"/main/index",
-    icon:"cui-icon-manage",
+    name:"职位",
+    url:"/main/position-list",
+    icon:require("../assets/image/logo-zhang.png"),
+    iconactive:require("../assets/image/logo-zhang-active.png"),
+    isImg:true
+  },
+  {
+    name:"笔试",
+    url:"/main/test-list",
+    icon:"cui-icon-editor",
     isImg:false
   },
   {
-    name:"消息",
-    url:"/main/Im",
-    icon:"cui-icon-message",
+    name:"公司",
+    url:"/main/company-list",
+    icon:"cui-icon-tasklist",
     isImg:false
   },
   {

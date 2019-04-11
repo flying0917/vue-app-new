@@ -2,7 +2,7 @@
   <div class="cui-tabbar">
     <div :class="activeName===x.name?'cui-tabbar-tabitem cui-tabbar-tabitem-active':'cui-tabbar-tabitem'" v-for="x in footerTabData" @click="switchTab(x.name)">
       <router-link :to="x.url">
-        <img v-if="x.isImg" :src="x.icon">
+        <img v-if="x.isImg" :src="activeName===x.name?x.iconactive:x.icon">
         <span v-else :class="'cui-iconfont '+x.icon"></span>
         <label>{{ x.name }}</label>
       </router-link>
@@ -136,5 +136,9 @@
     color:white;
     white-space: nowrap;
     line-height: .8rem;
+  }
+  a
+  {
+    color:#6f6e6e;
   }
 </style>
