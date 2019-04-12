@@ -3,7 +3,7 @@
     <div class="cui-header">
       <span class="cui-header-btn cui-iconfont cui-icon-search"></span>
     </div>
-    <cui-filter :data="filterData"></cui-filter>
+    <cui-filter :data="filterData" @onsuccess="isOk"></cui-filter>
     <div class="cui-flex-con position-list">
     </div>
   </div>
@@ -44,10 +44,10 @@
                           name:"武学",
                           children:[
                             {
-                              name:"金瓶梅"
+                              name:"少林寺"
                             },
                             {
-                              name:"我和僵尸"
+                              name:"武当山"
                             }
                           ]
                         }
@@ -68,13 +68,22 @@
                     type:"radio",
                     options:["男","女"]
                   }
+                  ,
+                  {
+                    name:"薪酬",
+                    type:"radio",
+                    options:["1000-5000","5000-10000","10000-15000"]
+                  }
                 ]
               }]
           }
         },
         methods:
         {
-
+          isOk(ret)
+          {
+            console.log(ret)
+          }
         },
         created()
         {

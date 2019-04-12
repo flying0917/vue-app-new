@@ -2,22 +2,33 @@
     <div class="cui-filter-content">
         <div class="cui-filter cui-flex-wrap">
             <div :class='activeIndex===index?"cui-filter-item cui-flex-con cui-filter-item-active":"cui-filter-item cui-flex-con"' @click="showFilterContent(index,item.type)" v-for="(item,index) in data">
-                {{item.name}}
+                {{value&&value[0]&&typeof value[0] ==="string"&&!item.multiple?value[0]:item.name}}
             </div>
         </div>
-        <div class="cui-filter-item-content" v-if="activeIndex!==-1">
-            <div v-for="(item,index) in data" v-if="activeIndex===index" :class='"cui-flex-wrap cui-filter-wrap cui-filter-item-"+item.type'>
+        <div class="cui-filter-item-content" v-if="activeIndex!==-1" @click.stop="close()">
+            <div @click.stop v-for="(item,index) in data" v-if="activeIndex===index" :class='"cui-flex-wrap cui-filter-wrap cui-filter-item-"+item.type'>
                 <template v-if="item.type==='place'||item.type==='tree'">
                     <div class="cui-fitler-item-p">
-                        <div :class='(item.value&&item.value[0]?item.value[0]:"")===y.name?"cui-filter-item-p-item active":"cui-filter-item-p-item"' @click="showSub(index,y.name,y.city?y.city:y.children)" v-for="y,index in renderData">{{y.name}}</div>
+                        <div :class='(item.value&&item.value[0]?item.value[0]:"")===y.name?"cui-filter-item-p-item active":"cui-filter-item-p-item"' @click.stop="showSub(index,y.name,y.city?y.city:y.children)" v-for="y,index in renderData">{{y.name}}</div>
                     </div>
                     <div class="cui-filter-item-c cui-flex-con">
-                        <div :class='value.indexOf(i.name)!==-1?"cui-filter-item-c-item active":"cui-filter-item-c-item"' @click="select((item.multiple?item.multiple:multiple),i.name)" v-for="i in subData">{{i.name}}</div>
+                        <div :class='value.indexOf(i.name)!==-1?"cui-filter-item-c-item active":"cui-filter-item-c-item"' @click.stop="select((item.multiple?item.multiple:multiple),i.name,-1)" v-for="i in subData">{{i.name}}</div>
+                    </div>
+                </template>
+
+                <template v-if="item.type==='many'">
+                    <div class="cui-filter-item-c cui-flex-con">
+                        <div class="cui-filter-item-option" v-for="subOptionItem,subOptionItemIndex in item.data">
+                            <label>{{subOptionItem.name}}</label>
+                            <div class="cui-filter-item-sub">
+                                <div :id="subOptionItemIndex" :class='value[subOptionItemIndex].indexOf(subOption)!==-1?"cui-option cui-option-active":"cui-option "+subOptionItemIndex' @click.stop="select((subOptionItem.type==='checkbox'?true:false),subOption,subOptionItemIndex)" v-for="subOption in subOptionItem.options">{{subOption}}</div>
+                            </div>
+                        </div>
                     </div>
                 </template>
             </div>
             <div class="cui-filter-btn cui-flex-wrap">
-                <div class="cui-filter-btn-item">重置</div>
+                <div class="cui-filter-btn-item" @click="close()">取消</div>
                 <div class="cui-filter-btn-item" @click="confirm()">确定</div>
             </div>
 
@@ -45,37 +56,12 @@
             }
         },
         props:
-            {
-                data:{
-                    required:true,
-                    default:function()
-                    {
-                        return [
-                            {
-                                name:"地点",
-                                type:"place",
-                                default:"",
-                                multiple:false
-                            },
-                            {
-                                name:"公司",
-                                type:"checkbox",
-                                default:""
-                            },
-                            {
-                                name:"公司",
-                                type:"radio",
-                                default:""
-                            }]
-                    }
-                }
-            },
-        computed:{
-            "datalist":function()
-            {
-
-            }
-        },
+         {
+             data:{
+                 required:true,
+                 default:[]
+             }
+         },
         created()
         {
             this.data.forEach((item,index)=>{
@@ -83,6 +69,13 @@
                 {
                     item.value=["",[]];
                     item.parentIndex=-1;
+                }
+                else if(item.type==="many")
+                {
+                    item.value=[];
+                    item.data.forEach((x,i)=>{
+                        item.value.push([])
+                    })
                 }
                 else
                 {
@@ -92,6 +85,7 @@
             })
         },
         methods:{
+            //展示筛选层试图
             showFilterContent(index,type)
             {
                 this.activeIndex=index;
@@ -101,13 +95,17 @@
                 {
                     this.renderData=place;
                     this.value=this.data[this.activeIndex].value[1]?this.data[this.activeIndex].value[1]:[];
-                    this.subData=this.renderData[this.data[this.activeIndex].parentIndex].city;
+                    this.subData=this.data[this.activeIndex].parentIndex!==-1?this.renderData[this.data[this.activeIndex].parentIndex].city:[];
                 }
                 else if(this.type==='tree')
                 {
                     this.renderData=this.data[this.activeIndex].data;
                     this.value=this.data[this.activeIndex].value[1]?this.data[this.activeIndex].value[1]:[];
-                    this.subData=this.renderData[this.data[this.activeIndex].parentIndex].children;
+                    this.subData=this.data[this.activeIndex].parentIndex!==-1?this.renderData[this.data[this.activeIndex].parentIndex].children:[];
+                }
+                else if(this.type==="many")
+                {
+                    this.value=this.data[this.activeIndex].value?this.data[this.activeIndex].value:[];
                 }
                 else
                 {
@@ -117,6 +115,7 @@
                 }
 
             },
+            //展示子数据
             showSub(index,p,data)
             {
                 this.subData=data;
@@ -124,56 +123,52 @@
                 this.$set(this.data[this.activeIndex].value, 0, p);
                 //this.data.value[0]=p;
             },
-            select(multiple,selectValue)
+            //选择值
+            select(multiple,selectValue,index)
             {
-                let nowItemValue=this.data[this.activeIndex]
-                if(multiple)
+                let nowItemValue=this.data[this.activeIndex],
+                    i=index!==-1?index:1;
+                if(multiple)//多选
                 {
-                    if(nowItemValue.value[1].indexOf(selectValue)===-1)
+                    if(nowItemValue.value[i].indexOf(selectValue)===-1)
                     {
-                        nowItemValue.value[1].push(selectValue);
+                        nowItemValue.value[i].push(selectValue);
                     }
                     else
                     {
-                        nowItemValue.value[1].splice(nowItemValue.value[1].indexOf(selectValue),1);
+                        nowItemValue.value[i].splice(nowItemValue.value[i].indexOf(selectValue),1);
 
                     }
-
+                }
+                else//单选
+                {
+                    if(nowItemValue.value[i].indexOf(selectValue)===-1)
+                    {
+                        nowItemValue.value[i]=[selectValue];
+                    }
+                    else
+                    {
+                        nowItemValue.value[i]=[];
+                    }
+                }
+                if(this.type==="many")//混合类型的数据处理
+                {
+                    this.$set(this.value,index,nowItemValue.value[index]);
                 }
                 else
                 {
-                    if(nowItemValue.value[1].indexOf(selectValue)===-1)
-                    {
-                        nowItemValue.value[1]=[selectValue];
-                    }
-                    else
-                    {
-                        nowItemValue.value[1]=[];
-                    }
+                    this.value=nowItemValue.value[i];
                 }
-                this.value=nowItemValue.value[1];
             },
+            //确认选择事件
             confirm()
             {
-                let nowItem=this.data[this.activeIndex];
-                if (!nowItem.value)
-                {
-                    nowItem.value=[];
-                }
-
-                if(nowItem&&nowItem.value&&nowItem instanceof Array)
-                {
-                    if(this.type==="place"||this.type==="tree")
-                    {
-                        nowItem.value[0]=this.parentValue;
-                        nowItem.value[1]=this.value;
-                    }
-                    else
-                    {
-
-                    }
-                }
-
+                this.activeIndex=-1;
+                this.$emit("onsuccess",this.data);
+            },
+            //关闭
+            close()
+            {
                 this.activeIndex=-1;
             }
 
@@ -233,7 +228,7 @@
         width:100%;
         position:absolute;
         top:2rem;
-
+        z-index: 3;
         background-color: rgba(0, 0, 0, 0.47);
         height:100%;
         -webkit-transform: translateY(2rem);
@@ -277,6 +272,51 @@
         background-size:cover;
         background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABA0lEQVRYR+2UvQ4BQRRGv0tC7R3ExvIWGgkKjYQobKlQKL2BUqWUKb2AikKynmFJFKLTiqhIriiI3zVzm41ktr475+yZmyVE/FDEfFgBW8AWsAX+t0BnzcnDCbVYHJuRQwvpH1VUoLHlVOIInwi5K5gZA+VSVyJhLHCHAxkGSgRUQWhLJYwEXuHKpen1q72Ah1IJbYGH7GlmVG7wW3aphJbAExwoqizNP933XQLoqyz1dHbip4Au/K2EpkSogClcIhEq0Ap4QoQCh2T/lvlhJ+rKpfG3uVABb8lljmGvHPJ17vN1xltxk8+YqTztRAISqOk7P5fQ9EDTeStgC9gCtkDkBS7eAXchNXyaTQAAAABJRU5ErkJggg==")
     }
+    /**/
+    .cui-filter-item-tree
+    {
+        height:60%;
+    }
+    /*多类型*/
+    .cui-filter-item-many
+    {
+        height:50%;
+    }
+    .cui-filter-item-option
+    {
+        font-size:.6rem;
+        padding:0 0 10px 0;
+    }
+    .cui-filter-item-option>label
+    {
+        font-weight: bold;
+        margin-top:.5rem;
+        padding-left:10px;
+    }
+    .cui-filter-item-option>.cui-filter-item-sub
+    {
+        margin-top:.5rem;
+    }
+    .cui-filter-item-sub .cui-option
+    {
+
+        width:calc(33% - 10px);
+        margin:0 0 10px 10px;
+        display:inline-block;
+        height:1.5rem;
+        line-height: 1.5rem;
+        border:1px solid #efefef;
+        text-align: center;
+    }
+    .cui-filter-item-sub .cui-option-active
+    {
+        background-color:#61d7ff;
+        color:white;
+        border:1px solid #61d7ff;
+    }
+
+
+
 
     /*地点*/
     .cui-filter-item-place
@@ -307,7 +347,7 @@
     {
         height:100%;
         overflow-y:auto;
-        padding:.5rem;
+        padding:.5rem 10px 10px 0;
         font-size:0;
         background-color:white;
     }
@@ -319,12 +359,18 @@
     }
     .cui-filter-item-c-item
     {
+        width:calc(33% - 10px);
         display:inline-block;
-        width:30%;
+        vertical-align: top;
+        margin-left:10px;
+        margin-bottom:10px;
         text-align: center;
-        font-size:.5rem;
-        padding:.2rem 0;
-        margin:.2rem;
+        white-space: nowrap;
+        text-overflow:ellipsis;
+        overflow:hidden;
+        font-size:.4rem;
+        height:1.5rem;
+        line-height: 1.5rem;
         border:1px solid #efefef;
     }
 
