@@ -2,34 +2,61 @@
     <div class="cui-filter-content">
         <div class="cui-filter cui-flex-wrap">
             <div :class='activeIndex===index?"cui-filter-item cui-flex-con cui-filter-item-active":"cui-filter-item cui-flex-con"' @click="showFilterContent(index,item.type)" v-for="(item,index) in data">
-                {{value&&value[0]&&typeof value[0] ==="string"&&!item.multiple?value[0]:item.name}}
+                {{item.value&&item.value[1]&&item.value[1][0]&&typeof item.value[1][0] ==="string"&&!item.multiple?item.value[1][0]:item.name}}
             </div>
         </div>
         <div class="cui-filter-item-content" v-if="activeIndex!==-1" @click.stop="close()">
             <div @click.stop v-for="(item,index) in data" v-if="activeIndex===index" :class='"cui-flex-wrap cui-filter-wrap cui-filter-item-"+item.type'>
+                <!---地点-->
                 <template v-if="item.type==='place'||item.type==='tree'">
                     <div class="cui-fitler-item-p">
                         <div :class='(item.value&&item.value[0]?item.value[0]:"")===y.name?"cui-filter-item-p-item active":"cui-filter-item-p-item"' @click.stop="showSub(index,y.name,y.city?y.city:y.children)" v-for="y,index in renderData">{{y.name}}</div>
                     </div>
                     <div class="cui-filter-item-c cui-flex-con">
-                        <div :class='value.indexOf(i.name)!==-1?"cui-filter-item-c-item active":"cui-filter-item-c-item"' @click.stop="select((item.multiple?item.multiple:multiple),i.name,-1)" v-for="i in subData">{{i.name}}</div>
+                        <div :class='value.indexOf(i.name)!==-1?"cui-filter-item-c-item active":"cui-filter-item-c-item"' @click.stop="select((item.multiple),i.name,-1)" v-for="i in subData">{{i.name}}</div>
                     </div>
                 </template>
+                <!---地点end-->
+
+                <!--多类型-->
 
                 <template v-if="item.type==='many'">
                     <div class="cui-filter-item-c cui-flex-con">
                         <div class="cui-filter-item-option" v-for="subOptionItem,subOptionItemIndex in item.data">
                             <label>{{subOptionItem.name}}</label>
                             <div class="cui-filter-item-sub">
-                                <div :id="subOptionItemIndex" :class='value[subOptionItemIndex].indexOf(subOption)!==-1?"cui-option cui-option-active":"cui-option "+subOptionItemIndex' @click.stop="select((subOptionItem.type==='checkbox'?true:false),subOption,subOptionItemIndex)" v-for="subOption in subOptionItem.options">{{subOption}}</div>
+                                <div  :class='value[subOptionItemIndex].indexOf(subOption)!==-1?"cui-option cui-option-active":"cui-option"' @click.stop="select((subOptionItem.type==='checkbox'?true:false),subOption,subOptionItemIndex)" v-for="subOption in subOptionItem.options">{{subOption}}</div>
                             </div>
                         </div>
                     </div>
                 </template>
+                <!--多类型end-->
+
+                <!--单选-->
+                <template v-if="item.type==='radio'">
+                    <div class="cui-filter-item-c cui-flex-con">
+                        <div :class='value&&value[0]&&value[0].indexOf(radioItem)!==-1?"cui-filter-item-option cui-filter-item-option-active":"cui-filter-item-option"' v-for="radioItem,radioIndex in item.data" @click="select(item.multiple,radioItem,0)">
+                           {{radioItem}}
+                        </div>
+                    </div>
+                </template>
+                <!--单选end-->
+
+                <!--多选-->
+                <template v-if="item.type==='checkbox'">
+                    <div class="cui-filter-item-c cui-flex-con">
+                        <div class="cui-filter-item-option">
+                            <div class="cui-filter-item-sub">
+                                <div v-for="checkboxItem in item.data" :class='value.indexOf(checkboxItem)!==-1?"cui-option cui-option-active":"cui-option "' @click="select(item.multiple,checkboxItem,0)">{{checkboxItem}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <!--多选end-->
             </div>
             <div class="cui-filter-btn cui-flex-wrap">
-                <div class="cui-filter-btn-item" @click="close()">取消</div>
-                <div class="cui-filter-btn-item" @click="confirm()">确定</div>
+                <div class="cui-filter-btn-item" @click.stop="close()">取消</div>
+                <div class="cui-filter-btn-item" @click.stop="confirm()">确定</div>
             </div>
 
         </div>
@@ -52,7 +79,7 @@
                 type:"",
                 parentValue:"",
                 value:[],
-                multiple:false
+                multiple:true
             }
         },
         props:
@@ -79,10 +106,23 @@
                 }
                 else
                 {
-                    item.value=[];
+                    item.value=[[]];
+                }
+                if(item.multiple!==false)
+                {
+                    item.multiple=true;
+                }
+                if(item.type==="radio")
+                {
+                    item.multiple=false;
+                }
+                if(item.type==="checkbox")
+                {
+                    item.multiple=true;
                 }
 
             })
+
         },
         methods:{
             //展示筛选层试图
@@ -126,6 +166,7 @@
             //选择值
             select(multiple,selectValue,index)
             {
+
                 let nowItemValue=this.data[this.activeIndex],
                     i=index!==-1?index:1;
                 if(multiple)//多选
@@ -159,6 +200,7 @@
                 {
                     this.value=nowItemValue.value[i];
                 }
+
             },
             //确认选择事件
             confirm()
@@ -170,6 +212,7 @@
             close()
             {
                 this.activeIndex=-1;
+                this.$emit("oncancel",this.data);
             }
 
         }
@@ -213,11 +256,12 @@
         text-align: center;
         color:#6f6e6e;
         line-height: 2rem;
+        overflow:hidden;
     }
     .cui-filter-item span
     {
         font-size:10px;
-        margin-left:5px;
+        margin-left:2px;
     }
     .cui-filter-wrap
     {
@@ -403,5 +447,22 @@
         flex:1;
         background-color:#61d7ff;
         color:white;
+    }
+    /*单选*/
+    .cui-filter-item-radio .cui-filter-item-c
+    {
+        padding:0 .5rem;
+    }
+    .cui-filter-item-radio .cui-filter-item-option
+    {
+        height:2rem;
+        line-height: 2rem;
+        padding:0 0 0 .5rem;
+        border-bottom:1px solid #efefef;
+    }
+
+    .cui-filter-item-radio .cui-filter-item-option-active
+    {
+        color:#61d7ff;
     }
 </style>

@@ -3,7 +3,7 @@
     <div class="cui-header">
       <span class="cui-header-btn cui-iconfont cui-icon-search"></span>
     </div>
-    <cui-filter :data="filterData" @onsuccess="isOk"></cui-filter>
+    <cui-filter :data="filterData" @onsuccess="isOk" @oncancel="isCancel"></cui-filter>
     <div class="cui-flex-con position-list">
     </div>
   </div>
@@ -22,7 +22,19 @@
               {
                 name:"地点",
                 type:"place",
-                default:""
+                multiple:false
+              },
+              {
+                name:"排序",
+                type:"radio",
+                data:["时间","123"],
+                multiple:false
+              },
+              {
+                name:"等级",
+                type:"checkbox",
+                data:["0","1","2","3"],
+                multiple:false
               },
               {
                 name:"类型",
@@ -54,25 +66,24 @@
                 ]
               },
               {
-                name:"多个",
+                name:"要求",
                 type:"many",
-                default:"",
                 data:[
                   {
-                    name:"价格",
+                    name:"学历",
                     type:"checkbox",
-                    options:["1000~5000","5000~10000","10000~20000"]
+                    options:["全部","初中及以下","中专/中技","高中","大专","本科","硕士","博士"]
                   },
                   {
-                    name:"性别",
-                    type:"radio",
-                    options:["男","女"]
+                    name:"经验",
+                    type:"checkbox",
+                    options:["全部","应届生","1年内","1-3年","2-5年","5-8年","10年以上"]
                   }
                   ,
                   {
-                    name:"薪酬",
+                    name:"薪水",
                     type:"radio",
-                    options:["1000-5000","5000-10000","10000-15000"]
+                    options:["全部","3k以下","3-5k","5k-10k","10k-20k","20k-50k","50k以上"]
                   }
                 ]
               }]
@@ -81,6 +92,10 @@
         methods:
         {
           isOk(ret)
+          {
+            console.log(ret)
+          },
+          isCancel(ret)
           {
             console.log(ret)
           }
