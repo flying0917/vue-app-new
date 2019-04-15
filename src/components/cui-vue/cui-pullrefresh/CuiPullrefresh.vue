@@ -1,5 +1,5 @@
 <template>
-    <div class="cui-vue-refresh-content" ref="content">
+    <div class="cui-vue-refresh-content" @scroll="scroll($event)" ref="content">
         <div class="cui-vue-refresh-wrap" :style="cssStyle" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
             <div class="cui-vue-refresh-header" :style='{height:refreshHeaderHeight+"px","line-height":refreshHeaderHeight+"px",top:"-"+refreshHeaderHeight+"px"}'>
                 <img :src="img">
@@ -7,6 +7,7 @@
             </div>
             <slot></slot>
         </div>
+        <div v-if="hasScrollToBottom||!isScrollBottomFinish" class="cui-vue-refresh-scroll-text"><img :src="bottomImg"><span>{{bottomTip}}</span></div>
     </div>
 </template>
 
@@ -24,8 +25,13 @@
                 isRefreshing:false,//是否在刷新
                 offsetTop:0,//手指滑动的Y长度
                 offsetLeft:0,//手指滑动的X长度
-                tipText:"",
+                tipText:"",//提示
                 img:require("./loading.gif"),
+                scrolltimeout:null,
+                hasScrollToBottom:this.$listeners&&this.$listeners.scrollToBottom?true:false,
+                contentDom:null,//容器（要监听其的滚动Y距离）
+                //底部加载更多锁
+                bottomLock:true,
                 cssStyle:{
                     webkitTransform:"translateY(0)",
                     transform:"translateY(0)",
@@ -38,6 +44,18 @@
             //下拉的距离的触发点
             triggerDistance:{
                 default:200
+            },
+            //滚动到底部显现的加载图标
+            bottomImg:{
+                default:require("./loading-bottom.gif")
+            },
+            //底部的提示
+            bottomTip:{
+               default:"加载更多"
+            },
+            //底部加载更多是否都加载完毕
+            isScrollBottomFinish:{
+                default:false
             },
             //下拉时
             contentdownIcon:{
@@ -70,14 +88,16 @@
             }
 
         },
-        created()
+        mounted()
         {
+            //获取容器
+            this.contentDom=this.$refs.content;
 
         },
         methods:{
             touchStart(e)
             {
-                let target=this.$refs.content;
+                let target=this.contentDom;
                 if(!this.isRefreshing&&target.scrollTop===0)
                 {
                     this.start=true;//开始
@@ -87,8 +107,7 @@
             },
             touchMove(e)
             {
-                let target=this.$refs.content;
-                console.log(target.scrollTop)
+                let target=this.contentDom;
                 if(!this.isRefreshing&&target.scrollTop===0)
                 {
                     //手指滑动的Y长度
@@ -148,6 +167,7 @@
                     }
                 }
             },
+            //关闭
             closeRefresh()
             {
                 let that=this;
@@ -160,6 +180,7 @@
                     that.cssStyle.webkitTransition=that.cssStyle.transition="";
                 },500)
             },
+            //刷新完毕
             refreshDone()
             {
                 var that=this;
@@ -168,6 +189,35 @@
                 setTimeout(function(){
                     that.closeRefresh();
                 },500);
+            },
+            //滚动监听
+            scroll(e)
+            {
+                if(this.hasScrollToBottom&&this.bottomLock)
+                {
+                    let target=e.target,
+                        that=this;
+                    if (this.scrolltimeout) {
+                        clearTimeout(this.scrolltimeout);
+                    }
+                    //节流
+                    this.scrolltimeout=setTimeout(function(){
+                        var scrollTop=target.scrollTop;
+                        var scrollHeight=target.scrollHeight;
+                        var windowHeight=target.offsetHeight;
+                        if(windowHeight+scrollTop>=scrollHeight)
+                        {
+                            that.bottomLock=false;
+                            //回调
+                            that.$emit("scrollToBottom",that.openLock);
+                        }
+                    },100);
+                }
+            },
+            //开锁(防止ajax加载过程中的延时而出现的多次触发滚动到底部监听事件 )
+            openLock()
+            {
+                this.bottomLock=true;
             }
         }
     }
@@ -196,9 +246,31 @@
         vertical-align: middle;
         margin-right:5px;
     }
+    .cui-vue-refresh-header span
+    {
+        font-size:.6rem;
+        display:inline-block;
+        width:3rem;
+        color:gray;
+    }
     .cui-vue-refresh-wrap
     {
         min-height:100%;
+    }
+    .cui-vue-refresh-scroll-text
+    {
+        font-size:.6rem;
+        text-align: center;
+        line-height: 1.5rem;
+        width:100%;
+        background-color:white;
+        color:#5a5858;
+    }
+    .cui-vue-refresh-scroll-text img
+    {
+        height:.7rem;
+        vertical-align: middle;
+        margin-right:.5rem;
     }
     /*下拉刷新插件end*/
 

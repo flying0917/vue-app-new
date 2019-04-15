@@ -6,7 +6,7 @@
     <cui-filter :data="filterData" @onSuccess="isOk" @onCancel="isCancel" @onChange="isChange"></cui-filter>
 
     <div class="cui-flex-con position-list" @click="show()">
-      <cui-pullrefresh @refresh="refresh">
+      <cui-pullrefresh @refresh="refresh" @scrollToBottom="down">
         <ul>
           <li v-for="item in list" >{{item}}</li>
         </ul>
@@ -121,6 +121,13 @@
           onHide()
           {
             console.log(2)
+          },
+          down(openLock)
+          {
+            let list=["底部加载","底部加载","底部加载","底部加载"],
+                    that=this;
+            that.list=that.list.concat(list);
+            openLock();
           },
           isChange(ret)
           {
