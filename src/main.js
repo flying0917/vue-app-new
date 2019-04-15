@@ -7,14 +7,21 @@ import FastClick from 'fastclick'
 import router from '@/router/index'
 import App from './App'
 import Global from '@/config/global'
+
+/*cui全局插件注册*/
+import Loading from '@/components/cui-vue/cui-loading'
 import './assets/css/cui.css'
 import './assets/css/add-css.css'
 import $api from '@/util/api'
+
 import { ToastPlugin,LoadingPlugin,DatetimePlugin } from 'vux'
 
 Vue.use(ToastPlugin)
 Vue.use(DatetimePlugin)
 Vue.use(LoadingPlugin)
+
+
+Vue.use(Loading)
 
 Vue.prototype.GLOBAL = Global
 

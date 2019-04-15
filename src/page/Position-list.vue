@@ -3,21 +3,34 @@
     <div class="cui-header">
       <span class="cui-header-btn cui-iconfont cui-icon-search"></span>
     </div>
-    <cui-filter :data="filterData" @onsuccess="isOk" @oncancel="isCancel"></cui-filter>
-    <div class="cui-flex-con position-list">
+    <cui-filter :data="filterData" @onSuccess="isOk" @onCancel="isCancel" @onChange="isChange"></cui-filter>
+
+    <div class="cui-flex-con position-list" @click="show()">
+      <cui-pullrefresh @refresh="refresh">
+        <ul>
+          <li v-for="item in list" >{{item}}</li>
+        </ul>
+      </cui-pullrefresh>
     </div>
+    <cui-loading :isShow="isShow" @onShow="onShow()" @onHide="onHide()"></cui-loading>
   </div>
 </template>
 <script>
-    import CuiFilter from '@/components/cui/CuiFilter'
+    import CuiFilter from '@/components/cui-vue/cui-filter/CuiFilter';
+    import CuiLoading from "@/components/cui-vue/cui-loading/CuiLoading";
+    import CuiPullrefresh from "@/components/cui-vue/cui-pullrefresh/CuiPullrefresh";
     export default {
         name: "Position-list",
         components:{
-          CuiFilter
+          CuiLoading,
+          CuiFilter,
+          CuiPullrefresh
         },
         data()
         {
           return {
+            list:["0"],
+            isShow:false,
             filterData:[
               {
                 name:"地点",
@@ -28,12 +41,6 @@
                 name:"排序",
                 type:"radio",
                 data:["时间","123"],
-                multiple:false
-              },
-              {
-                name:"等级",
-                type:"checkbox",
-                data:["0","1","2","3"],
                 multiple:false
               },
               {
@@ -98,6 +105,40 @@
           isCancel(ret)
           {
             console.log(ret)
+          },
+          show()
+          {
+            var that=this;
+            that.isShow=true;
+            setTimeout(function(){
+              that.isShow=false;
+            },5000)
+          },
+          onShow()
+          {
+            console.log(1)
+          },
+          onHide()
+          {
+            console.log(2)
+          },
+          isChange(ret)
+          {
+            console.log("值改变了");
+            console.log(ret)
+          },
+          refresh(done) {
+            let that=this;
+            setTimeout(function(){
+              let list=[];
+              for(var x=0;x<4;x++)
+              {
+                list.push(x+'')
+              }
+              //Array.prototype.call.concat(that.list,list)
+              that.list=that.list.concat(list);
+              done();
+            },3000)
           }
         },
         created()
@@ -136,5 +177,6 @@
   .position-list
   {
     width:100%;
+    overflow:hidden;
   }
 </style>

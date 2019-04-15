@@ -5,81 +5,81 @@
                 {{item.value&&item.value[1]&&item.value[1][0]&&typeof item.value[1][0] ==="string"&&!item.multiple?item.value[1][0]:item.name}}
             </div>
         </div>
-        <div class="cui-filter-item-content" v-if="activeIndex!==-1" @click.stop="close()">
-            <div @click.stop v-for="(item,index) in data" v-if="activeIndex===index" :class='"cui-flex-wrap cui-filter-wrap cui-filter-item-"+item.type'>
-                <!---地点-->
-                <template v-if="item.type==='place'||item.type==='tree'">
-                    <div class="cui-fitler-item-p">
-                        <div :class='(item.value&&item.value[0]?item.value[0]:"")===y.name?"cui-filter-item-p-item active":"cui-filter-item-p-item"' @click.stop="showSub(index,y.name,y.city?y.city:y.children)" v-for="y,index in renderData">{{y.name}}</div>
-                    </div>
-                    <div class="cui-filter-item-c cui-flex-con">
-                        <div :class='value.indexOf(i.name)!==-1?"cui-filter-item-c-item active":"cui-filter-item-c-item"' @click.stop="select((item.multiple),i.name,-1)" v-for="i in subData">{{i.name}}</div>
-                    </div>
-                </template>
-                <!---地点end-->
+        <transition name="fade">
+            <div class="cui-filter-item-content" v-if="activeIndex!==-1" @click.stop="close()">
+                <div @click.stop v-for="(item,index) in data" v-if="activeIndex===index" :class='"cui-flex-wrap cui-filter-wrap cui-filter-item-"+item.type'>
+                    <!---地点-->
+                    <template v-if="item.type==='place'||item.type==='tree'">
+                        <div class="cui-fitler-item-p">
+                            <div :class='(item.value&&item.value[0]?item.value[0]:"")===y.name?"cui-filter-item-p-item active":"cui-filter-item-p-item"' @click.stop="showSub(index,y.name,y.city?y.city:y.children)" v-for="y,index in renderData">{{y.name}}</div>
+                        </div>
+                        <div class="cui-filter-item-c cui-flex-con">
+                            <div :class='value.indexOf(i.name)!==-1?"cui-filter-item-c-item active":"cui-filter-item-c-item"' @click.stop="select((item.multiple),i.name,-1)" v-for="i in subData">{{i.name}}</div>
+                        </div>
+                    </template>
+                    <!---地点end-->
 
-                <!--多类型-->
-
-                <template v-if="item.type==='many'">
-                    <div class="cui-filter-item-c cui-flex-con">
-                        <div class="cui-filter-item-option" v-for="subOptionItem,subOptionItemIndex in item.data">
-                            <label>{{subOptionItem.name}}</label>
-                            <div class="cui-filter-item-sub">
-                                <div  :class='value[subOptionItemIndex].indexOf(subOption)!==-1?"cui-option cui-option-active":"cui-option"' @click.stop="select((subOptionItem.type==='checkbox'?true:false),subOption,subOptionItemIndex)" v-for="subOption in subOptionItem.options">{{subOption}}</div>
+                    <!--多类型-->
+                    <template v-if="item.type==='many'">
+                        <div class="cui-filter-item-c cui-flex-con">
+                            <div class="cui-filter-item-option" v-for="subOptionItem,subOptionItemIndex in item.data">
+                                <label>{{subOptionItem.name}}</label>
+                                <div class="cui-filter-item-sub">
+                                    <div  :class='value[subOptionItemIndex].indexOf(subOption)!==-1?"cui-option cui-option-active":"cui-option"' @click.stop="select((subOptionItem.type==='checkbox'?true:false),subOption,subOptionItemIndex)" v-for="subOption in subOptionItem.options">{{subOption}}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </template>
-                <!--多类型end-->
+                    </template>
+                    <!--多类型end-->
 
-                <!--单选-->
-                <template v-if="item.type==='radio'">
-                    <div class="cui-filter-item-c cui-flex-con">
-                        <div :class='value&&value[0]&&value[0].indexOf(radioItem)!==-1?"cui-filter-item-option cui-filter-item-option-active":"cui-filter-item-option"' v-for="radioItem,radioIndex in item.data" @click="select(item.multiple,radioItem,0)">
-                           {{radioItem}}
-                        </div>
-                    </div>
-                </template>
-                <!--单选end-->
-
-                <!--多选-->
-                <template v-if="item.type==='checkbox'">
-                    <div class="cui-filter-item-c cui-flex-con">
-                        <div class="cui-filter-item-option">
-                            <div class="cui-filter-item-sub">
-                                <div v-for="checkboxItem in item.data" :class='value.indexOf(checkboxItem)!==-1?"cui-option cui-option-active":"cui-option "' @click="select(item.multiple,checkboxItem,0)">{{checkboxItem}}</div>
+                    <!--单选-->
+                    <template v-if="item.type==='radio'">
+                        <div class="cui-filter-item-c cui-flex-con">
+                            <div :class='value&&value[0]&&value[0].indexOf(radioItem)!==-1?"cui-filter-item-option cui-filter-item-option-active":"cui-filter-item-option"' v-for="radioItem,radioIndex in item.data" @click="select(item.multiple,radioItem,0)">
+                                {{radioItem}}
                             </div>
                         </div>
-                    </div>
-                </template>
-                <!--多选end-->
-            </div>
-            <div class="cui-filter-btn cui-flex-wrap">
-                <div class="cui-filter-btn-item" @click.stop="close()">取消</div>
-                <div class="cui-filter-btn-item" @click.stop="confirm()">确定</div>
-            </div>
+                    </template>
+                    <!--单选end-->
 
-        </div>
+                    <!--多选-->
+                    <template v-if="item.type==='checkbox'">
+                        <div class="cui-filter-item-c cui-flex-con">
+                            <div class="cui-filter-item-option">
+                                <div class="cui-filter-item-sub">
+                                    <div v-for="checkboxItem in item.data" :class='value.indexOf(checkboxItem)!==-1?"cui-option cui-option-active":"cui-option "' @click="select(item.multiple,checkboxItem,0)">{{checkboxItem}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <!--多选end-->
+                </div>
+                <div class="cui-filter-btn cui-flex-wrap">
+                    <div class="cui-filter-btn-item" @click.stop="close()">取消</div>
+                    <div class="cui-filter-btn-item" @click.stop="confirm()">确定</div>
+                </div>
+
+            </div>
+        </transition>
+
     </div>
 
 </template>
 
 <script>
-    import place from '@/components/cui/place'
+    import place from '@/components/cui-vue/place'
     export default {
         name: "CuiFilter",
         data()
         {
             return {
-                activeIndex:-1,
-                renderData:[],
-                subData:[],
-                cityData:[],
-                city:[],
-                type:"",
-                parentValue:"",
-                value:[],
-                multiple:true
+                activeIndex:-1,//目前打开的筛选类型
+                renderData:[],//要渲染的数据
+                subData:[],//子数据 for (place,tree类型)
+
+                type:"",//有 place(地点),tree(树),many(各种类型),checkbox(多选),radio(单选)等类型
+                parentValue:"",//父节点目前的值 for (place,tree类型)
+                value:[],//目前选中的值
             }
         },
         props:
@@ -201,18 +201,20 @@
                     this.value=nowItemValue.value[i];
                 }
 
+                this.$emit("onChange",{value:this.value,name:nowItemValue.name});//当值有变动时调用 返回当前改变的值
+
             },
             //确认选择事件
             confirm()
             {
                 this.activeIndex=-1;
-                this.$emit("onsuccess",this.data);
+                this.$emit("onSuccess",this.data);
             },
             //关闭
             close()
             {
                 this.activeIndex=-1;
-                this.$emit("oncancel",this.data);
+                this.$emit("onCancel",this.data);
             }
 
         }
@@ -220,6 +222,22 @@
 </script>
 
 <style scoped>
+    /*动画*/
+    .fade-enter-active,.fade-leave-active
+    {
+        transition: all 500ms;
+    }
+    .fade-enter-active {
+        opacity:1;
+    }
+    .fade-enter
+    {
+        opacity:0;
+    }
+    .fade-leave-active {
+        opacity:0;
+    }
+    /*筛选*/
     .cui-flex-wrap
     {
         display: -webkit-box;
