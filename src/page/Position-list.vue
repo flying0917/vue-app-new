@@ -7,9 +7,7 @@
 
     <div class="cui-flex-con position-list" @click="show()">
       <cui-pullrefresh @refresh="refresh" @scrollToBottom="down">
-        <ul>
-          <li v-for="item in list" >{{item}}</li>
-        </ul>
+        <position></position>
       </cui-pullrefresh>
     </div>
     <cui-loading :isShow="isShow" @onShow="onShow()" @onHide="onHide()"></cui-loading>
@@ -19,12 +17,16 @@
     import CuiFilter from '@/components/cui-vue/cui-filter/CuiFilter';
     import CuiLoading from "@/components/cui-vue/cui-loading/CuiLoading";
     import CuiPullrefresh from "@/components/cui-vue/cui-pullrefresh/CuiPullrefresh";
+
+
+    import Position from "@/components/Position";
     export default {
         name: "Position-list",
         components:{
           CuiLoading,
           CuiFilter,
-          CuiPullrefresh
+          CuiPullrefresh,
+          Position
         },
         data()
         {
@@ -127,7 +129,10 @@
             let list=["底部加载","底部加载","底部加载","底部加载"],
                     that=this;
             that.list=that.list.concat(list);
-            openLock();
+            setTimeout(function()
+            {
+              openLock();
+            },3000)
           },
           isChange(ret)
           {
