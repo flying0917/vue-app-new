@@ -24,15 +24,23 @@
             bgColor:[],
             //加载的图片
             img:{
-                default:require("./loading.gif")
+                default()
+                {
+                    return require("./loading.gif");
+
+                }
             },
             //是否显示
             isShow:{
-                default: false
+                default(){
+                    return false;
+                }
             },
             //提示文本
             msg:{
-                default:""
+                default(){
+                   return "";
+                }
             }
         },
         watch:{

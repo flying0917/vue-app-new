@@ -1,6 +1,7 @@
 <template>
   <div class="cui-flex-wrap cui-flex-con cui-flex-vertical position-content">
     <div class="cui-header">
+      <div class="cui-header-title">职位</div>
       <span class="cui-header-btn cui-iconfont cui-icon-search"></span>
     </div>
     <cui-filter :data="filterData" @onSuccess="isOk" @onCancel="isCancel" @onChange="isChange"></cui-filter>

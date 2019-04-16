@@ -1,108 +1,22 @@
 <template>
     <div class="position-list">
-        <div class="position-list-item" >
+        <div class="position-list-item" v-for="x in data" :key="x.id">
             <div class="position-list-header">
-                <div class="title">Web前端</div>
-                <div class="remuneration">1万-2万</div>
+                <div class="title">{{x.title}}</div>
+                <div class="remuneration">{{x.prize}}</div>
             </div>
             <div class="position-list-content">
-                <i>广州天河</i>
-                <i>1-3年</i>
-                <i>大专</i>
+                <i>{{x.place}}</i>
+                <i>{{x.experience}}</i>
+                <i>{{x.record}}</i>
             </div>
             <div class="position-list-footer">
                 <div class="position-list-avator">
                     <img src="http://img95.699pic.com/photo/50055/5642.jpg_wh300.jpg">
                 </div>
                 <div class="position-list-name">
-                    <div>育贝科技</div>
-                    <div class="time">2018-10-19</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="position-list-item" >
-            <div class="position-list-header">
-                <div class="title">php后台开发</div>
-                <div class="remuneration">1万-2万</div>
-            </div>
-            <div class="position-list-content">
-                <i>深圳</i>
-                <i>1-3年</i>
-                <i>大专</i>
-            </div>
-            <div class="position-list-footer">
-                <div class="position-list-avator">
-                    <img src="http://img95.699pic.com/photo/50055/5642.jpg_wh300.jpg">
-                </div>
-                <div class="position-list-name">
-                    <div>小米科技</div>
-                    <div class="time">2018-10-19</div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="position-list-item" >
-            <div class="position-list-header">
-                <div class="title">Web前端</div>
-                <div class="remuneration">1万-2万</div>
-            </div>
-            <div class="position-list-content">
-                <i>广州天河</i>
-                <i>1-3年</i>
-                <i>大专</i>
-            </div>
-            <div class="position-list-footer">
-                <div class="position-list-avator">
-                    <img src="http://img95.699pic.com/photo/50055/5642.jpg_wh300.jpg">
-                </div>
-                <div class="position-list-name">
-                    <div>育贝科技</div>
-                    <div class="time">2018-10-19</div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="position-list-item" >
-            <div class="position-list-header">
-                <div class="title">Web前端</div>
-                <div class="remuneration">1万-2万</div>
-            </div>
-            <div class="position-list-content">
-                <i>广州天河</i>
-                <i>1-3年</i>
-                <i>大专</i>
-            </div>
-            <div class="position-list-footer">
-                <div class="position-list-avator">
-                    <img src="http://img95.699pic.com/photo/50055/5642.jpg_wh300.jpg">
-                </div>
-                <div class="position-list-name">
-                    <div>育贝科技</div>
-                    <div class="time">2018-10-19</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="position-list-item" >
-            <div class="position-list-header">
-                <div class="title">Web前端</div>
-                <div class="remuneration">1万-2万</div>
-            </div>
-            <div class="position-list-content">
-                <i>广州天河</i>
-                <i>1-3年</i>
-                <i>大专</i>
-            </div>
-            <div class="position-list-footer">
-                <div class="position-list-avator">
-                    <img src="http://img95.699pic.com/photo/50055/5642.jpg_wh300.jpg">
-                </div>
-                <div class="position-list-name">
-                    <div>育贝科技</div>
-                    <div class="time">2018-10-19</div>
+                    <div>{{x.company}}</div>
+                    <div class="time">{{x.time}}</div>
                 </div>
             </div>
         </div>
@@ -110,21 +24,35 @@
 </template>
 
 <script>
+    import positionModel from "@/model/position"
     export default {
         name: "Position",
+        data()
+        {
+            return {
+                data:[]
+            }
+        },
         props:{
-            data:{
-                default()
-                {
-                    return []
-                }
-            },
             filterData:{
                 default()
                 {
                     return {}
                 }
             }
+        },
+        methods:{
+            getData()
+            {
+                let that=this,
+                    filter=JSON.parse(JSON.stringify(that.filterData))
+                positionModel.getPosition(filter,(ret)=>{
+                    that.data=ret;
+                })
+            }
+        },
+        created() {
+            this.getData()
         }
     }
 </script>

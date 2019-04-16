@@ -43,48 +43,74 @@
         props:{
             //下拉的距离的触发点
             triggerDistance:{
-                default:200
+                default(){
+                    return 200;
+                }
             },
             //滚动到底部显现的加载图标
             bottomImg:{
-                default:require("./loading-bottom.gif")
+                default(){
+                   return require("./loading-bottom.gif");
+                }
             },
             //底部的提示
             bottomTip:{
-               default:"加载更多"
+               default(){
+                   return "加载更多";
+               }
             },
             //底部加载更多是否都加载完毕
             isScrollBottomFinish:{
-                default:false
+                default(){
+                    return false;
+                }
             },
             //下拉时
             contentdownIcon:{
-                default: require("./loading.gif")
+                default(){
+                    return require("./loading.gif");
+                }
             },
             contentdown:{
-                default:"下拉刷新"
+                default(){
+                    return "下拉刷新";
+                }
             },
             //放开时
             contentoverIcon:{
-                default: require("./loading.gif")
+                default(){
+                    return require("./loading.gif");
+                }
             },
             contentover:{
-                default:"松开刷新"
+                default(){
+                    return "松开刷新"
+                }
             },
             //刷新时
             contentrefreshIcon:{
-                default: require("./loading.gif")
+                default(){
+                    return require("./loading.gif");
+                }
             },
             contentrefresh:{
-                default:"刷新中"
+
+                default(){
+                    return "刷新中";
+                }
             },
             //完成刷新时
 
             contentdoneIcon:{
-                default: require("./loading.gif")
+                default(){
+                    return require("./loading.gif");
+                }
             },
             contentdone:{
-                default:"完成刷新"
+                default()
+                {
+                    return "完成刷新";
+                }
             }
 
         },

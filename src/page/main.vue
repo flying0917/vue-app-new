@@ -56,6 +56,8 @@
   {
     width:100%;
     height:2.5rem;
+    position:relative;
+    z-index:2;
   }
   .slide-right-enter-active,
   .slide-right-leave-active,

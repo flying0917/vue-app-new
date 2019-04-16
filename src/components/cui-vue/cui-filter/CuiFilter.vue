@@ -86,7 +86,10 @@
          {
              data:{
                  required:true,
-                 default:[]
+                 default()
+                 {
+                     return [];
+                 }
              }
          },
         created()
