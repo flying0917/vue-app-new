@@ -18,6 +18,7 @@ import WorkList from '@/page/Work-list'
 import TestList from '@/page/Test-list'
 import CompanyList from '@/page/Company-list'
 import PositionList from '@/page/position-list'
+import CityChoice from '@/page/City-choice'
 
 const routes=[
   //默认入口
@@ -73,6 +74,11 @@ const routes=[
   {
     path: '/Job-choice',
     component: JobChoice
+  },
+  // 选择城市
+  {
+    path: '/City-choice',
+    component: CityChoice
   },
   //选择角色
   {
