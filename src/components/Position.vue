@@ -1,63 +1,197 @@
 <template>
-    <div class="position-list">
-        <div class="position-list-item" v-for="x in data" :key="x.id">
-            <div class="position-list-header">
-                <div class="title">{{x.title}}</div>
-                <div class="remuneration">{{x.prize}}</div>
-            </div>
-            <div class="position-list-content">
-                <i>{{x.place}}</i>
-                <i>{{x.experience}}</i>
-                <i>{{x.record}}</i>
-            </div>
-            <div class="position-list-footer">
-                <div class="position-list-avator">
-                    <img src="http://img95.699pic.com/photo/50055/5642.jpg_wh300.jpg">
+    <div class="position-content">
+        <cui-pullrefresh @refresh="refresh" @scrollToBottom="down">
+            <transition name="fade">
+                <div class="position-list" v-if="isShow">
+                    <div class="position-list-item" v-for="x in data" >
+                        <div class="position-list-header">
+                            <div class="title">{{x.title}}</div>
+                            <div class="remuneration">{{x.prize}}</div>
+                        </div>
+                        <div class="position-list-content">
+                            <i>{{x.place}}</i>
+                            <i>{{x.experience}}</i>
+                            <i>{{x.record}}</i>
+                        </div>
+                        <div class="position-list-footer">
+                            <div class="position-list-avator">
+                                <img src="http://img95.699pic.com/photo/50055/5642.jpg_wh300.jpg">
+                            </div>
+                            <div class="position-list-name">
+                                <div>{{x.company}}</div>
+                                <div class="time">{{x.time}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="position-list-name">
-                    <div>{{x.company}}</div>
-                    <div class="time">{{x.time}}</div>
-                </div>
-            </div>
-        </div>
+            </transition>
+        </cui-pullrefresh>
+        <cui-loading :isShow="isLoading"></cui-loading>
     </div>
 </template>
 
 <script>
     import positionModel from "@/model/position"
+
+    import CuiPullrefresh from "@/components/cui-vue/cui-pullrefresh/CuiPullrefresh";
+    import CuiLoading from "@/components/cui-vue/cui-loading/CuiLoading";
     export default {
         name: "Position",
+        components:{
+            CuiPullrefresh,
+            CuiLoading
+        },
         data()
         {
             return {
-                data:[]
+                data:[],//渲染的数据
+                isShow:false,//是否展示（为了过渡动画）
+                p:1,
+                lock:false,
+                isLoading:true
             }
         },
         props:{
+            //接收父组件的值
+            //是否更新
+            update:{
+                default()
+                {
+                    return false;
+                }
+            },
+            //一页的个数
+            length:{
+                default()
+                {
+                    return 5;
+                }
+            },
+            //筛选条件
             filterData:{
                 default()
                 {
-                    return {}
+                    return {};
                 }
             }
         },
         methods:{
-            getData()
+            //获取职位数据
+            getData(cb=()=>{})
             {
                 let that=this,
-                    filter=JSON.parse(JSON.stringify(that.filterData))
+                    callback=cb,
+                    //复制一份 防止引用类型的影响
+                    filter=JSON.parse(JSON.stringify(that.filterData));
+                Object.assign(filter,{p:this.p,length:this.length})
+                //网络请求职位数据（目前先模拟）
                 positionModel.getPosition(filter,(ret)=>{
-                    that.data=ret;
+                    if(that.p===1)
+                    {
+                        that.data=ret;
+                    }
+                    else
+                    {
+                        that.data=Array.prototype.concat(that.data,ret);
+                    }
+                    callback(ret&&ret instanceof Array?ret.length:0)
                 })
+            },
+            //滑动到底部的回调
+            down(ret)
+            {
+                let that=this;
+                that.p=that.p+1;
+                that.getData((n)=>{
+                    if(!n)
+                    {
+                        ret.nothing();
+                    }
+                    else
+                    {
+                        ret.loading();
+                    }
+                    that.$nextTick(()=>{
+                        if(!that.lock)
+                        {
+                            ret.openLock();
+                        }
+                    });
+                });
+            },
+            //下拉刷新，被调用 done() 可以收起下拉动画
+            refresh(done) {
+                let that = this;
+                that.isLoading=false;
+                //that.isShow=false;
+                setTimeout(function () {
+                    that.p = 1;
+
+                    that.getData(()=>{
+                        that.$nextTick(()=>{
+                            that.isShow=true;
+                            that.isLoading=false;
+                            done();
+                        })
+                    })
+                }, 1000)
+            }
+        },
+        watch:{
+            //监听update的开关
+            update:function(newVal)
+            {
+                let that=this;
+                //关锁 告诉父组件您要关锁了
+                that.lock=true;
+                that.isShow=false;
+                that.data=[];
+                that.isLoading=true;
+                that.getData(()=>{
+                    //开锁 告诉父组件您可以开锁了
+                    that.$nextTick(()=>{
+                        that.isShow=true;
+                        that.lock=false;
+                        that.isLoading=false;
+                    })
+                });
             }
         },
         created() {
-            this.getData()
+            let that=this;
+            that.lock=true;
+            that.getData(()=>{
+                that.isShow=true;
+                //开锁 告诉父组件您可以开锁了
+                that.$nextTick(()=>{
+                    that.lock=false;
+                    that.isLoading=false;
+                })
+            });
         }
     }
 </script>
 
 <style scoped>
+    /*动画*/
+    .fade-enter-active,.fade-leave-active
+    {
+        transition: all 500ms;
+    }
+    .fade-enter-active {
+        opacity:1;
+    }
+    .fade-enter
+    {
+        opacity:0;
+    }
+    .fade-leave-active {
+        opacity:0;
+    }
+    .position-content
+    {
+        height:100%;
+    }
     .position-list
     {
 

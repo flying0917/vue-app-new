@@ -4,21 +4,16 @@
       <div class="cui-header-title">职位</div>
       <span class="cui-header-btn cui-iconfont cui-icon-search"></span>
     </div>
-    <cui-filter :data="filterData" @onSuccess="isOk" @onCancel="isCancel" @onChange="isChange"></cui-filter>
+    <cui-filter :data="filterOption" @onSuccess="isOk" @onCancel="isCancel" @onChange="isChange"></cui-filter>
 
-    <div class="cui-flex-con position-list" @click="show()">
-      <cui-pullrefresh @refresh="refresh" @scrollToBottom="down">
-        <position></position>
-      </cui-pullrefresh>
+    <div class="cui-flex-con position-list">
+        <position :p="page" :update="isupdate" :filterData="filterData"></position>
     </div>
-    <cui-loading :isShow="isShow" @onShow="onShow()" @onHide="onHide()"></cui-loading>
   </div>
 </template>
 <script>
     import CuiFilter from '@/components/cui-vue/cui-filter/CuiFilter';
     import CuiLoading from "@/components/cui-vue/cui-loading/CuiLoading";
-    import CuiPullrefresh from "@/components/cui-vue/cui-pullrefresh/CuiPullrefresh";
-
 
     import Position from "@/components/Position";
     export default {
@@ -26,28 +21,34 @@
         components:{
           CuiLoading,
           CuiFilter,
-          CuiPullrefresh,
           Position
         },
         data()
         {
           return {
-            list:["0"],
-            isShow:false,
-            filterData:[
+
+            isShow:false,//是否显示loading
+            page:1,//职位分页 当前页数
+            isupdate:false,//是否更新开关 取反 this.isupdate=!this.isupdate
+            filterData:{},//选中的过滤参数
+            //过滤的选项
+            filterOption:[
               {
-                name:"地点",
+                text:"地点",
+                name:"place",
                 type:"place",
                 multiple:false
               },
               {
-                name:"排序",
+                text:"排序",
+                name:"order",
                 type:"radio",
-                data:["时间","123"],
+                data:["时间","职位"],
                 multiple:false
               },
               {
-                name:"类型",
+                text:"类型",
+                name:"type",
                 type:"tree",
                 multiple:true,
                 data:[
@@ -76,86 +77,61 @@
                 ]
               },
               {
-                name:"要求",
+                text:"要求",
                 type:"many",
                 data:[
                   {
-                    name:"学历",
+                    text:"学历",
+                    name:"record",
                     type:"checkbox",
                     options:["全部","初中及以下","中专/中技","高中","大专","本科","硕士","博士"]
                   },
                   {
-                    name:"经验",
+                    text:"经验",
+                    name:"experience",
                     type:"checkbox",
                     options:["全部","应届生","1年内","1-3年","2-5年","5-8年","10年以上"]
                   }
                   ,
                   {
-                    name:"薪水",
+                    text:"薪水",
+                    name:"prize",
                     type:"radio",
                     options:["全部","3k以下","3-5k","5k-10k","10k-20k","20k-50k","50k以上"]
                   }
                 ]
-              }]
+              }],
+            //锁
+            lock:false
           }
         },
         methods:
         {
+          //选择筛选条件完，点击确认
           isOk(ret)
           {
             console.log(ret)
+            this.filterData={
+              place:ret[0].value[1],
+              order:ret[1].value[0],
+              type:ret[2].value[1],
+              record:ret[3].value[0],
+              experience:ret[3].value[1],
+              prize:ret[3].value[2]
+            }
+            this.isupdate=!this.isupdate;
           },
+          //取消筛选条件
           isCancel(ret)
           {
             console.log(ret)
           },
-          show()
-          {
-            var that=this;
-            that.isShow=true;
-            setTimeout(function(){
-              that.isShow=false;
-            },5000)
-          },
-          onShow()
-          {
-            console.log(1)
-          },
-          onHide()
-          {
-            console.log(2)
-          },
-          down(openLock)
-          {
-            let list=["底部加载","底部加载","底部加载","底部加载"],
-                    that=this;
-            that.list=that.list.concat(list);
-            setTimeout(function()
-            {
-              openLock();
-            },3000)
-          },
+          //当筛选条件有一个值改变时，被调用
           isChange(ret)
           {
             console.log("值改变了");
             console.log(ret)
           },
-          refresh(done) {
-            let that=this;
-            setTimeout(function(){
-              let list=[];
-              for(var x=0;x<4;x++)
-              {
-                list.push(x+'')
-              }
-              //Array.prototype.call.concat(that.list,list)
-              that.list=that.list.concat(list);
-              done();
-            },3000)
-          }
-        },
-        created()
-        {
 
         }
     }

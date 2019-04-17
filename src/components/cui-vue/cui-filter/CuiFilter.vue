@@ -2,7 +2,7 @@
     <div class="cui-filter-content">
         <div class="cui-filter cui-flex-wrap">
             <div :class='activeIndex===index?"cui-filter-item cui-flex-con cui-filter-item-active":"cui-filter-item cui-flex-con"' @click="showFilterContent(index,item.type)" v-for="(item,index) in data">
-                {{item.value&&item.value[1]&&item.value[1][0]&&typeof item.value[1][0] ==="string"&&!item.multiple?item.value[1][0]:item.name}}
+                {{item.value&&item.value[1]&&item.value[1][0]&&typeof item.value[1][0] ==="string"&&!item.multiple?item.value[1][0]:item.text}}
             </div>
         </div>
         <transition name="fade">
@@ -23,7 +23,7 @@
                     <template v-if="item.type==='many'">
                         <div class="cui-filter-item-c cui-flex-con">
                             <div class="cui-filter-item-option" v-for="subOptionItem,subOptionItemIndex in item.data">
-                                <label>{{subOptionItem.name}}</label>
+                                <label>{{subOptionItem.text}}</label>
                                 <div class="cui-filter-item-sub">
                                     <div  :class='value[subOptionItemIndex].indexOf(subOption)!==-1?"cui-option cui-option-active":"cui-option"' @click.stop="select((subOptionItem.type==='checkbox'?true:false),subOption,subOptionItemIndex)" v-for="subOption in subOptionItem.options">{{subOption}}</div>
                                 </div>
@@ -264,12 +264,12 @@
 
         color:#6f6e6e;
 
-
     }
     .cui-filter
     {
         height:2rem;
         background-color:white;
+        border-bottom:1px solid #f7f7f7;
     }
     .cui-filter .cui-filter-item
     {

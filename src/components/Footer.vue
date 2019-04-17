@@ -55,6 +55,7 @@
     display:table;
     background-color:white;
     height:2rem;
+    border-top:1px solid #f7f7f7;
 
   }
   .cui-tabbar .cui-tabbar-tabitem

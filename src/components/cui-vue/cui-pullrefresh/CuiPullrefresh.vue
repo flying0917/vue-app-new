@@ -30,6 +30,8 @@
                 scrolltimeout:null,
                 hasScrollToBottom:this.$listeners&&this.$listeners.scrollToBottom?true:false,
                 contentDom:null,//容器（要监听其的滚动Y距离）
+                bottomTip:this.bottomLoadingTip,
+                bottomImg:this.bottomLoadingImg,
                 //底部加载更多锁
                 bottomLock:true,
                 cssStyle:{
@@ -48,16 +50,28 @@
                 }
             },
             //滚动到底部显现的加载图标
-            bottomImg:{
+            bottomLoadingImg:{
                 default(){
                    return require("./loading-bottom.gif");
                 }
             },
-            //底部的提示
-            bottomTip:{
+            //底部加载中的提示
+            bottomLoadingTip:{
                default(){
                    return "加载更多";
                }
+            },
+            //滚动到底部显现的加载图标
+            bottomDoneImg:{
+                default(){
+                    return require("./null.png");
+                }
+            },
+            //底部加载中的提示
+            bottomDoneTip:{
+                default(){
+                    return "没有内容了";
+                }
             },
             //底部加载更多是否都加载完毕
             isScrollBottomFinish:{
@@ -233,9 +247,10 @@
                         var windowHeight=target.offsetHeight;
                         if(windowHeight+scrollTop>=scrollHeight)
                         {
+                            that.loading();
                             that.bottomLock=false;
                             //回调
-                            that.$emit("scrollToBottom",that.openLock);
+                            that.$emit("scrollToBottom",{openLock:that.openLock,nothing:that.nothing,loading:that.loading});
                         }
                     },100);
                 }
@@ -244,7 +259,20 @@
             openLock()
             {
                 this.bottomLock=true;
+            },
+            //（加载更多）没有更多了
+            nothing()
+            {
+                this.bottomTip=this.bottomDoneTip;
+                this.bottomImg=this.bottomDoneImg;
+            },
+            //（加载更多）加载中
+            loading()
+            {
+                this.bottomTip=this.bottomLoadingTip;
+                this.bottomImg=this.bottomLoadingImg;
             }
+
         }
     }
 </script>
@@ -294,7 +322,7 @@
     }
     .cui-vue-refresh-scroll-text img
     {
-        height:.7rem;
+        height:.6rem;
         vertical-align: middle;
         margin-right:.5rem;
     }
