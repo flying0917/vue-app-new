@@ -13,8 +13,8 @@
                 <img v-lazy="headerImg">
               </div>
               <div class="detail cui-flex-con">
-                <div class="username">flying0917</div>
-                <div class="sex man"></div>
+                <div class="username">{{username}}</div>
+                <div :class='sex==="woman"?"sex woman":"sex man"'></div>
               </div>
             </div>
             <div class="usercenter-type cui-flex-wrap">
@@ -68,6 +68,7 @@
 </template>
 <script>
     import CuiPullfresh from '@/components/cui-vue/cui-pullrefresh/CuiPullrefresh'
+    import userModel from '@/model/user'
     export default {
         name: "UserCenter",
         components:{
@@ -76,21 +77,35 @@
         data()
         {
           return {
-            headerImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"
+            username:"12312",
+            headerImg:"",
+            sex:"man"
           }
         },
         methods:
         {
           isOk(done)
           {
+            let d=done;
             setTimeout(function(){
-              done()
-            },2000)
+              let that=this;
+              userModel.getUserInfo((ret)=>{
+                that.username=ret.username;
+                that.headerImg=ret.headerImg;
+                that.sex=ret.sex;
+                d();
+              });
+            },2000);
           }
         },
         created()
         {
-
+          let that=this;
+          userModel.getUserInfo((ret)=>{
+            that.username=ret.username;
+            that.headerImg=ret.headerImg;
+            that.sex=ret.sex;
+          });
         }
     }
 </script>
@@ -146,6 +161,9 @@
     font-size:.8rem;
     font-weight: bold;
     line-height: 1.5rem;
+    white-space: normal;
+    overflow:hidden;
+    text-overflow: ellipsis;
   }
   .sex
   {

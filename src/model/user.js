@@ -49,6 +49,16 @@ const userModel={
      {
         callback(ret,err)
      })
+  },
+  //获取用户信息
+  "getUserInfo":function(cb)
+  {
+    let data={
+      username:"flying0917",
+      headerImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658",
+      sex:"man"
+    };
+    cb(data)
   }
 }
 export default userModel
