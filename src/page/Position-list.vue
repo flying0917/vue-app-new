@@ -49,6 +49,12 @@
               {
                 text:"类型",
                 name:"type",
+                type:"checkbox",
+                data:["面试","机上任务"]
+              },
+              /*{
+                text:"类型",
+                name:"type",
                 type:"tree",
                 multiple:true,
                 data:[
@@ -75,7 +81,7 @@
                           ]
                         }
                 ]
-              },
+              },*/
               {
                 text:"要求",
                 type:"many",

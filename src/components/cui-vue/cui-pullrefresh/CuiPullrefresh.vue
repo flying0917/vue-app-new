@@ -218,6 +218,7 @@
                 setTimeout(function(){
                     //清除动画
                     that.cssStyle.webkitTransition=that.cssStyle.transition="";
+                    that.offsetTop=0;
                 },500)
             },
             //刷新完毕
