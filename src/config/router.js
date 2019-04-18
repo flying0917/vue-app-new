@@ -1,25 +1,24 @@
 /**
  * 路由配置
  * **/
-import Login from '@/page/Login'
-import Main from '@/page/main'
-import Register from '@/page/Register'
-import UserCenter from '@/page/UserCenter'
-import Index from '@/page/Index'
-import Im from '@/page/Im'
-import Weixin from '@/page/Weixin-login'
-import SelectSole from '@/page/SelectSole'
-import UserInfo from '@/page/UserInfo-primary'
-import UserInfo2 from '@/page/UserInfo-jobintension'
-import UserInfo3 from '@/page/UserInfo-work'
-import ErrorLoad from '@/page/Error-load'
-import JobChoice from '@/page/Job-choice'
-import WorkList from '@/page/Work-list'
-import TestList from '@/page/Test-list'
-import CompanyList from '@/page/Company-list'
-import PositionList from '@/page/position-list'
-import CityChoice from '@/page/City-choice'
-
+const Login= () => import('@/page/Login'),
+      Main= () => import('@/page/main'),
+      Register= () => import('@/page/Register'),
+      UserCenter=() => import('@/page/UserCenter'),
+      Index=() => import('@/page/Index'),
+      Im= () => import('@/page/Im'),
+      Weixin=() => import('@/page/Weixin-login'),
+      SelectSole= () => import('@/page/SelectSole'),
+      UserInfo= () => import('@/page/UserInfo-primary'),
+      UserInfo2= () => import('@/page/UserInfo-jobintension'),
+      UserInfo3= () => import('@/page/UserInfo-work'),
+      ErrorLoad= () => import('@/page/Error-load'),
+      JobChoice= () => import('@/page/Job-choice'),
+      WorkList= () => import('@/page/Work-list'),
+      TestList= () => import('@/page/Test-list'),
+      CompanyList= () => import('@/page/Company-list'),
+      PositionList= () => import('@/page/position-list'),
+      CityChoice= () => import('@/page/City-choice');
 const routes=[
   //默认入口
   {

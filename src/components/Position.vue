@@ -32,7 +32,6 @@
 
 <script>
     import positionModel from "@/model/position"
-
     import CuiPullrefresh from "@/components/cui-vue/cui-pullrefresh/CuiPullrefresh";
     import CuiLoading from "@/components/cui-vue/cui-loading/CuiLoading";
     export default {
