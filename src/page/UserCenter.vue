@@ -1,66 +1,69 @@
 <template>
-  <div class="cui-content">
+  <div class="cui-content cui-flex-wrap cui-flex-vertical">
       <div class="cui-header">
         <div class="cui-header-btn">
           <span class="cui-iconfont cui-icon-setup"></span>
         </div>
       </div>
-      <cui-pullfresh @refresh="isOk">
-        <div class="usercenter-content">
-          <div class="usercenter-header cui-flex-wrap">
-            <div class="avator">
-              <img v-lazy="headerImg">
-            </div>
-            <div class="detail cui-flex-con">
-              <div class="username">flying0917</div>
-              <div class="sex man"></div>
-            </div>
-          </div>
-          <div class="usercenter-type cui-flex-wrap">
-            <div class="cui-flex-con">
-              <div class="cui-iconfont cui-icon-task"></div>
-              <div class="title">笔试</div>
-            </div>
-            <div class="cui-flex-con">
-              <div class="cui-iconfont cui-icon-like"></div>
-              <div class="title">收藏</div>
-            </div>
-            <div class="cui-flex-con">
-              <div class="cui-iconfont cui-icon-stealth"></div>
-              <div class="title">投递</div>
-            </div>
-            <div class="cui-flex-con">
-              <div class="cui-iconfont cui-icon-camera"></div>
-              <div class="title">视频</div>
-            </div>
-          </div>
-          <div class="usercenter-setting">
-            <div class="cui-list cui-list-setting cui-list-link" >
-              <div class="cui-list-item">
-                <div class="cui-list-center">
-                  <span class="cui-iconfont cui-icon-document"></span>我的简历
-                </div>
-                <div class="cui-list-right">
-                </div>
+      <div class="cui-flex-con">
+        <cui-pullfresh @refresh="isOk">
+          <div class="usercenter-content">
+            <div class="usercenter-header cui-flex-wrap">
+              <div class="avator">
+                <img v-lazy="headerImg">
               </div>
-              <div class="cui-list-item">
-                <div class="cui-list-center">
-                  <span class="cui-iconfont cui-icon-emoji"></span>求职意向
-                </div>
-                <div class="cui-list-right">
-                </div>
-              </div>
-              <div class="cui-list-item">
-                <div class="cui-list-center">
-                  <span class="cui-iconfont cui-icon-setup"></span>设置
-                </div>
-                <div class="cui-list-right">
-                </div>
+              <div class="detail cui-flex-con">
+                <div class="username">flying0917</div>
+                <div class="sex man"></div>
               </div>
             </div>
+            <div class="usercenter-type cui-flex-wrap">
+              <div class="cui-flex-con">
+                <div class="cui-iconfont cui-icon-task"></div>
+                <div class="title">笔试</div>
+              </div>
+              <div class="cui-flex-con">
+                <div class="cui-iconfont cui-icon-like"></div>
+                <div class="title">收藏</div>
+              </div>
+              <div class="cui-flex-con">
+                <div class="cui-iconfont cui-icon-stealth"></div>
+                <div class="title">投递</div>
+              </div>
+              <div class="cui-flex-con">
+                <div class="cui-iconfont cui-icon-camera"></div>
+                <div class="title">视频</div>
+              </div>
+            </div>
+            <div class="usercenter-setting">
+              <div class="cui-list cui-list-setting cui-list-link" >
+                <div class="cui-list-item">
+                  <div class="cui-list-center">
+                    <span class="cui-iconfont cui-icon-document"></span>我的简历
+                  </div>
+                  <div class="cui-list-right">
+                  </div>
+                </div>
+                <div class="cui-list-item">
+                  <div class="cui-list-center">
+                    <span class="cui-iconfont cui-icon-emoji"></span>求职意向
+                  </div>
+                  <div class="cui-list-right">
+                  </div>
+                </div>
+                <div class="cui-list-item">
+                  <div class="cui-list-center">
+                    <span class="cui-iconfont cui-icon-setup"></span>设置
+                  </div>
+                  <div class="cui-list-right">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </cui-pullfresh>
+        </cui-pullfresh>
+      </div>
+
   </div>
 </template>
 <script>
@@ -105,6 +108,11 @@
   .cui-header .cui-iconfont
   {
     color:white;
+  }
+  .usercenter-content
+  {
+    min-height:0;
+    overflow:hidden;
   }
   .usercenter-header
   {

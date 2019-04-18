@@ -7,7 +7,7 @@
             </div>
             <slot></slot>
         </div>
-        <div v-if="hasScrollToBottom||!isScrollBottomFinish" class="cui-vue-refresh-scroll-text"><img :src="bottomImg"><span>{{bottomTip}}</span></div>
+        <div v-if="hasScrollToBottom" class="cui-vue-refresh-scroll-text"><img :src="bottomImg"><span>{{bottomTip}}</span></div>
     </div>
 </template>
 
@@ -132,7 +132,7 @@
         {
             //获取容器
             this.contentDom=this.$refs.content;
-
+            console.log(this.hasScrollToBottom)
         },
         methods:{
             touchStart(e)
