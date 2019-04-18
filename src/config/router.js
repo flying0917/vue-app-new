@@ -1,10 +1,15 @@
 /**
  * 路由配置
  * **/
+/*预加载 这里只能放导航的组件*/
+import Main from '@/page/main'
+import UserCenter from '@/page/UserCenter'
+import TestList from '@/page/Test-list'
+import CompanyList from '@/page/Company-list'
+import PositionList from '@/page/position-list'
+/*懒加载*/
 const Login= () => import('@/page/Login'),
-      Main= () => import('@/page/main'),
       Register= () => import('@/page/Register'),
-      UserCenter=() => import('@/page/UserCenter'),
       Index=() => import('@/page/Index'),
       Im= () => import('@/page/Im'),
       Weixin=() => import('@/page/Weixin-login'),
@@ -15,9 +20,6 @@ const Login= () => import('@/page/Login'),
       ErrorLoad= () => import('@/page/Error-load'),
       JobChoice= () => import('@/page/Job-choice'),
       WorkList= () => import('@/page/Work-list'),
-      TestList= () => import('@/page/Test-list'),
-      CompanyList= () => import('@/page/Company-list'),
-      PositionList= () => import('@/page/position-list'),
       CityChoice= () => import('@/page/City-choice');
 const routes=[
   //默认入口
@@ -101,7 +103,7 @@ const routes=[
     path: '/main',
     component: Main,
     meta:{
-      keepAlive:true,
+      keepAlive:false,
       requireAuth: false
     },
     children:[

@@ -67,7 +67,6 @@
 </template>
 
 <script>
-    import place from '@/components/cui-vue/place'
     export default {
         name: "CuiFilter",
         data()
@@ -136,7 +135,11 @@
                 this.subData=[];
                 if(this.type==='place')
                 {
-                    this.renderData=place;
+                    var that=this;
+                    import("@/components/cui-vue/place").then(function(place){
+                        that.renderData=place.default;
+                    });
+                    // this.renderData=place;
                     this.value=this.data[this.activeIndex].value[1]?this.data[this.activeIndex].value[1]:[];
                     this.subData=this.data[this.activeIndex].parentIndex!==-1?this.renderData[this.data[this.activeIndex].parentIndex].city:[];
                 }
