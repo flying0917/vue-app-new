@@ -3,9 +3,9 @@
  * **/
 import $http from "@/util/axios-ajax"
 import url from "@/config/url"
-const positionModel={
+const companyModel={
   //token test
-  "getPosition":function(filter,cb)
+  "getCompany":function(filter,cb)
   {
     var callback=cb,
         data=[
@@ -17,8 +17,10 @@ const positionModel={
             company:"预备科技",
             id:1,
             record:"大专",
-            time:"2010-10-10",
-            companyImg:""
+            wanted:5,
+            videoimg:"https://hbimg.huabanimg.com/e220cc1c1ddb915ac99ddcbe8b855e997b9300ced2fe-Tqn8oH_fw658",
+            logo:"",
+            time:"2010-10-10"
           },
           {
             title:"PHP后台工程师",
@@ -28,8 +30,11 @@ const positionModel={
             company:"预备科技",
             id:2,
             record:"大专",
-            time:"2010-10-10",
-            companyImg:""
+            wanted:5,
+            videoimg:"https://hbimg.huabanimg.com/e27767f8cc1d8b079c1eb611d99cb19594007320c280-9gsE1f_fw658",
+            logo:"",
+
+            time:"2010-10-10"
           },
           {
             title:"java权杖",
@@ -39,8 +44,10 @@ const positionModel={
             company:"预备科技",
             id:3,
             record:"大专",
-            time:"2010-10-10",
-            companyImg:""
+            wanted:5,
+            videoimg:"",
+            logo:"",
+            time:"2010-10-10"
           },
           {
             title:"web前端",
@@ -50,8 +57,10 @@ const positionModel={
             company:"预备科技",
             id:4,
             record:"大专",
-            time:"2010-10-10",
-            companyImg:""
+            wanted:5,
+            videoimg:"",
+            logo:"",
+            time:"2010-10-10"
           },
           {
             title:"web前端",
@@ -61,8 +70,10 @@ const positionModel={
             company:"预备科技",
             id:5,
             record:"大专",
-            time:"2010-10-10",
-            companyImg:""
+            wanted:5,
+            videoimg:"https://hbimg.huabanimg.com/e220cc1c1ddb915ac99ddcbe8b855e997b9300ced2fe-Tqn8oH_fw658",
+            logo:"",
+            time:"2010-10-10"
           }
         ]
     if(filter.p===5)
@@ -80,4 +91,4 @@ const positionModel={
     })*/
   }
 }
-export default positionModel
+export default companyModel

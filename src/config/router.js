@@ -93,7 +93,7 @@ const routes=[
       path:"/page/work/list",
       component:WorkList,
       meta:{
-          keepAlive:false,
+          keepAlive:true,
           index:1
       }
   },
@@ -103,14 +103,14 @@ const routes=[
     component: Main,
     meta:{
       keepAlive:true,
-      requireAuth: true
+      requireAuth: false
     },
     children:[
       {
         path:"position-list",
         component:PositionList,
         meta:{
-          keepAlive:false,
+          keepAlive:true,
           index:1
         }
       },
@@ -118,7 +118,7 @@ const routes=[
         path:"test-list",
         component:TestList,
         meta:{
-          keepAlive:false,
+          keepAlive:true,
           index:2
         }
       },
@@ -126,7 +126,7 @@ const routes=[
         path:"company-list",
         component:CompanyList,
         meta:{
-          keepAlive:false,
+          keepAlive:true,
           index:3
         }
       },
@@ -134,7 +134,7 @@ const routes=[
         path:"UserCenter",
         component:UserCenter,
         meta:{
-          keepAlive:false,
+          keepAlive:true,
           index:4
         }
       },

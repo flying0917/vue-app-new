@@ -1,27 +1,32 @@
 <template>
-    <div class="position-content">
+    <div class="company-content">
         <cui-pullrefresh @refresh="refresh" @scrollToBottom="down">
             <transition name="fade">
-                <div class="position-list" v-if="isShow">
-                    <div class="position-list-item" v-for="x in data" >
-                        <div class="position-list-header">
-                            <div class="title">{{x.title}}</div>
-                            <div class="remuneration">{{x.prize}}</div>
+                <div class="company-list" v-if="isShow">
+                    <div class="company-list-item" v-for="x in data" >
+                        <div class="company-list-video">
+                            <div class="company-list-video-img" :style='{backgroundImage:"url("+(x.videoimg?x.videoimg:GLOBAL.no_img)+")"}'></div>
+                            <div class="company-list-video-btn"></div>
                         </div>
-                        <div class="position-list-content">
-                            <i>{{x.place}}</i>
-                            <i>{{x.experience}}</i>
-                            <i>{{x.record}}</i>
-                        </div>
-                        <div class="position-list-footer">
-                            <div class="position-list-avator">
-                                <img :src="x.companyImg?x.companyImg:GLOBAL.no_img">
+                        <div class="link">
+                            <div class="company-list-footer">
+                                <div class="company-list-avator">
+                                    <img :src='x.logo?x.logo:GLOBAL.no_img'>
+                                </div>
                             </div>
-                            <div class="position-list-name">
+                            <div class="company-list-name">
                                 <div>{{x.company}}</div>
-                                <div class="time">{{x.time}}</div>
+                            </div>
+                            <div class="company-list-header">
+                                <div class="company-list-wanted">在招职位<span class="wanted">{{x.wanted}}</span></div>
+                            </div>
+                            <div class="company-list-content">
+                                <i>{{x.place}}</i>
+                                <i>{{x.experience}}</i>
+                                <i>{{x.record}}</i>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </transition>
@@ -31,12 +36,12 @@
 </template>
 
 <script>
-    import positionModel from "@/model/position"
+    import companyModel from "@/model/company"
 
     import CuiPullrefresh from "@/components/cui-vue/cui-pullrefresh/CuiPullrefresh";
     import CuiLoading from "@/components/cui-vue/cui-loading/CuiLoading";
     export default {
-        name: "Position",
+        name: "Company",
         components:{
             CuiPullrefresh,
             CuiLoading
@@ -84,8 +89,8 @@
                     //复制一份 防止引用类型的影响
                     filter=JSON.parse(JSON.stringify(that.filterData));
                 Object.assign(filter,{p:this.p,length:this.length})
-                //网络请求职位数据（目前先模拟）
-                positionModel.getPosition(filter,(ret)=>{
+                //网络请求公司数据（目前先模拟）
+                companyModel.getCompany(filter,(ret)=>{
                     if(that.p===1)
                     {
                         that.data=ret;
@@ -188,29 +193,30 @@
     .fade-leave-active {
         opacity:0;
     }
-    .position-content
+    .company-content
     {
         height:100%;
     }
-    .position-list
+    .company-list
     {
 
         padding:0;
         margin-top:.1rem;
     }
-    .position-list-item
+    .company-list-item
     {
         min-height:2rem;
-        margin-bottom:.3rem;
+        margin-bottom:.7rem;
         padding:.75rem;
         background-color:white;
+        border-bottom:1px solid #efefef;
     }
-    .position-list-header
+    .company-list-header
     {
         height:1rem;
         line-height: 1rem;
     }
-    .position-list-header .title
+    .company-list-header .title
     {
         width:70%;
         height:100%;
@@ -222,7 +228,7 @@
         text-overflow:ellipsis;
         white-space: nowrap;
     }
-    .position-list-header .remuneration
+    .company-list-header .remuneration
     {
         width:30%;
         float:left;
@@ -231,13 +237,38 @@
         vertical-align: top;
         text-align: right;
     }
-    .position-list-content
+    .company-list-content
     {
         height:1rem;
         line-height: .8rem;
-        margin:.5rem 0;
     }
-    .position-list-content i
+    .company-list-video
+    {
+        height:4rem;
+        margin:-.75rem -.75rem 0 -.75rem;
+        position:relative;
+
+    }
+    .company-list-video-btn
+    {
+        height:100%;
+        width:100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        background-position:center;
+        background-size:40px;
+        background-repeat: no-repeat;
+        background-image:url("../assets/image/play.png");
+        position:absolute;
+        top:0;
+        left:0;
+    }
+    .company-list-video-img
+    {
+        height:100%;
+        background-size:cover;
+        background-position:center;
+    }
+    .company-list-content i
     {
         font-size:.6rem;
         display:inline-block;
@@ -248,38 +279,42 @@
         background-color: rgba(94, 210, 250, 0.5);
         color:white;
     }
-    .position-list-footer
+    .company-list-footer
     {
         display:-webkit-box;
         display:-webkit-flex;
         display:flex;
         line-height: 1;
     }
-    .position-list-avator
+    .company-list-avator
     {
-        width:1.5rem;
-        height:1.5rem;
+        width:2rem;
+        height:2rem;
         border-radius:50%;
         background-color: white;
         margin-right:10px;
         overflow:hidden;
+        margin-top: -1rem;
+        position:relative;
+        z-index:2;
         border:2px solid #e8e8e8;
     }
-    .position-list-avator img
+    .company-list-avator img
     {
         width:100%;
         height:100%;
     }
-    .position-list-name
+    .company-list-name
     {
         height:1.5rem;
-        font-size:.6rem;
+        font-size:.8rem;
+        font-weight: bold;
         color:#6f6e6e;
         -webkit-box-flex:1;
         -webkit-flex:1;
         flex:1;
     }
-    .position-list-name>div
+    .company-list-name>div
     {
         line-height: .75rem;
         width:50%;
@@ -289,8 +324,23 @@
         text-overflow:ellipsis;
         white-space: nowrap;
     }
-    .time
+    .wanted
     {
-        text-align: right;
+        color: #5ed2fa;
+        margin-left:10px;
+    }
+    .company-list-wanted
+    {
+        font-size:.6rem;
+        color:gray;
+    }
+    .link
+    {
+        margin:0 -.75rem -.75rem -.75rem;
+        padding:0 .75rem .5rem .75rem;
+        background-image:url(../assets/image/right.png);
+        background-position:95% center;
+        background-repeat: no-repeat;
+        background-size:20px;
     }
 </style>
