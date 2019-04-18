@@ -5,13 +5,13 @@
                 <div class="company-list" v-if="isShow">
                     <div class="company-list-item" v-for="x in data" >
                         <div class="company-list-video">
-                            <div class="company-list-video-img" :style='{backgroundImage:"url("+(x.videoimg?x.videoimg:GLOBAL.no_img)+")"}'></div>
+                            <div class="company-list-video-img" :key="x.videoimg?x.videoimg:GLOBAL.no_img" v-lazy:background-image = 'x.videoimg?x.videoimg:GLOBAL.no_img'></div>
                             <div class="company-list-video-btn"></div>
                         </div>
                         <div class="link">
                             <div class="company-list-footer">
                                 <div class="company-list-avator">
-                                    <img :src='x.logo?x.logo:GLOBAL.no_img'>
+                                    <img v-lazy='x.logo?x.logo:GLOBAL.no_img' :key="x.logo?x.logo:GLOBAL.no_img" alt>
                                 </div>
                             </div>
                             <div class="company-list-name">

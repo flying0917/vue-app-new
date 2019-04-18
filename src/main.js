@@ -8,6 +8,8 @@ import router from '@/router/index'
 import App from './App'
 import Global from '@/config/global'
 
+import VueLazyLoad from 'vue-lazyload'
+
 /*cui全局插件注册*/
 import Loading from '@/components/cui-vue/cui-loading'
 import './assets/css/cui.css'
@@ -19,7 +21,13 @@ import { ToastPlugin,LoadingPlugin,DatetimePlugin } from 'vux'
 Vue.use(ToastPlugin)
 Vue.use(DatetimePlugin)
 Vue.use(LoadingPlugin)
+//图片懒加载
+Vue.use(VueLazyLoad,{
+  loading:Global.no_img,
+  preLoad: 1,
+  error: Global.err_img
 
+})
 
 Vue.use(Loading)
 

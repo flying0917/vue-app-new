@@ -17,6 +17,7 @@
     "fastclick": "^1.0.6",
     "qs": "^6.6.0",
     "vue": "^2.5.2",
+    "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.1",
     "vue-validator": "^3.0.0-alpha.2",
     "vuex": "^2.5.0",

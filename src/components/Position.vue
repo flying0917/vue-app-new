@@ -15,7 +15,7 @@
                         </div>
                         <div class="position-list-footer">
                             <div class="position-list-avator">
-                                <img :src="x.companyImg?x.companyImg:GLOBAL.no_img">
+                                <img v-lazy='x.companyImg?x.companyImg:GLOBAL.no_img' :key="x.companyImg?x.companyImg:GLOBAL.no_img">
                             </div>
                             <div class="position-list-name">
                                 <div>{{x.company}}</div>
