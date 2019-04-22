@@ -18,7 +18,7 @@ const positionModel={
             id:1,
             record:"大专",
             time:"2010-10-10",
-            companyImg:""
+            companyImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"
           },
           {
             title:"PHP后台工程师",
@@ -29,7 +29,7 @@ const positionModel={
             id:2,
             record:"大专",
             time:"2010-10-10",
-            companyImg:""
+            companyImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"
           },
           {
             title:"java权杖",
@@ -40,7 +40,7 @@ const positionModel={
             id:3,
             record:"大专",
             time:"2010-10-10",
-            companyImg:""
+            companyImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"
           },
           {
             title:"web前端",
@@ -51,7 +51,7 @@ const positionModel={
             id:4,
             record:"大专",
             time:"2010-10-10",
-            companyImg:""
+            companyImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"
           },
           {
             title:"web前端",
@@ -62,7 +62,7 @@ const positionModel={
             id:5,
             record:"大专",
             time:"2010-10-10",
-            companyImg:""
+            companyImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"
           }
         ]
     if(filter.p===5)

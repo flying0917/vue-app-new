@@ -1,5 +1,5 @@
 <template>
-    <div class="cui-filter-content">
+    <div :class="{ 'class-a': isA, 'class-b': isB }" class="cui-filter-content">
         <div class="cui-filter cui-flex-wrap">
             <div :class='activeIndex===index?"cui-filter-item cui-flex-con cui-filter-item-active":"cui-filter-item cui-flex-con"' @click="showFilterContent(index,item.type)" v-for="(item,index) in data">
                 {{item.value&&item.value[1]&&item.value[1][0]&&typeof item.value[1][0] ==="string"&&!item.multiple?item.value[1][0]:item.text}}
@@ -88,6 +88,12 @@
                  default()
                  {
                      return [];
+                 }
+             },
+             radius:{
+                 default()
+                 {
+                     return true;
                  }
              }
          },

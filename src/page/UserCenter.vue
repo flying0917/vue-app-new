@@ -53,6 +53,13 @@
                 </div>
                 <div class="cui-list-item">
                   <div class="cui-list-center">
+                    <span class="cui-iconfont cui-icon-headlines"></span>个人认证
+                  </div>
+                  <div class="cui-list-right">
+                  </div>
+                </div>
+                <div class="cui-list-item">
+                  <div class="cui-list-center">
                     <span class="cui-iconfont cui-icon-setup"></span>设置
                   </div>
                   <div class="cui-list-right">
@@ -216,6 +223,7 @@
     font-size:1.5rem !important;
     line-height: 1.8rem;
     text-align: center;
+    color:#5ed1fa;
   }
   .cui-list-center
   {
@@ -230,5 +238,11 @@
     font-size:1rem;
     display:inline-block;
     margin-right:5px;
+    color:#5ed1fa;
+  }
+
+  .cui-list-setting .cui-list-item
+  {
+    margin-left:.75rem;
   }
 </style>

@@ -203,6 +203,8 @@
         margin-bottom:.3rem;
         padding:.75rem;
         background-color:white;
+        border-radius: 15px;
+        margin: .3rem;
     }
     .position-list-header
     {
@@ -244,7 +246,7 @@
         padding:0 .4rem;
         border-radius:.4rem;
         line-height: .8rem;
-        background-color: rgba(94, 210, 250, 0.5);
+        background-color: rgba(38, 167, 212, 0.5);
         color:white;
     }
     .position-list-footer
