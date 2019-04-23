@@ -1,6 +1,6 @@
 <template>
     <div class="exam-content">
-        <cui-pullrefresh @refresh="refresh" @scrollToBottom="down">
+        <cui-pullrefresh @refresh="refresh" @scrollToBottom="down" bgColor="white">
             <transition name="fade">
                 <div class="exam-list" v-if="isShow">
                     <div class="cui-column cui-column-count-2 exam-list">

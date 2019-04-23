@@ -193,17 +193,15 @@
     }
     .position-list
     {
-
         padding:0;
         margin-top:.1rem;
     }
     .position-list-item
     {
         min-height:2rem;
-        margin-bottom:.3rem;
         padding:.75rem;
         background-color:white;
-        border-radius: 15px;
+        border-radius: 10px;
         margin: .3rem;
     }
     .position-list-header

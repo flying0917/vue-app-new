@@ -13,8 +13,8 @@
 <script>
     import CuiTab from '@/components/cui-vue/cui-tab/CuiTab'
     import Exam from '@/components/Exam'
-    import Position from "@/components/Position";
-    import Company from "@/components/Company";
+    import Position from "@/components/Position"
+    import Company from "@/components/Company"
     export default {
         name: "Test-list",
         components:{

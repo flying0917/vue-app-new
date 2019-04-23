@@ -206,11 +206,10 @@
     .company-list-item
     {
         min-height:2rem;
-        margin-bottom:.7rem;
         padding:.75rem;
         background-color:white;
         border-bottom:1px solid #efefef;
-        border-radius: 15px;
+        border-radius: 10px;
         margin: .3rem;
         overflow: hidden;
     }

@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="cui-vue-tab-content cui-flex-con" @touchstart="start($event)"  @touchend="end($event)">
-            <transition :name="transitionName"  v-for="(y,dataindex) in data">
+            <transition :name="transitionName" :key="dataindex"  v-for="y,dataindex in data">
                 <div :key="dataindex" v-show="parseInt(activeIndex)===dataindex" class="cui-vue-tab-content-item">
                     <slot :name="dataindex"></slot>
                 </div>
