@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ 'class-a': isA, 'class-b': isB }" class="cui-filter-content">
+    <div :class="{ 'cui-filter-content':true, 'cui-filter-radius': radius }" >
         <div class="cui-filter cui-flex-wrap">
             <div :class='activeIndex===index?"cui-filter-item cui-flex-con cui-filter-item-active":"cui-filter-item cui-flex-con"' @click="showFilterContent(index,item.type)" v-for="(item,index) in data">
                 {{item.value&&item.value[1]&&item.value[1][0]&&typeof item.value[1][0] ==="string"&&!item.multiple?item.value[1][0]:item.text}}
@@ -83,6 +83,7 @@
         },
         props:
          {
+             //可筛选渲染
              data:{
                  required:true,
                  default()
@@ -90,6 +91,7 @@
                      return [];
                  }
              },
+             //是否圆角
              radius:{
                  default()
                  {
@@ -144,10 +146,13 @@
                     var that=this;
                     import("@/components/cui-vue/place").then(function(place){
                         that.renderData=place.default;
+                        // this.renderData=place;
+                        that.value=that.data[that.activeIndex].value[1]?that.data[that.activeIndex].value[1]:[];
+                        console.log(that.renderData)
+                        console.log(that.data[that.activeIndex].parentIndex)
+                        console.log(that.renderData[that.data[that.activeIndex].parentIndex])
+                        that.subData=that.data[that.activeIndex].parentIndex!==-1?that.renderData[that.data[that.activeIndex].parentIndex].city:[];
                     });
-                    // this.renderData=place;
-                    this.value=this.data[this.activeIndex].value[1]?this.data[this.activeIndex].value[1]:[];
-                    this.subData=this.data[this.activeIndex].parentIndex!==-1?this.renderData[this.data[this.activeIndex].parentIndex].city:[];
                 }
                 else if(this.type==='tree')
                 {
@@ -273,6 +278,17 @@
 
         color:#6f6e6e;
 
+    }
+    /*圆样式*/
+    .cui-filter-radius .cui-option,.cui-filter-radius .cui-filter-item-c-item
+    {
+        border-radius:.75rem;
+    }
+    .cui-filter-radius .cui-filter-btn
+    {
+        border-bottom-left-radius:10px;
+        border-bottom-right-radius:10px;
+        overflow:hidden;
     }
     .cui-filter
     {
