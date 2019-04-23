@@ -8,6 +8,9 @@
 # install dependencies
 npm install
 
+# install dependencies vue-lazyload 
+npm install --save vue-lazyload
+
 # serve with hot reload at localhost:8080
 npm run dev
 
