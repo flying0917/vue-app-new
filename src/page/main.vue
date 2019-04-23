@@ -1,12 +1,10 @@
 <template>
   <div class="cui-content cui-flex-wrap cui-flex-vertical">
     <div class="cui-flex-con">
-      <transition :name="transitionName">
-        <keep-alive v-if="$route.meta.keepAlive">
-          <router-view></router-view>
-        </keep-alive>
-        <router-view v-if="!$route.meta.keepAlive"></router-view>
-      </transition>
+      <keep-alive v-if="$route.meta.keepAlive">
+        <router-view></router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
     </div>
     <footer>
       <footer-tab></footer-tab>

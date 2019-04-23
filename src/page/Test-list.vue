@@ -1,20 +1,18 @@
 <template>
   <div class="cui-content">
-    <cui-tab :data="data">
-      <div class="test-content" :slot="index" v-for="x,index in data">
-        <div :slot="index" v-if='x==="笔试"'>
-          <position></position>
+    <cui-tab :data="data" active="0">
+        <div class="test-content" slot="0">
+            <exam></exam>
         </div>
-        <div :slot="index" v-else-if='x==="职位"'>
-          <company></company>
+        <div class="test-content" slot="1">
+           <position></position>
         </div>
-      </div>
     </cui-tab>
   </div>
 </template>
 <script>
     import CuiTab from '@/components/cui-vue/cui-tab/CuiTab'
-
+    import Exam from '@/components/Exam'
     import Position from "@/components/Position";
     import Company from "@/components/Company";
     export default {
@@ -22,7 +20,8 @@
         components:{
           CuiTab,
           Position,
-          Company
+          Company,
+          Exam
         },
         data()
         {

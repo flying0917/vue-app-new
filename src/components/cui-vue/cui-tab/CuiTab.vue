@@ -1,15 +1,14 @@
 <template>
     <div :class='"cui-vue-tab cui-flex-wrap cui-flex-vertical cui-vue-tab-"+type'>
         <div class="cui-vue-tab-header">
-            <div :class='{"cui-vue-tab-header-item":true,"active":activeIndex===index}' @click="switchTab(index)" v-for="x,index in data">
+            <div :class='{"cui-vue-tab-header-item":true,"active":parseInt(activeIndex)===index}' @click="switchTab(index)" v-for="x,index in data">
                 {{x}}
             </div>
-            <!--<div class="cui-vue-tab-header-tip"></div>-->
         </div>
-        <div class="cui-vue-tab-content cui-flex-con">
-            <transition>
-                <div v-if="activeIndex===index" class="cui-vue-tab-content-item" v-for="y,index in data">
-                    <slot :name="index"></slot>
+        <div class="cui-vue-tab-content cui-flex-con" @touchstart="start($event)"  @touchend="end($event)">
+            <transition :name="transitionName"  v-for="(y,dataindex) in data">
+                <div :key="dataindex" v-show="parseInt(activeIndex)===dataindex" class="cui-vue-tab-content-item">
+                    <slot :name="dataindex"></slot>
                 </div>
             </transition>
         </div>
@@ -23,20 +22,42 @@
         data()
         {
             return {
-                activeIndex:0
+                startX:0,//手指开始x点
+                startY:0,//手指开始y点
+                endX:0,
+                endY:0,
+
+                lock:false,//锁
+                activeIndex:this.active,//目前选中的索引
+                transitionName:this.animate?"slides-right":""
             }
         },
         props:{
+            //初始化激活的
+            active:{
+                default()
+                {
+                    return 0
+                }
+            },
+            //是否开启动画
+            animate:{
+                default()
+                {
+                    return true
+                }
+            },
             data:{
                 default()
                 {
-                    return ["待笔","职位","待笔1","职位1","待笔2","职位2","待笔3","职位3"]
+                    return []//接收数组
                 }
             },
+            //类型
             type:{
                 default()
                 {
-                    return "button"//其值有scroll(滚动) flex(平分) button(按钮)
+                    return "scroll"//其值有scroll(滚动) flex(平分) button(按钮)
                 }
             }
         },
@@ -45,15 +66,88 @@
 
         },
         methods:{
+            start(e)
+            {
+                let target=e.changedTouches[0];
+                this.startX=target.clientX;
+                this.startY=target.clientY;
+                this.lock=true;
+            },
+            end(e)
+            {
+                if(this.lock)
+                {
+                    let target=e.changedTouches[0],
+                        mX=0;
+                    this.lock=false;
+                    this.endX=target.clientX;
+                    this.endY=target.clientY;
+                    mX=this.endX-this.startX;
+                    let moveX =(this.endX>this.startX)&&(Math.abs((this.endY-this.startY)/(this.endX-this.startX))<1);
+                    console.log(parseInt(mX))
+                    if(Math.abs(mX)>50)
+                    {
+                        if(!moveX)
+                        {
+                            this.activeIndex=(this.activeIndex+1)<=(this.data.length-1)?this.activeIndex+1:(this.data.length-1);
+                        }
+                        else
+                        {
+                            this.activeIndex=(this.activeIndex-1)>=0?this.activeIndex-1:0;
+                        }
+                        if(this.animate)
+                        {
+                            this.transitionName = moveX ? 'slides-right' : 'slides-left'
+                        }
+                    }
+                }
+            },
             switchTab(index)
             {
+                const toIndex =index;
+                const fromIndex = this.activeIndex;
+                if(this.animate)
+                {
+
+                    this.transitionName = toIndex < fromIndex ? 'slides-right' : 'slides-left'
+                }
                 this.activeIndex=index;
+                this.$emit("onchange",this.activeIndex);//当切换时调用
             }
         }
     }
 </script>
 
 <style scoped>
+    /*动画*/
+    .slides-right-enter-active,
+    .slides-right-leave-active,
+    .slides-left-enter-active,
+    .slides-left-leave-active {
+        will-change: transform;
+        transition: all 500ms;
+        position: absolute;
+    }
+
+    .slides-right-enter {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    .slides-right-leave-active {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+
+    .slides-left-enter {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+
+    .slides-left-leave-active {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+    }
     .cui-flex-wrap
     {
         display: -webkit-box;
@@ -197,10 +291,10 @@
     {
         height:100%;
         width:100%;
+        display:inline-block;
     }
     .cui-vue-tab-content
     {
-
-
+        white-space: nowrap;
     }
 </style>

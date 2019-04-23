@@ -6,7 +6,7 @@
         </div>
       </div>
       <div class="cui-flex-con">
-        <cui-pullfresh @refresh="isOk">
+        <cui-pullfresh @refresh="isOk" bgColor="white">
           <div class="usercenter-content">
             <div class="usercenter-header cui-flex-wrap">
               <div class="avator">

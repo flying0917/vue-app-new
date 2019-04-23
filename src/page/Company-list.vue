@@ -108,5 +108,6 @@
   {
     width:100%;
     overflow:hidden;
+    background-color:#efefef;
   }
 </style>

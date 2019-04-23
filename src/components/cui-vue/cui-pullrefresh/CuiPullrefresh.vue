@@ -1,5 +1,5 @@
 <template>
-    <div class="cui-vue-refresh-content" @scroll="scroll($event)" ref="content">
+    <div class="cui-vue-refresh-content" :style='{backgroundColor:bgColor}' @scroll="scroll($event)" ref="content">
         <div class="cui-vue-refresh-wrap" :style="cssStyle" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
             <div class="cui-vue-refresh-header" :style='{height:refreshHeaderHeight+"px","line-height":refreshHeaderHeight+"px",top:"-"+refreshHeaderHeight+"px"}'>
                 <img :src="img">
@@ -77,6 +77,13 @@
             isScrollBottomFinish:{
                 default(){
                     return false;
+                }
+            },
+            //背景颜色
+            bgColor:{
+                default()
+                {
+                    return "#ececec";
                 }
             },
             //下拉时
@@ -284,7 +291,7 @@
         height:100%;
         width:100%;
         position:relative;
-        background-color: #f9f9f9;
+        background-color: #ececec;
         overflow-x:hidden;
         overflow-y:auto;
         -webkit-overflow-scrolling:touch;
