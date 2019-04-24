@@ -18,6 +18,7 @@ const companyModel={
             id:1,
             record:"大专",
             wanted:5,
+            video_url:"",
             videoimg:"https://hbimg.huabanimg.com/e220cc1c1ddb915ac99ddcbe8b855e997b9300ced2fe-Tqn8oH_fw658",
             logo:"https://hbimg.huabanimg.com/e6a314b8e568662af5d2add8cc2e0bf063175a361e167e-GZTsCd_fw658",
             time:"2010-10-10"
@@ -31,6 +32,7 @@ const companyModel={
             id:2,
             record:"大专",
             wanted:5,
+            video_url:"",
             videoimg:"https://hbimg.huabanimg.com/e27767f8cc1d8b079c1eb611d99cb19594007320c280-9gsE1f_fw658",
             logo:"https://hbimg.huabanimg.com/e6a314b8e568662af5d2add8cc2e0bf063175a361e167e-GZTsCd_fw658",
 
@@ -45,6 +47,7 @@ const companyModel={
             id:3,
             record:"大专",
             wanted:5,
+            video_url:"",
             videoimg:"",
             logo:"https://hbimg.huabanimg.com/e6a314b8e568662af5d2add8cc2e0bf063175a361e167e-GZTsCd_fw658",
             time:"2010-10-10"
@@ -56,6 +59,7 @@ const companyModel={
             prize:"1.1k-2k",
             company:"预备科技",
             id:4,
+            video_url:"",
             record:"大专",
             wanted:5,
             videoimg:"",
@@ -71,6 +75,7 @@ const companyModel={
             id:5,
             record:"大专",
             wanted:5,
+            video_url:require("../assets/company_video/company.mp4"),
             videoimg:"https://hbimg.huabanimg.com/e220cc1c1ddb915ac99ddcbe8b855e997b9300ced2fe-Tqn8oH_fw658",
             logo:"https://hbimg.huabanimg.com/e6a314b8e568662af5d2add8cc2e0bf063175a361e167e-GZTsCd_fw658",
             time:"2010-10-10"

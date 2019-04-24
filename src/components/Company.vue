@@ -4,7 +4,7 @@
             <transition name="fade">
                 <div class="company-list" v-if="isShow">
                     <div class="company-list-item" v-for="x in data" >
-                        <div class="company-list-video">
+                        <div class="company-list-video" @click="playVideo(x.video_url)">
                             <div class="company-list-video-img" :key="x.videoimg?x.videoimg:GLOBAL.no_img" v-lazy:background-image = 'x.videoimg?x.videoimg:GLOBAL.no_img'></div>
                             <div class="company-list-video-btn"></div>
                         </div>
@@ -107,6 +107,7 @@
             {
                 let that=this;
                 that.p=that.p+1;
+                ret.loading();
                 that.getData((n)=>{
                     if(!n)
                     {
@@ -114,8 +115,9 @@
                     }
                     else
                     {
-                        ret.loading();
+                        ret.noloading();
                     }
+
                     that.$nextTick(()=>{
                         if(!that.lock)
                         {
@@ -140,6 +142,10 @@
                         })
                     })
                 }, 1000)
+            },
+            playVideo(video)
+            {
+
             }
         },
         watch:{

@@ -5,7 +5,7 @@
                 <div class="exam-list" v-if="isShow">
                     <div class="cui-column cui-column-count-2 exam-list">
                         <div class="cui-column-item exam-list-item" v-for="x in data">
-                            <img :src="x.examimg">
+                            <img v-lazy="x.examimg" :key="x.examimg">
                             <div class="exam-list-item-detail">
                                 <div class="title">{{x.title}}</div>
                                 <div class="exam-company">
@@ -95,6 +95,7 @@
             {
                 let that=this;
                 that.p=that.p+1;
+                ret.loading();
                 that.getData((n)=>{
                     if(!n)
                     {
@@ -102,8 +103,9 @@
                     }
                     else
                     {
-                        ret.loading();
+                        ret.noloading();
                     }
+
                     that.$nextTick(()=>{
                         if(!that.lock)
                         {
@@ -243,7 +245,7 @@
     }
     .exam-company .time
     {
-        width:4rem;
+        width:3rem;
         color: #a3a3a3;
         padding-left:5px;
         font-size:.6rem;

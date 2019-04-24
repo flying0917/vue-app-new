@@ -49,6 +49,18 @@
                     return 200;
                 }
             },
+
+            bottomNoLoadImg:{
+                default(){
+                    return "";
+                }
+            },
+
+            bottomNoLoadTip:{
+                default(){
+                    return "加载更多";
+                }
+            },
             //滚动到底部显现的加载图标
             bottomLoadingImg:{
                 default(){
@@ -58,7 +70,7 @@
             //底部加载中的提示
             bottomLoadingTip:{
                default(){
-                   return "加载更多";
+                   return "加载中";
                }
             },
             //滚动到底部显现的加载图标
@@ -258,7 +270,7 @@
                             that.loading();
                             that.bottomLock=false;
                             //回调
-                            that.$emit("scrollToBottom",{openLock:that.openLock,nothing:that.nothing,loading:that.loading});
+                            that.$emit("scrollToBottom",{openLock:that.openLock,nothing:that.nothing,loading:that.loading,noloading:that.noloading});
                         }
                     },100);
                 }
@@ -267,6 +279,12 @@
             openLock()
             {
                 this.bottomLock=true;
+            },
+            //没有加载
+            noloading()
+            {
+                this.bottomTip=this.bottomNoLoadTip;
+                this.bottomImg=this.bottomNoLoadImg;
             },
             //（加载更多）没有更多了
             nothing()

@@ -101,6 +101,7 @@
             {
                 let that=this;
                 that.p=that.p+1;
+                ret.loading();
                 that.getData((n)=>{
                     if(!n)
                     {
@@ -108,8 +109,9 @@
                     }
                     else
                     {
-                        ret.loading();
+                        ret.noloading();
                     }
+
                     that.$nextTick(()=>{
                         if(!that.lock)
                         {

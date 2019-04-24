@@ -84,7 +84,6 @@
                     this.endY=target.clientY;
                     mX=this.endX-this.startX;
                     let moveX =(this.endX>this.startX)&&(Math.abs((this.endY-this.startY)/(this.endX-this.startX))<1);
-                    console.log(parseInt(mX))
                     if(Math.abs(mX)>50)
                     {
                         if(!moveX)
