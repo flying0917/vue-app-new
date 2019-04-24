@@ -32,6 +32,7 @@
             </transition>
         </cui-pullrefresh>
         <cui-loading :isShow="isLoading"></cui-loading>
+        <cui-video @close="closeVideo" :isShow="showVideo" :url="video_url"></cui-video>
     </div>
 </template>
 
@@ -40,11 +41,13 @@
 
     import CuiPullrefresh from "@/components/cui-vue/cui-pullrefresh/CuiPullrefresh";
     import CuiLoading from "@/components/cui-vue/cui-loading/CuiLoading";
+    import CuiVideo from "@/components/cui-vue/cui-video/CuiVideo";
     export default {
         name: "Company",
         components:{
             CuiPullrefresh,
-            CuiLoading
+            CuiLoading,
+            CuiVideo
         },
         data()
         {
@@ -53,7 +56,9 @@
                 isShow:false,//是否展示（为了过渡动画）
                 p:1,
                 lock:false,
-                isLoading:true
+                isLoading:true,
+                showVideo:false,
+                video_url:""
             }
         },
         props:{
@@ -145,7 +150,16 @@
             },
             playVideo(video)
             {
-
+                if(video)
+                {
+                    this.video_url=video;
+                    console.log(234)
+                    this.showVideo=true;
+                }
+            },
+            closeVideo()
+            {
+                this.showVideo=false;
             }
         },
         watch:{
@@ -252,7 +266,7 @@
     }
     .company-list-video
     {
-        height:4rem;
+        height:5rem;
         margin:-.75rem -.75rem 0 -.75rem;
         position:relative;
 
