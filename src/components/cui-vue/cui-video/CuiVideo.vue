@@ -2,7 +2,7 @@
     <transition name="fade">
         <div class="cui-vue-video" v-if="isShow">
             <div class="cui-back-btn" @click="closeVideo"></div>
-            <div :class='{"cui-horizontal-screen-btn":true,"cui-horizontal-screen-h-btn":isH}' @click="changeH()"></div>
+            <div class="cui-horizontal-screen-btn" @click="changeH()"></div>
             <video :style='styleCss' width="100%" height="100%" ref="video" @playing="playing($event)" @ended="done" :src="url" @click="play()"></video>
             <transition name="fade">
                 <div v-if="isPaused" class="cui-play-btn" @click="play()" :style='{backgroundImage:"url("+playImg+")"}'></div>
@@ -187,13 +187,5 @@
         background-repeat: no-repeat;
         background-position:center;
         background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAgCAYAAACcuBHKAAABFElEQVRYR+2XoUqEQRSFv6NgsKjBhzAYNiiizyAG3aTFvtgMFtu+gFkEgwZhVzBrU0EUDFazoMkn2CNX2PKzbPtnJsw8wJxv7pw5nBEFLBXAQIUY30IZk7C9ABwBs4n9MQKuJX3K9gVwmBhgLDeQtBcQj8BWA+Ie6LcIdgssAq+S1gPiCdhsCF5JOmgLwvYPsAy8SVqrEHUS0zzxDKwAS0AWYz5IOrU9B5wDMzleR0/SezxJ2ztANwdEBNaJpJHty4jwHBARVl/AN9DJ5YmamDW2i4vtSX0ieWLeAduN7vABDNvqE8AxMA+8SNoIY3aBmxYFp20dHXP/v23b3gVWE4NE0T2T9FtG5U98+olydRJFfQP/ANLi1CFSwFoJAAAAAElFTkSuQmCC)
-    }
-    .cui-horizontal-screen-h-btn
-    {
-        -webkit-transform: rotate(-90deg);
-        -moz-transform: rotate(-90deg);
-        -ms-transform: rotate(-90deg);
-        -o-transform: rotate(-90deg);
-        transform: rotate(-90deg);
     }
 </style>
