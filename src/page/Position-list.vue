@@ -12,10 +12,9 @@
   </div>
 </template>
 <script>
-    import CuiFilter from '@/components/cui-vue/cui-filter/CuiFilter';
-    import CuiLoading from "@/components/cui-vue/cui-loading/CuiLoading";
-
-    import Position from "@/components/Position";
+  const CuiFilter = () => import('@/components/cui-vue/cui-filter/CuiFilter'),
+        CuiLoading = () => import("@/components/cui-vue/cui-loading/CuiLoading"),
+        Position = () => import("@/components/Position");
     export default {
         name: "Position-list",
         components:{
@@ -146,7 +145,7 @@
 <style scoped>
   .cui-header
   {
-    height:2rem;
+
   }
   .cui-icon-search
   {
@@ -168,6 +167,9 @@
   {
     height:100%;
     width:100%;
+    position:absolute;
+    top:0;
+    left:0;
   }
   .position-list
   {

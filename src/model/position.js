@@ -15,7 +15,7 @@ const positionModel={
             place:"广州天河",
             prize:"1.1k-2k",
             company:"预备科技",
-            id:1,
+            id:filter.p+"1",
             record:"大专",
             time:"2010-10-10",
             companyImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"
@@ -26,7 +26,7 @@ const positionModel={
             place:"广州天河",
             prize:"2k-3k",
             company:"预备科技",
-            id:2,
+            id:filter.p+"2",
             record:"大专",
             time:"2010-10-10",
             companyImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"
@@ -37,7 +37,7 @@ const positionModel={
             place:"广州天河",
             prize:"1.1k-2k",
             company:"预备科技",
-            id:3,
+            id:filter.p+"3",
             record:"大专",
             time:"2010-10-10",
             companyImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"
@@ -48,7 +48,7 @@ const positionModel={
             place:"广州天河",
             prize:"1.1k-2k",
             company:"预备科技",
-            id:4,
+            id:filter.p+"4",
             record:"大专",
             time:"2010-10-10",
             companyImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"
@@ -59,7 +59,7 @@ const positionModel={
             place:"广州天河",
             prize:"1.1k-2k",
             company:"预备科技",
-            id:5,
+            id:filter.p+"5",
             record:"大专",
             time:"2010-10-10",
             companyImg:"https://hbimg.huabanimg.com/d52b235b5f34f0e68d174a3349486b3df043adc313362-ALqwez_fw658"

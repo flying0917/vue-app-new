@@ -20,12 +20,14 @@ const Login= () => import('@/page/Login'),
       ErrorLoad= () => import('@/page/Error-load'),
       JobChoice= () => import('@/page/Job-choice'),
       WorkList= () => import('@/page/Work-list'),
+      PlayVideo= () => import('@/components/cui-vue/cui-video/CuiVideo'),
       CityChoice= () => import('@/page/City-choice');
 const routes=[
   //默认入口
   {
     path: '/',
     component: Weixin
+    //component: Main
   },
   //登录页面
   {
@@ -38,6 +40,14 @@ const routes=[
     component: UserInfo,
     meta:{
       requireAuth: true//登陆验证
+    }
+  },
+  //视频播放器
+  {
+    path: '/playvideo',
+    component: PlayVideo,
+    meta:{
+      requireAuth: false//登陆验证
     }
   },
   //加载失败

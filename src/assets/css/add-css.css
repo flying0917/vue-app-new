@@ -10,7 +10,19 @@
 {
   color:#464646;
 }
-
+.cui-header
+{
+  padding-top:20px;
+}
+.cui-content
+{
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  overflow:hidden;
+}
 /*选择时间*/
 .vux-datetime-confirm
 {

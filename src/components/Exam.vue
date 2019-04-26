@@ -4,7 +4,7 @@
             <transition name="fade">
                 <div class="exam-list" v-if="isShow">
                     <div class="cui-column cui-column-count-2 exam-list">
-                        <div class="cui-column-item exam-list-item" v-for="x in data">
+                        <div class="cui-column-item exam-list-item" v-for="x in data" :key="x.id">
                             <img v-lazy="x.examimg" :key="x.examimg">
                             <div class="exam-list-item-detail">
                                 <div class="title">{{x.title}}</div>
@@ -172,6 +172,20 @@
     .fade-enter-active,.fade-leave-active
     {
         transition: all 500ms;
+        -webkit-transform: translateZ(0);
+        -moz-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        -o-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        backface-visibility: hidden;
+
+        -webkit-perspective: 1000;
+        -moz-perspective: 1000;
+        -ms-perspective: 1000;
+        perspective: 1000;
     }
     .fade-enter-active {
         opacity:1;

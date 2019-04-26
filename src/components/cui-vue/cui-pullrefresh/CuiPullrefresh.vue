@@ -6,8 +6,8 @@
                 <span>{{tipText}}</span>
             </div>
             <slot></slot>
+            <div v-if="hasScrollToBottom" class="cui-vue-refresh-scroll-text"><img v-if="bottomImg!==''" :src="bottomImg"><span>{{bottomTip}}</span></div>
         </div>
-        <div v-if="hasScrollToBottom" class="cui-vue-refresh-scroll-text"><img :src="bottomImg"><span>{{bottomTip}}</span></div>
     </div>
 </template>
 
@@ -32,6 +32,7 @@
                 contentDom:null,//容器（要监听其的滚动Y距离）
                 bottomTip:this.bottomLoadingTip,
                 bottomImg:this.bottomLoadingImg,
+                isloaded:false,
                 //底部加载更多锁
                 bottomLock:true,
                 cssStyle:{
@@ -151,7 +152,7 @@
         {
             //获取容器
             this.contentDom=this.$refs.content;
-            console.log(this.hasScrollToBottom)
+            console.log("---------"+this.hasScrollToBottom)
         },
         methods:{
             touchStart(e)
@@ -215,6 +216,8 @@
                             that.tipText=that.contentrefresh;
                             that.img=that.contentrefreshIcon;
                             //开始回调
+                            console.log(22222222)
+
                             that.$emit("refresh",that.refreshDone);
                         },500)
 
@@ -307,8 +310,11 @@
     .cui-vue-refresh-content
     {
         height:100%;
+        min-height:100%;
         width:100%;
-        position:relative;
+        position:absolute;
+        left:0;
+        top:0;
         background-color: #ececec;
         overflow-x:hidden;
         overflow-y:auto;
@@ -336,6 +342,7 @@
     .cui-vue-refresh-wrap
     {
         min-height:100%;
+
     }
     .cui-vue-refresh-scroll-text
     {

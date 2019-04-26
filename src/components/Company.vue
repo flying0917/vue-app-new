@@ -3,7 +3,7 @@
         <cui-pullrefresh @refresh="refresh" @scrollToBottom="down">
             <transition name="fade">
                 <div class="company-list" v-if="isShow">
-                    <div class="company-list-item" v-for="x in data" >
+                    <div class="company-list-item" v-for="x in data" :key="x.id" >
                         <div class="company-list-video" @click="playVideo(x.video_url)">
                             <div class="company-list-video-img" :key="x.videoimg?x.videoimg:GLOBAL.no_img" v-lazy:background-image = 'x.videoimg?x.videoimg:GLOBAL.no_img'></div>
                             <div class="company-list-video-btn"></div>
@@ -32,7 +32,6 @@
             </transition>
         </cui-pullrefresh>
         <cui-loading :isShow="isLoading"></cui-loading>
-        <cui-video @close="closeVideo" :isShow="showVideo" :url="video_url"></cui-video>
     </div>
 </template>
 
@@ -41,13 +40,11 @@
 
     import CuiPullrefresh from "@/components/cui-vue/cui-pullrefresh/CuiPullrefresh";
     import CuiLoading from "@/components/cui-vue/cui-loading/CuiLoading";
-    import CuiVideo from "@/components/cui-vue/cui-video/CuiVideo";
     export default {
         name: "Company",
         components:{
             CuiPullrefresh,
-            CuiLoading,
-            CuiVideo
+            CuiLoading
         },
         data()
         {
@@ -153,8 +150,10 @@
                 if(video)
                 {
                     this.video_url=video;
-                    console.log(234)
                     this.showVideo=true;
+                    this.$router.push({path:"/playvideo",query:{
+                            url:this.video_url
+                        }})
                 }
             },
             closeVideo()
@@ -202,6 +201,20 @@
     .fade-enter-active,.fade-leave-active
     {
         transition: all 500ms;
+        -webkit-transform: translateZ(0);
+        -moz-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        -o-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        backface-visibility: hidden;
+
+        -webkit-perspective: 1000;
+        -moz-perspective: 1000;
+        -ms-perspective: 1000;
+        perspective: 1000;
     }
     .fade-enter-active {
         opacity:1;
@@ -215,6 +228,10 @@
     }
     .company-content
     {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
         height:100%;
     }
     .company-list

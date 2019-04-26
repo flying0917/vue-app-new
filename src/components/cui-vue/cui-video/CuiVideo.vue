@@ -1,8 +1,12 @@
 <template>
     <transition name="fade">
-        <div class="cui-vue-video" v-if="isShow">
-            <div class="cui-back-btn" @click="closeVideo"></div>
-            <div class="cui-horizontal-screen-btn" @click="changeH()"></div>
+        <div class="cui-vue-video" v-if="show">
+            <div class="cui-header" style="background-color:transparent;color:white;">
+                <span class="cui-iconfont cui-icon-return" onclick="history.back()"></span>
+                <div class="cui-header-btn">
+                    <div class="cui-horizontal-screen-btn" @click="changeH()"></div>
+                </div>
+            </div>
             <video :style='styleCss' width="100%" height="100%" ref="video" @playing="playing($event)" @ended="done" :src="url" @click="play()"></video>
             <transition name="fade">
                 <div v-if="isPaused" class="cui-play-btn" @click="play()" :style='{backgroundImage:"url("+playImg+")"}'></div>
@@ -21,26 +25,11 @@
             return {
                 playImg:require("../../../assets/image/play.png"),
                 isPaused:true,
-                show:this.isShow,
+                show:true,
                 styleCss:{},
+                url:this.$route.query.url,
                 isH:false,//是否横屏
             }
-        },
-        props:{
-            //初始化激活的
-            isShow:{
-                default()
-                {
-                    return false
-                }
-            },
-            url:{
-                default()
-                {
-                    return ""
-                }
-            }
-
         },
         mounted()
         {
@@ -115,6 +104,11 @@
 .fade-leave-active {
     opacity:0;
 }
+
+.cui-header .cui-iconfont,.cui-header .cui-header-title
+{
+    color:white;
+}
 .cui-vue-video
 {
     background-color: black;
@@ -177,12 +171,11 @@
     }
     .cui-horizontal-screen-btn
     {
-        position:absolute;
+
         z-index:2;
         height:1rem;
         width:1rem;
-        right:.75rem;
-        top:.75rem;
+        display:inline-block;
         background-size:cover;
         background-repeat: no-repeat;
         background-position:center;

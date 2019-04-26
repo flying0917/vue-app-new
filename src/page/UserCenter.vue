@@ -74,7 +74,7 @@
   </div>
 </template>
 <script>
-    import CuiPullfresh from '@/components/cui-vue/cui-pullrefresh/CuiPullrefresh'
+    const CuiPullfresh = ()=>import('@/components/cui-vue/cui-pullrefresh/CuiPullrefresh');
     import userModel from '@/model/user'
     export default {
         name: "UserCenter",

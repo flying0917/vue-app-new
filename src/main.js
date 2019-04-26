@@ -56,6 +56,7 @@ if(Global.isApp)
       router,
       render: h => h(App)
     }).$mount('#app-box')
+    $api.fixIos7Bar($api.dom(".cui-header"));
   }
 }
 else

@@ -1,6 +1,6 @@
 <template>
     <div :class='"cui-vue-tab cui-flex-wrap cui-flex-vertical cui-vue-tab-"+type'>
-        <div class="cui-vue-tab-header">
+        <div class="cui-vue-tab-header" :style='{paddingTop:paddingTop}'>
             <div :class='{"cui-vue-tab-header-item":true,"active":parseInt(activeIndex)===index}' @click="switchTab(index)" v-for="x,index in data">
                 {{x}}
             </div>
@@ -53,6 +53,11 @@
                     return []//接收数组
                 }
             },
+            paddingTop:{
+                default(){
+                    return "0"
+                }
+            },
             //类型
             type:{
                 default()
@@ -84,7 +89,7 @@
                     this.endY=target.clientY;
                     mX=this.endX-this.startX;
                     let moveX =(this.endX>this.startX)&&(Math.abs((this.endY-this.startY)/(this.endX-this.startX))<1);
-                    if(Math.abs(mX)>50)
+                    if(Math.abs(mX)>100)
                     {
                         if(!moveX)
                         {
@@ -126,25 +131,35 @@
         will-change: transform;
         transition: all 500ms;
         position: absolute;
+
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        backface-visibility: hidden;
+
+        -webkit-perspective: 1000;
+        -moz-perspective: 1000;
+        -ms-perspective: 1000;
+        perspective: 1000;
     }
 
     .slides-right-enter {
-        opacity: 0;
+
         transform: translate3d(-100%, 0, 0);
     }
 
     .slides-right-leave-active {
-        opacity: 0;
+
         transform: translate3d(100%, 0, 0);
     }
 
     .slides-left-enter {
-        opacity: 0;
+
         transform: translate3d(100%, 0, 0);
     }
 
     .slides-left-leave-active {
-        opacity: 0;
+
         transform: translate3d(-100%, 0, 0);
     }
     .cui-flex-wrap
@@ -191,6 +206,21 @@
         -ms-transition: all .3s;
         -o-transition: all .3s;
         transition: all .3s;
+
+        -webkit-transform: translateZ(0);
+        -moz-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        -o-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        backface-visibility: hidden;
+
+        -webkit-perspective: 1000;
+        -moz-perspective: 1000;
+        -ms-perspective: 1000;
+        perspective: 1000;
     }
     .cui-vue-tab-header-item.active
     {

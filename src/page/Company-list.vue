@@ -1,21 +1,20 @@
 <template>
   <div class="cui-flex-wrap cui-flex-con cui-flex-vertical company-content">
-    <div class="cui-header">
-      <div class="cui-header-title">公司</div>
-      <span class="cui-header-btn cui-iconfont cui-icon-search"></span>
-    </div>
-    <cui-filter :data="filterOption" @onSuccess="isOk" @onCancel="isCancel" @onChange="isChange"></cui-filter>
+      <div class="cui-header">
+        <div class="cui-header-title">公司</div>
+        <span class="cui-header-btn cui-iconfont cui-icon-search"></span>
+      </div>
+      <cui-filter :data="filterOption" @onSuccess="isOk" @onCancel="isCancel" @onChange="isChange"></cui-filter>
 
-    <div class="cui-flex-con company-list">
-      <company :p="page" :update="isupdate" :filterData="filterData"></company>
-    </div>
+      <div class="cui-flex-con company-list">
+        <company :p="page" :update="isupdate" :filterData="filterData"></company>
+      </div>
   </div>
 </template>
 <script>
-  import CuiFilter from '@/components/cui-vue/cui-filter/CuiFilter';
-  import CuiLoading from "@/components/cui-vue/cui-loading/CuiLoading";
-
-  import Company from "@/components/Company";
+    const CuiFilter = () => import('@/components/cui-vue/cui-filter/CuiFilter'),
+          CuiLoading = () => import("@/components/cui-vue/cui-loading/CuiLoading"),
+          Company = () => import("@/components/Company");
   export default {
     name: "Company-list",
     components:{
@@ -79,10 +78,7 @@
 </script>
 
 <style scoped>
-  .cui-header
-  {
-    height:2rem;
-  }
+
   .cui-icon-search
   {
     color:#6f6e6e;
@@ -103,6 +99,10 @@
   {
     height:100%;
     width:100%;
+      position:absolute;
+      top:0;
+      left:0;
+    overflow:hidden;
   }
   .company-list
   {
@@ -110,4 +110,5 @@
     overflow:hidden;
     background-color:#efefef;
   }
+
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="cui-content">
-    <cui-tab :data="data" active="0">
+    <cui-tab :data="data" active="0" paddingTop="25px">
         <div class="test-content" slot="0">
             <exam></exam>
         </div>
@@ -11,10 +11,10 @@
   </div>
 </template>
 <script>
-    import CuiTab from '@/components/cui-vue/cui-tab/CuiTab'
-    import Exam from '@/components/Exam'
-    import Position from "@/components/Position"
-    import Company from "@/components/Company"
+    const CuiTab = () => import('@/components/cui-vue/cui-tab/CuiTab'),
+          Exam = () => import('@/components/Exam'),
+          Position = () => import("@/components/Position"),
+          Company = () => import("@/components/Company");
     export default {
         name: "Test-list",
         components:{

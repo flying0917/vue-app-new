@@ -1,12 +1,12 @@
 <template>
     <div :class="{ 'cui-filter-content':true, 'cui-filter-radius': radius }" >
-        <div class="cui-filter cui-flex-wrap">
+        <div class="cui-filter cui-flex-wrap" ref="filter-content">
             <div :class='activeIndex===index?"cui-filter-item cui-flex-con cui-filter-item-active":"cui-filter-item cui-flex-con"' @click="showFilterContent(index,item.type)" v-for="(item,index) in data">
                 {{item.value&&item.value[1]&&item.value[1][0]&&typeof item.value[1][0] ==="string"&&!item.multiple?item.value[1][0]:item.text}}
             </div>
         </div>
         <transition name="fade">
-            <div class="cui-filter-item-content" v-if="activeIndex!==-1" @click.stop="close()">
+            <div class="cui-filter-item-content" :style='{top:$refs["filter-content"].offsetTop+"px"}' v-if="activeIndex!==-1" @click.stop="close()">
                 <div @click.stop v-for="(item,index) in data" v-if="activeIndex===index" :class='"cui-flex-wrap cui-filter-wrap cui-filter-item-"+item.type'>
                     <!---地点-->
                     <template v-if="item.type==='place'||item.type==='tree'">

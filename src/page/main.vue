@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import FooterTab from '@/components/Footer'
+  const FooterTab = () => import('@/components/Footer')
   import userModel from '@/model/user'
     export default {
         name: "main",

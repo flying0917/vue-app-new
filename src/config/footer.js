@@ -2,12 +2,18 @@
  * 首页底部导航配置
  * **/
 const footerTabData=[
+  /*{
+    name:"职位",
+    url:"/main/position-list",
+    icon:"./static/image/logo-zhang.png",
+    iconactive:"./static/image/logo-zhang-active.png",
+    isImg:true
+  },*/
   {
     name:"职位",
     url:"/main/position-list",
-    icon:require("../assets/image/logo-zhang.png"),
-    iconactive:require("../assets/image/logo-zhang-active.png"),
-    isImg:true
+    icon:"cui-icon-tools",
+    isImg:false
   },
   {
     name:"笔试",

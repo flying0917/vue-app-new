@@ -3,7 +3,7 @@
         <cui-pullrefresh @refresh="refresh" @scrollToBottom="down">
             <transition name="fade">
                 <div class="position-list" v-if="isShow">
-                    <div class="position-list-item" v-for="x in data" >
+                    <div class="position-list-item" v-for="x in data" :key="x.id">
                         <div class="position-list-header">
                             <div class="title">{{x.title}}</div>
                             <div class="remuneration">{{x.prize}}</div>
@@ -196,7 +196,7 @@
     .position-list
     {
         padding:0;
-        margin-top:.1rem;
+        min-height:100%;
     }
     .position-list-item
     {

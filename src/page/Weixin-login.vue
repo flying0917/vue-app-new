@@ -2,7 +2,7 @@
   <div class="cui-content">
       <div class="weixin-content">
         <img src="@/assets/image/logo-long-theme.png">
-        <div class="btn weixin-btn"><img src="@/assets/image/login_icon_wechat.png">微信登录</div>
+        <div class="btn weixin-btn" @click="goWeixin()"><img src="@/assets/image/login_icon_wechat.png">微信登录</div>
         <div class="btn mobile-btn" @click="goMobileLogin()"><img src="@/assets/image/login_icon_phone.png">手机登录</div>
         <provision></provision>
       </div>
@@ -27,6 +27,10 @@
           goMobileLogin:function()
           {
             this.$router.push("/login")
+          },
+          goWeixin()
+          {
+              this.$router.push("/main/position-list");
           }
         },
         created()
