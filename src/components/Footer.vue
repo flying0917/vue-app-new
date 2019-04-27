@@ -1,7 +1,7 @@
 <template>
   <div class="cui-tabbar">
     <div :class="activeName===x.url?'cui-tabbar-tabitem cui-tabbar-tabitem-active':'cui-tabbar-tabitem '+(name===x.name?'cui-tabbar-tabitem-active':'')" v-for="x in footerTabData" @click="switchTab(x.name)">
-      <router-link :to="x.url">
+      <router-link :to="x.url" replace>
         <img v-if="x.isImg" :src="activeName===x.url?x.iconactive:x.icon">
         <span v-else :class="'cui-iconfont '+x.icon"></span>
         <label>{{ x.name }}</label>
@@ -26,13 +26,12 @@
           switchTab(name)
           {
             this.activeName=this.$route.fullPath;
-            //this.$goRoute(url);
 
            this.name=name;
           }
         },
         mounted() {
-          console.log(this.$route)
+
         }
     }
 </script>

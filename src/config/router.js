@@ -47,6 +47,7 @@ const routes=[
     path: '/playvideo',
     component: PlayVideo,
     meta:{
+      keepAlive:false,
       requireAuth: false//登陆验证
     }
   },
@@ -113,7 +114,7 @@ const routes=[
     path: '/main',
     component: Main,
     meta:{
-      keepAlive:false,
+      keepAlive:true,
       requireAuth: false
     },
     children:[

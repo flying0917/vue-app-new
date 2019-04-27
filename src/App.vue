@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <transition :name="transitionName">
-      <router-view></router-view>
-    </transition>
+      <transition :name="transitionName">
+        <keep-alive v-if="$route.meta.keepAlive">
+          <router-view></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
+      </transition>
   </div>
 </template>
 
@@ -23,7 +26,6 @@ export default {
 
       const toIndex = to.fullPath.split("/")
       const fromIndex = from.fullPath.split("/")
-
       this.transitionName = toIndex < fromIndex ? 'slide-right' : 'slide-left'
     }
   }

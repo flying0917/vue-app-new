@@ -22,7 +22,7 @@
                 <div class="cui-iconfont cui-icon-task"></div>
                 <div class="title">笔试</div>
               </div>
-              <div class="cui-flex-con">
+              <div class="cui-flex-con" @click="$router.push({path:'/playvideo'})">
                 <div class="cui-iconfont cui-icon-like"></div>
                 <div class="title">收藏</div>
               </div>

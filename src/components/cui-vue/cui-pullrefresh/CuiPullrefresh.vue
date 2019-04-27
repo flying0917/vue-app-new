@@ -30,8 +30,8 @@
                 scrolltimeout:null,
                 hasScrollToBottom:this.$listeners&&this.$listeners.scrollToBottom?true:false,
                 contentDom:null,//容器（要监听其的滚动Y距离）
-                bottomTip:this.bottomLoadingTip,
-                bottomImg:this.bottomLoadingImg,
+                bottomTip:"",
+                bottomImg:"",
                 isloaded:false,
                 //底部加载更多锁
                 bottomLock:true,
@@ -209,6 +209,7 @@
                     {
                         //显示刷新中的动画
                         this.cssStyle.webkitTransform=this.cssStyle.transform="translateY("+this.refreshHeaderHeight+"px)";
+                        this.noloading();
                         setTimeout(function(){
                             that.cssStyle.webkitTransition=that.cssStyle.transition="";
                             //改变状态（正在刷新）
@@ -216,7 +217,6 @@
                             that.tipText=that.contentrefresh;
                             that.img=that.contentrefreshIcon;
                             //开始回调
-                            console.log(22222222)
 
                             that.$emit("refresh",that.refreshDone);
                         },500)

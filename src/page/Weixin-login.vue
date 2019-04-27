@@ -30,7 +30,7 @@
           },
           goWeixin()
           {
-              this.$router.push("/main/position-list");
+              this.$router.replace("/main/position-list");
           }
         },
         created()

@@ -2,7 +2,7 @@
     <transition name="fade">
         <div class="cui-vue-video" v-if="show">
             <div class="cui-header" style="background-color:transparent;color:white;">
-                <span class="cui-iconfont cui-icon-return" onclick="history.back()"></span>
+                <span class="cui-iconfont cui-icon-return" @click="$router.go(-1)"></span>
                 <div class="cui-header-btn">
                     <div class="cui-horizontal-screen-btn" @click="changeH()"></div>
                 </div>

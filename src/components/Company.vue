@@ -82,6 +82,9 @@
                 }
             }
         },
+        computed:{
+
+        },
         methods:{
             //获取职位数据
             getData(cb=()=>{})

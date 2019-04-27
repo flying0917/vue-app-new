@@ -458,7 +458,7 @@
         white-space: nowrap;
         text-overflow:ellipsis;
         overflow:hidden;
-        font-size:.4rem;
+        font-size:.6rem;
         height:1.5rem;
         line-height: 1.5rem;
         border:1px solid #efefef;

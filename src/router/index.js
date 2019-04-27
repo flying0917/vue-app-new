@@ -10,7 +10,24 @@ if (window.localStorage.getItem('token')) {
   store.commit(types.TOKEN, window.localStorage.getItem('token'))//access_token
 }
 const router= new Router({
-  routes: routerconfig
+  routes: routerconfig,
+  /*scrollBehavior (to, from, savedPosition) {
+    console.log(savedPosition)
+    console.log(to)
+    console.log(from)
+    // 从第二页返回首页时savedPosition为undefined
+    if (savedPosition || typeof savedPosition !== 'undefined') {
+      // 只处理设置了路由元信息的组件
+      from.meta.keepAlive = false
+      if (savedPosition) {
+        return savedPosition
+      }
+    }
+    else
+    {
+      to.meta.keepAlive = true
+    }
+  }*/
 })
 
 //判断登陆钩子
