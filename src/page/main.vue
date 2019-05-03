@@ -1,10 +1,12 @@
 <template>
   <div class="cui-content cui-flex-wrap cui-flex-vertical">
     <div class="cui-flex-con">
-      <keep-alive v-if="$route.meta.keepAlive">
-        <router-view></router-view>
-      </keep-alive>
-      <router-view v-if="!$route.meta.keepAlive"></router-view>
+      <transition :name="transitionName">
+        <keep-alive v-if="$route.meta.keepAlive">
+          <router-view></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
+      </transition>
     </div>
     <footer>
       <footer-tab></footer-tab>
@@ -24,11 +26,6 @@
         },
         components:{
           FooterTab
-        },
-        beforeRouteLeave(to,from,next)
-        {
-          to.meta.keepAlive=true;
-          next();
         },
         created()
         {
