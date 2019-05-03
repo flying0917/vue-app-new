@@ -2,7 +2,7 @@
   <div class="cui-content">
     <!--带箭头-->
     <div class="cui-header cui-fixed-top back-btn">
-      <span class="cui-iconfont cui-icon-return" @click="this.$router.back(-1)"></span>
+      <span class="cui-iconfont cui-icon-return" @click="$router.back(-1)"></span>
     </div>
     <form class="cui-form cui-heade-margin">
       <div class="userinfo-title">基本信息</div>
@@ -33,14 +33,16 @@
       </div>
       <div class="cui-btn cui-btn-primary cui-btn-block cui-btn-radius next-btn">下一步</div>
     </form>
-    <div v-transfer-dom>
+    <div>
       <actionsheet v-model="headimgActionSheet" :menus="headimgSettingMenu" @on-click-menu="selectFileType" :close-on-clicking-mask="false" :close-on-clicking-menu="true">
       </actionsheet>
     </div>
+    <cui-picker></cui-picker>
   </div>
 </template>
 <script>
   import userModel from "@/model/user"
+  import CuiPicker from "@/components/cui-vue/cui-picker/CuiPicker"
   import { Actionsheet } from 'vux'
     export default {
         name: "UserInfo",
@@ -59,8 +61,14 @@
           }
         },
         components:{
-          Actionsheet
+          Actionsheet,
+          CuiPicker
         },
+      beforeRouteLeave(to,from,next)
+      {
+        to.meta.keepAlive=true;
+        next();
+      },
         methods:
         {
             selectFileType:function(key)
@@ -101,7 +109,7 @@
         },
         created()
         {
-
+          console.log("userinfo")
         }
     }
 </script>

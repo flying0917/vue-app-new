@@ -25,6 +25,15 @@
         components:{
           FooterTab
         },
+        beforeRouteLeave(to,from,next)
+        {
+          to.meta.keepAlive=true;
+          next();
+        },
+        created()
+        {
+          console.log("main")
+        },
         watch:{
           '$route' (to, from) {
 

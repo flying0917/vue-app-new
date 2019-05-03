@@ -22,6 +22,11 @@
 
           }
         },
+        beforeRouteLeave(to,from,next)
+        {
+            to.meta.keepAlive=false;
+            next();
+        },
         methods:
         {
           goMobileLogin:function()
@@ -30,11 +35,13 @@
           },
           goWeixin()
           {
-              this.$router.replace("/main/position-list");
+              this.$router.push("/main/position-list");
+              //this.$router.push("/userinfo-primary");
           }
         },
         created()
         {
+            console.log("login")
 
         }
     }

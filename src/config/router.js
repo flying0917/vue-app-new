@@ -26,7 +26,10 @@ const routes=[
   //默认入口
   {
     path: '/',
-    component: Weixin
+    component: Weixin,
+    meta:{
+      keepAlive:true
+    }
     //component: Main
   },
   //登录页面
@@ -39,7 +42,7 @@ const routes=[
     path: '/userinfo-primary',
     component: UserInfo,
     meta:{
-      requireAuth: true//登陆验证
+      requireAuth: false//登陆验证
     }
   },
   //视频播放器

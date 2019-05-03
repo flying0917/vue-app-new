@@ -31,9 +31,18 @@
                 isH:false,//是否横屏
             }
         },
-        mounted()
+        created()
         {
-
+            console.log(999999)
+        },
+        beforeRouteLeave(to,from,next)
+        {
+            //from.meta.keepAlive=false;
+            to.meta.keepAlive=true;
+            console.log(11111111)
+            console.log(to)
+            console.log(from)
+            next();
         },
         methods:{
             play()

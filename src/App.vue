@@ -18,9 +18,6 @@ export default {
       transitionName:""
     }
   },
-  components:{
-
-  },
   watch:{
     '$route' (to, from) {
 
