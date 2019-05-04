@@ -24,7 +24,8 @@
         },
         beforeRouteLeave(to,from,next)
         {
-            to.meta.keepAlive=false;
+            from.meta.keepAlive=false;
+            to.meta.keepAlive=true;
             next();
         },
         methods:
@@ -35,8 +36,8 @@
           },
           goWeixin()
           {
-              this.$router.push("/main/position-list");
-              //this.$router.push("/userinfo-primary");
+              //this.$router.push("/main/position-list");
+              this.$router.push("/userinfo-primary");
           }
         },
         created()

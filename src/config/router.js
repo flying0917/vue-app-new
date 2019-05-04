@@ -3,10 +3,10 @@
  * **/
 /*预加载 这里只能放导航的组件*/
 import Main from '@/page/main'
-import UserCenter from '@/page/UserCenter'
-import TestList from '@/page/Test-list'
-import CompanyList from '@/page/Company-list'
 import PositionList from '@/page/position-list'
+import CompanyList from '@/page/Company-list'
+import TestList from '@/page/Test-list'
+import UserCenter from '@/page/UserCenter'
 /*懒加载*/
 const Login= () => import('@/page/Login'),
       Register= () => import('@/page/Register'),

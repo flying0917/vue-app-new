@@ -37,7 +37,7 @@
       <actionsheet v-model="headimgActionSheet" :menus="headimgSettingMenu" @on-click-menu="selectFileType" :close-on-clicking-mask="false" :close-on-clicking-menu="true">
       </actionsheet>
     </div>
-    <cui-picker></cui-picker>
+    <cui-picker @changeCol="pickerChange"></cui-picker>
   </div>
 </template>
 <script>
@@ -66,14 +66,20 @@
         },
       beforeRouteLeave(to,from,next)
       {
+        from.meta.keepAlive=false;
         to.meta.keepAlive=true;
         next();
       },
         methods:
         {
+
+            pickerChange(ret,data)
+            {
+              console.log(data)
+            },
             selectFileType:function(key)
             {
-                console.log(key)
+
             },
             //选择性别
             selectSex:function(sex)
@@ -82,7 +88,7 @@
             },
             //弹出选头像类型框
             showSelectPicture:function(){
-              this.headimgActionSheet=true
+              this.headimgActionSheet=false
             },
             //设置生日
             setBirth:function()
