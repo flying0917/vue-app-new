@@ -1,25 +1,27 @@
 <template>
-    <div class="cui-vue-picker cui-vue-picker-active">
-        <div class="cui-vue-picker-shelter">
-            <div class="cui-vue-picker-content">
-                <div class="cui-vue-picker-header">
-                    <div class="cui-vue-picker-header-left">{{cancelText}}</div>
-                    <div class="cui-vue-picker-header-title">{{title}}</div>
-                    <div class="cui-vue-picker-header-right">{{confirmText}}</div>
-                </div>
-                <div class="cui-vue-picker-item">
-                    <div class="cui-vue-picker-item-content">
-                        <div class="cui-vue-picker-item-list" v-for="(x,xIndex) in data" @touchstart="_touchStart(xIndex,$event)" @touchmove="_touchMove(xIndex,$event)" @touchend="_touchEnd(xIndex,$event)">
-                            <div class="cui-vue-picker-item-selected">
-                                <div class="cui-vue-picker-item-select" :style='itemsDomArr[xIndex]?itemsDomArr[xIndex].style:{}'>
-                                    <template v-for="y,sIndex in x">
-                                        <div v-if='typeof y==="object"' :class='{"cui-vue-picker-item-option":true,"cui-picker-item-option-active":itemsDomArr[xIndex].index===sIndex}' :style='{height:optionHeight+"px"}' :data-value='y.value?y.value:y.name'>
-                                            {{y.name}}
-                                        </div>
-                                        <div v-else :class='{"cui-vue-picker-item-option":true,"cui-picker-item-option-active":itemsDomArr[xIndex].index===sIndex}' :style='{height:optionHeight+"px"}' :data-value='y'>
-                                            {{y}}
-                                        </div>
-                                    </template>
+    <transition name="slide">
+        <div v-if="isShow" class="cui-vue-picker cui-vue-picker-active">
+            <div class="cui-vue-picker-shelter">
+                <div class="cui-vue-picker-content">
+                    <div class="cui-vue-picker-header">
+                        <div class="cui-vue-picker-header-left" @click="cancel">{{cancelText}}</div>
+                        <div class="cui-vue-picker-header-title">{{title}}</div>
+                        <div class="cui-vue-picker-header-right" @click="confirm">{{confirmText}}</div>
+                    </div>
+                    <div class="cui-vue-picker-item">
+                        <div class="cui-vue-picker-item-content">
+                            <div class="cui-vue-picker-item-list" v-for="(x,xIndex) in data" @touchstart="_touchStart(xIndex,$event)" @touchmove="_touchMove(xIndex,$event)" @touchend="_touchEnd(xIndex,$event)">
+                                <div class="cui-vue-picker-item-selected">
+                                    <div class="cui-vue-picker-item-select" :style='itemsDomArr[xIndex]?itemsDomArr[xIndex].style:{}'>
+                                        <template v-for="y,sIndex in x">
+                                            <div v-if='typeof y==="object"' :class='{"cui-vue-picker-item-option":true,"cui-picker-item-option-active":itemsDomArr[xIndex].index===sIndex}' :style='{height:optionHeight+"px"}' :data-value='y.value?y.value:y.name'>
+                                                {{y.name}}
+                                            </div>
+                                            <div v-else :class='{"cui-vue-picker-item-option":true,"cui-picker-item-option-active":itemsDomArr[xIndex].index===sIndex}' :style='{height:optionHeight+"px"}' :data-value='y'>
+                                                {{y}}
+                                            </div>
+                                        </template>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -27,7 +29,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -46,6 +48,13 @@
             }
         },
         props:{
+            //是否展示
+            isShow:{
+                default()
+                {
+                    return false;
+                }
+            },
             //类型
             type:{
                 default()
@@ -499,12 +508,44 @@
                     });
                     that.handlePlaceData();
                 }
+            },
+            //确认
+            confirm()
+            {
+                this.$emit("onSuccess")
+            },
+            //取消
+            cancel()
+            {
+                this.$emit("onCancel")
             }
         }
     }
 </script>
 
 <style scoped>
+
+
+    .slide-enter-active,
+    .slide-leave-active {
+        will-change: transform;
+        transition: all 500ms;
+        position: absolute;
+    }
+
+    .slide-enter {
+        opacity: 0;
+    }
+
+    .slide-leave-active {
+        opacity: 0;
+
+    }
+
+    .slide-enter-active
+    {
+
+    }
     /*picker插件*/
     .cui-vue-picker
     {

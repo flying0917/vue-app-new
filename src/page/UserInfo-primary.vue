@@ -34,10 +34,10 @@
       <div class="cui-btn cui-btn-primary cui-btn-block cui-btn-radius next-btn">下一步</div>
     </form>
     <div>
-      <actionsheet v-model="headimgActionSheet" :menus="headimgSettingMenu" @on-click-menu="selectFileType" :close-on-clicking-mask="false" :close-on-clicking-menu="true">
+      <actionsheet v-if="false" v-model="headimgActionSheet" :menus="headimgSettingMenu" @on-click-menu="selectFileType" :close-on-clicking-mask="false" :close-on-clicking-menu="true">
       </actionsheet>
     </div>
-    <cui-picker @changeCol="pickerChange"></cui-picker>
+    <cui-picker :isShow="showPicker" type="date" @onSuccess="selectage" @changeCol="pickerChange"></cui-picker>
   </div>
 </template>
 <script>
@@ -57,7 +57,8 @@
               file: '文件',
               photo: '图片',
               carma: '摄像'
-            }
+            },
+            showPicker:false
           }
         },
         components:{
@@ -95,7 +96,9 @@
             {
               let that=this,
                   date=new Date()
-              this.$vux.datetime.show({
+
+              that.showPicker=true;
+              /*this.$vux.datetime.show({
                 cancelText: '取消',
                 confirmText: '确定',
                 maxYear:date.getFullYear(),
@@ -109,9 +112,13 @@
                 onShow () {
                   const _this = this
                 }
-              })
+              })*/
 
-            }
+            },
+          selectage()
+          {
+            this.showPicker=false
+          }
         },
         created()
         {
